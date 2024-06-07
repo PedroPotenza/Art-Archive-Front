@@ -1,0 +1,128 @@
+{
+  "name": "aurora-web",
+  "private": true,
+  "version": "0.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "prepare": "husky install",
+    "commit": "git-cz"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "@vitejs/plugin-react": "^4.0.3",
+    "cz-emoji-conventional": "^1.0.2",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "husky": "^8.0.0",
+    "prettier": "3.0.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-emoji-conventional",
+      "types": {
+        "feat": {
+          "description": "A new feature",
+          "title": "Features",
+          "emoji": "🌟"
+        },
+        "fix": {
+          "description": "A bug fix",
+          "title": "Bug Fixes",
+          "emoji": "🐛"
+        },
+        "WIP": {
+          "description": "Working in Progress",
+          "title": "WIP",
+          "emoji": "🚧"
+        },
+        "docs": {
+          "description": "Documentation change",
+          "title": "Documentation",
+          "emoji": "📚"
+        },
+        "style": {
+          "description": "Add or update the UI and style files",
+          "title": "UI Styles",
+          "emoji": "🎨"
+        },
+        "codestyle": {
+          "description": "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)",
+          "title": "Code Styles",
+          "emoji": "💎"
+        },
+        "refactor": {
+          "description": "A code change that neither fixes a bug nor adds a feature",
+          "title": "Code Refactoring",
+          "emoji": "🔨"
+        },
+        "dependency": {
+          "description": "Add a dependency.",
+          "title": "Dependency",
+          "emoji": "➕"
+        },
+        "perf": {
+          "description": "A code change that improves performance",
+          "title": "Performance Improvements",
+          "emoji": "⚡️"
+        },
+        "test": {
+          "description": "Adding missing tests or correcting existing tests",
+          "title": "Tests",
+          "emoji": "🧪"
+        },
+        "mock": {
+          "description": "Mock things",
+          "title": "Mocks",
+          "emoji": "🤡"
+        },
+        "build": {
+          "description": "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)",
+          "title": "Builds",
+          "emoji": "🔨"
+        },
+        "ci": {
+          "description": "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)",
+          "title": "Continuous Integrations",
+          "emoji": "📦"
+        },
+        "chore": {
+          "description": "Other changes that don't modify src or test files",
+          "title": "Chores",
+          "emoji": "🧹"
+        },
+        "revert": {
+          "description": "Reverts a previous commit",
+          "title": "Reverts",
+          "emoji": "⏪️"
+        },
+        "poop": {
+          "description": "Bad code that needs to be improved",
+          "title": "Poop",
+          "emoji": "💩"
+        }
+      }
+    }
+  }
+}
