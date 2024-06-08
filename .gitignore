@@ -27,3 +27,6 @@ node_modules
 *.env
 *.env.local
 *.lock
+
+.next
+next-env.d.ts
