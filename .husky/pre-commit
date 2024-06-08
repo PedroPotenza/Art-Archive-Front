@@ -2,6 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 yarn prettier . --write  --cache # if you want to auto fix the code  (use that for personal projects / small teams)
-yarn run eslint "src/*.{ts,tsx}" --max-warnings 0 --fix . # if you want to check the code (use that for big teams)
+yarn run eslint "src/**/*.{ts,tsx}" --max-warnings 0 --fix . # if you want to check the code (use that for big teams)
 git add .
 # yarn prettier . --check --cache # if you want to check the code (use that for big teams) 

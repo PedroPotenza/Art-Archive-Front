@@ -4,14 +4,16 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky install",
     "commit": "git-cz"
   },
   "dependencies": {
+    "next": "^14.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
