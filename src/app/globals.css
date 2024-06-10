@@ -50,10 +50,15 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  @apply w-full h-10 bg-almost-black text-almost-white rounded-md;
 }
 button:hover {
-  border-color: #646cff;
+  @apply bg-black;
 }
+button:disabled {
+  @apply bg-gray-300 text-gray-500 cursor-not-allowed;
+}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
