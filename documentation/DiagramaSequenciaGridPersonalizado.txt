@@ -1,0 +1,13 @@
+@startuml
+actor "Registered User" as RU
+participant "Art Archive System" as System
+participant "Firebase" as FB
+participant "Harvard API" as HA
+
+RU -> System: View Personalized Grid
+System -> FB: Fetch User Data
+FB --> System: Return User Data
+System -> HA: Fetch Artworks Data
+HA --> System: Return Artworks Data
+System -> RU: Display Personalized Grid
+@enduml

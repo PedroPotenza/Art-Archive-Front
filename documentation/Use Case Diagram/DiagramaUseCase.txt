@@ -1,0 +1,39 @@
+@startuml
+left to right direction
+
+actor Visitor as V
+actor "Registered User" as RU
+
+rectangle "Art Archive System" {
+    usecase "View Artworks Grid" as U1
+    usecase "View Artwork Details" as U2
+    usecase "Search Artworks" as U3
+    usecase "Apply Filters" as U4
+    usecase "Login" as U5
+    usecase "Create Account" as U6
+    usecase "Recover Password" as U7
+    usecase "Create Archive Box" as U8
+    usecase "Save Artwork to Archive Box" as U9
+    usecase "View Archive Boxes" as U10
+    usecase "View Personalized Grid" as U11
+    usecase "Logout" as U17
+}
+
+V --> U1
+V --> U2
+V --> U3
+V --> U4
+V --> U5
+V --> U6
+V --> U7
+
+RU --> U1
+RU --> U2
+RU --> U3
+RU --> U4
+RU --> U8
+RU --> U9
+RU --> U10
+RU --> U11
+RU --> U17
+@enduml
