@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import "./globals.css";
 import React from "react";
-// import SessionProvider from "./SessionProvider";
+import Header from "../components/header";
+import "./globals.css";
+
+import { SESSION_COOKIE_NAME } from "../constants";
+
+import { cookies } from "next/headers";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -12,10 +16,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const session = cookies().get(SESSION_COOKIE_NAME)?.value || null;
+
   return (
     <html lang="en">
-      <body className={montserrat.className}>
-        {/* <SessionProvider>{children}</SessionProvider> */}
+      <body className={`flex flex-col w-screen h-screen ${montserrat.className}`}>
+        <Header session={session} />
         {children}
       </body>
     </html>
