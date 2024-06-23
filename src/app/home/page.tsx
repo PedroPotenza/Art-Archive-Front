@@ -1,38 +1,38 @@
 "use client";
-import { signOut } from "next-auth/react";
+import { useEffect } from "react";
+import axiosInstance from "../../libs/axios/axios";
 import "../globals.css";
-import { getSession } from "../../actions/authActions";
-import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [userSessionId, setUserSessionId] = useState<string | null>(null);
+  // const [userSessionId, setUserSessionId] = useState<string | null>(null);
+  // const [objects, setObjects] = useState<any[]>([]);
+
+  // useEffect(() => {
+  //   async function fetchSession() {
+  //     const sessionId = await getSession();
+  //     setUserSessionId(sessionId);
+  //   }
+
+  //   fetchSession();
+  // }, []);
+
+  const getObjects = async () => {
+    const response = await axiosInstance.get("/object?size=10&page=1");
+    console.log(response);
+  };
 
   useEffect(() => {
-    async function fetchSession() {
-      const sessionId = await getSession();
-      setUserSessionId(sessionId);
-    }
-
-    fetchSession();
+    console.log("useEffect running");
+    getObjects();
   }, []);
 
   return (
     <div className=" flex justify-center items-center w-full h-full p-16">
-      <div className="flex flex-col w-[500px] h-[80%] border-4 border-almost-black rounded-2xl">
+      {/* map objects */}
+      <div className="flex flex-col w-[80%] h-fit border-4 border-almost-black rounded-2xl">
         <div className="flex bg-almost-black w-full h-16 p-4 justify-start items-center">
-          <p className="text-almost-white text-2xl">Home</p>
+          <p className="text-almost-white text-2xl">Object 1</p>
         </div>
-
-        {userSessionId ? (
-          <div className="flex flex-col w-full h-[calc(100%-4rem)] p-4 gap-4">
-            <p> Nome do usuario aqui: </p> <br />
-            <p onClick={() => signOut()}> Logout </p>
-          </div>
-        ) : (
-          <div className="flex flex-col w-full h-[calc(100%-4rem)] p-4 gap-4">
-            <p> You are not logged in </p>
-          </div>
-        )}
       </div>
     </div>
   );

@@ -1,18 +1,37 @@
 "use client";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { createSession } from "../../actions/authActions";
+import { signInEmailAndPassword, signInGoogle } from "../../libs/firebase/auth";
 import "../globals.css";
-import { signIn } from "next-auth/react";
 import React from "react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const router = useRouter();
+  const router = useRouter();
+
+  const handleSignInGoogle = async () => {
+    const userUid = await signInGoogle(); //Probably I can use the credentials normally here this is something to look up another moment
+    if (userUid) {
+      await createSession(userUid);
+    }
+
+    router.push("/home");
+  };
+
+  const handleSignInEmailAndPassword = async () => {
+    const userUid = await signInEmailAndPassword(email, password);
+    if (userUid) {
+      await createSession(userUid);
+    }
+
+    router.push("/home");
+  };
 
   return (
     <div className=" flex justify-center items-center w-full h-[100vh] p-16">
-      <div className="flex flex-col w-[500px] h-[100%] border-4 border-almost-black rounded-2xl">
+      <div className="flex flex-col w-[500px] h-fit border-4 border-almost-black rounded-2xl">
         <div className="flex bg-almost-black w-full h-16 p-4 justify-start items-center">
           <p className="text-almost-white text-2xl">Welcome back!</p>
         </div>
@@ -45,22 +64,19 @@ export default function Login() {
           </div>
 
           <div className="flex w-full h-16">
-            <button
-              onClick={() => signIn("credentials", { email, password, redirect: true, callbackUrl: "/home" })}
-              disabled={!email || !password}
-            >
+            <button onClick={handleSignInEmailAndPassword} disabled={!email || !password}>
               Login
             </button>
           </div>
-
-          {/* or google */}
 
           <div className="flex w-full h-16 justify-center items-center">
             <p className="text-almost-black text-lg">Or</p>
           </div>
 
           <div className="flex w-full h-16">
-            <button className="">Login with Google</button>
+            <button className="" onClick={handleSignInGoogle}>
+              Login with Google
+            </button>
           </div>
 
           <div className="flex w-full h-16 justify-center items-center">

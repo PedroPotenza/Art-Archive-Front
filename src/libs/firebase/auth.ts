@@ -1,7 +1,9 @@
 import {
   type User,
   onAuthStateChanged as _onAuthStateChanged,
+  createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  signInWithEmailAndPassword,
   signInWithPopup
 } from "firebase/auth";
 
@@ -11,9 +13,31 @@ export function onAuthStateChanged(callback: (authUser: User | null) => void) {
   return _onAuthStateChanged(firebaseAuth, callback);
 }
 
-//TODO Add the signInWithEmailAndPassword and signOut functions
+export async function signUpEmailAndPassword(email: string, password: string) {
+  const result = await createUserWithEmailAndPassword(firebaseAuth, email, password).catch((error) => {
+    console.log("Error signing up", error);
+  });
 
-export async function signInWithGoogle() {
+  if (!result || !result.user) {
+    throw new Error("Sign up failed");
+  }
+
+  return result.user.uid;
+}
+
+export async function signInEmailAndPassword(email: string, password: string) {
+  const result = await signInWithEmailAndPassword(firebaseAuth, email, password).catch((error) => {
+    console.log("Error signing in", error);
+  });
+
+  if (!result || !result.user) {
+    throw new Error("Sign in failed");
+  }
+
+  return result.user.uid;
+}
+
+export async function signInGoogle() {
   const provider = new GoogleAuthProvider();
 
   try {
@@ -29,10 +53,9 @@ export async function signInWithGoogle() {
 }
 
 export async function signOut() {
-  //TODO make sure this is generic, not just for google sign out
   try {
     await firebaseAuth.signOut();
   } catch (error) {
-    console.error("Error signing out with Google", error);
+    console.error("Error signing out", error);
   }
 }

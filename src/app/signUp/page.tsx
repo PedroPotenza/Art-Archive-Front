@@ -1,8 +1,8 @@
 "use client";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { auth } from "../firebase";
+import { createSession } from "../../actions/authActions";
+import { signInGoogle, signUpEmailAndPassword } from "../../libs/firebase/auth";
 import "../globals.css";
 import React from "react";
 
@@ -12,14 +12,28 @@ export default function SignUp() {
   const [passwordAgain, setPasswordAgain] = useState("");
   const router = useRouter();
 
-  const signUpHandle = () => {
-    createUserWithEmailAndPassword(auth, email, password);
-    router.push("signIn");
+  const signUpHandle = async () => {
+    const userUid = await signUpEmailAndPassword(email, password);
+
+    if (userUid) {
+      await createSession(userUid);
+    }
+
+    router.push("/home");
+  };
+
+  const handleSignInGoogle = async () => {
+    const userUid = await signInGoogle(); //Probably I can use the credentials normally here this is something to look up another moment
+    if (userUid) {
+      await createSession(userUid);
+    }
+
+    router.push("/home");
   };
 
   return (
     <div className=" flex justify-center items-center w-full h-[100vh] p-12">
-      <div className="flex flex-col w-[500px] h-[100%] border-4 border-almost-black rounded-2xl">
+      <div className="flex flex-col w-[500px] h-fit border-4 border-almost-black rounded-2xl">
         <div className="flex bg-almost-black w-full h-16 p-4 justify-start items-center">
           <p className="text-almost-white text-2xl">Register</p>
         </div>
@@ -69,7 +83,9 @@ export default function SignUp() {
           </div>
 
           <div className="flex w-full h-16">
-            <button className="">Register with Google</button>
+            <button className="" onClick={handleSignInGoogle}>
+              Register with Google
+            </button>
           </div>
 
           <div className="flex w-full h-16 justify-center items-center">
