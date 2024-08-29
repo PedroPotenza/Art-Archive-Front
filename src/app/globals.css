@@ -25,7 +25,8 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: #a97e03;
+  color: theme("colors.golden-yellow.dark");
+  text-decoration: underline;
 }
 
 body {
@@ -40,17 +41,20 @@ h1 {
   line-height: 1.1;
 }
 
+input {
+  @apply focus-visible:outline-none focus-visible:ring-0;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-  @apply w-full h-10 bg-almost-black text-almost-white rounded-md;
+  @apply w-full h-10 bg-almost-black text-almost-white rounded-md px-4 focus-visible:outline-none focus-visible:ring-0 focus:outline-none focus:ring-0;
 }
 button:hover {
   @apply bg-black;
