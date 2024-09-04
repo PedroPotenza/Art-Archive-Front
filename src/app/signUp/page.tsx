@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createSession } from "../../actions/authActions";
 import { signInGoogle, signUpEmailAndPassword } from "../../libs/firebase/auth";
 import "../globals.css";
+import React from "react";
 
 export default function SignUp() {
   const [name, setName] = useState("");
