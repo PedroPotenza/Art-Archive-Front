@@ -1,28 +1,54 @@
 "use client";
+// import { getSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { getSession } from "../../actions/authActions";
+import axiosInstance from "../../libs/axios/axios";
 import "../globals.css";
 
 export default function Home() {
-  // const [userSessionId, setUserSessionId] = useState<string | null>(null);
-  // const [objects, setObjects] = useState<any[]>([]);
+  const [userSessionId, setUserSessionId] = useState<string>("");
+  const [objects, setObjects] = useState<any[]>([]);
 
-  // useEffect(() => {
-  //   async function fetchSession() {
-  //     const sessionId = await getSession();
-  //     setUserSessionId(sessionId);
-  //   }
+  useEffect(() => {
+    async function fetchSession() {
+      const sessionId = await getSession();
+      if (sessionId) {
+        setUserSessionId(sessionId);
+        // console.log("sessionId", sessionId);
+      }
+    }
 
-  //   fetchSession();
-  // }, []);
+    fetchSession();
+  }, []);
 
-  // const getObjects = async () => {
-  //   const response = await axiosInstance.get("/object?size=10&page=1");
-  //   console.log(response);
-  // };
+  // quick test to see user session id
+  useEffect(() => {
+    if (userSessionId) {
+      // console.log("userSessionId", userSessionId);
+    }
+  }, [userSessionId]);
 
-  // useEffect(() => {
-  //   console.log("useEffect running");
-  //   getObjects();
-  // }, []);
+  // quick test to see objects
+  useEffect(() => {
+    if (objects) {
+      // console.log("objects", objects);
+    }
+  }, [objects]);
+
+  const getObjects = async () => {
+    const response = await axiosInstance.get("proxy/object?size=100&page=1");
+    return response.data;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const objects = await getObjects();
+      if (objects) {
+        setObjects(objects);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className=" flex justify-center items-center w-full h-full p-16">
