@@ -1,0 +1,309 @@
+Encontrados 307 títulos duplicados com um total de 1785 objetos duplicados:
+
+'High-Rise Steel Frame Apartment Building, 1929-1930' aparece 31 vezes com os IDs: 52558, 52559, 52560, 52561, 52562, 52563, 52564, 52565, 52566, 52581, 52582, 52587, 52588, 52589, 52590, 52591, 52592, 52593, 52594, 52595, 52596, 52597, 52598, 52612, 52613, 52614, 52644, 52645, 53012, 53013, 53014
+'Factory and Office Building for Werkbund Exhibition, Cologne, 1914' aparece 10 vezes com os IDs: 52567, 52568, 52584, 52585, 52586, 52615, 52616, 52648, 52649, 52650
+'Office Building for Werkbund Exhibition, Cologne, 1914: view from court' aparece 2 vezes com os IDs: 52569, 52570
+'Bauhaus Masters' Housing, Dessau, 1925-1926' aparece 20 vezes com os IDs: 52572, 52573, 52574, 52575, 52577, 52578, 52579, 52580, 52606, 52607, 52610, 52611, 52697, 52698, 52699, 53015, 53016, 53036, 53037, 53038
+'Competition Entry for Ukrainian State Theater, Kharkov, 1930-1931' aparece 9 vezes com os IDs: 52617, 52651, 52652, 52676, 52677, 52678, 52679, 52687, 52688
+'Apartment House Communal Rooms for Deutsche Bauausstellung, Berlin, 1931' aparece 10 vezes com os IDs: 52620, 52621, 52632, 52633, 52634, 52662, 52663, 52664, 52665, 52680
+'Apartment House Communal Rooms for Werkbund Exhibition, Paris, 1930' aparece 3 vezes com os IDs: 52643, 52671, 52672
+'AHAG Exhibition, Berlin-Zehlendorf, 1928' aparece 3 vezes com os IDs: 52673, 52674, 52675
+'Prefabricated Copper Houses, 1931-1932' aparece 13 vezes com os IDs: 52689, 52690, 52691, 52692, 52693, 52694, 52695, 52696, 52703, 52704, 52705, 52706, 52707
+'Lead Token' aparece 44 vezes com os IDs: 146215, 146216, 146217, 146218, 146219, 146220, 146221, 146223, 146224, 146226, 146227, 146228, 146272, 146273, 146275, 146276, 146277, 146278, 146279, 146280, 146281, 146282, 146283, 146326, 146327, 146328, 146329, 146330, 146331, 146332, 146333, 146334, 146369, 146370, 146401, 146402, 146406, 146407, 146460, 146461, 146462, 146785, 146786, 146787
+'Untitled' aparece 20 vezes com os IDs: 146243, 146295, 146308, 146309, 146310, 146340, 146341, 146342, 146518, 146534, 146823, 54358, 54359, 54377, 54397, 54414, 54415, 147986, 147988, 55360
+'One of Two Standing Officials, Each with Upturned Shoes, a 'Liangdang' Breastplate, and a Military Official's Headgear Emblazoned with a Descending Bird, and Each with His Hands Clasped at His Waist and Concealed within His Sleeves' aparece 2 vezes com os IDs: 146262, 146527
+'Standing Boar (One of Two)' aparece 2 vezes com os IDs: 146268, 146489
+'Illegible coin' aparece 4 vezes com os IDs: 146298, 146314, 146399, 146400
+'Coin of Justin II' aparece 24 vezes com os IDs: 146315, 146316, 146317, 146319, 146320, 146321, 146322, 146323, 146324, 146325, 146367, 146368, 146403, 146404, 146405, 146415, 146416, 146417, 146418, 146422, 146423, 147459, 147460, 147461
+'Coin of Tiberius II' aparece 9 vezes com os IDs: 146371, 146373, 146408, 146409, 146410, 146411, 146412, 146413, 146421
+'Sheet of Studies' aparece 2 vezes com os IDs: 146425, 146426
+'Landscape with Mountain' aparece 2 vezes com os IDs: 146442, 146533
+'Coin of Justinian I' aparece 91 vezes com os IDs: 146447, 146448, 146449, 146450, 146451, 146452, 146475, 146476, 146477, 146478, 146775, 146776, 147491, 147492, 147510, 147511, 147512, 147513, 147514, 147515, 147516, 147517, 147518, 147519, 147520, 147521, 147522, 147523, 147524, 147525, 147550, 147551, 147552, 147553, 147554, 147634, 147635, 147636, 147637, 147638, 147639, 147640, 147641, 147642, 147643, 147644, 147645, 147646, 147647, 147648, 147649, 147650, 147651, 147652, 147653, 147654, 147655, 147656, 147684, 147685, 147686, 147687, 147688, 147689, 147690, 147691, 147692, 147693, 147694, 147919, 147920, 147921, 147922, 147923, 147924, 147925, 147926, 147927, 147957, 147958, 147959, 147960, 147961, 147962, 147963, 147964, 147965, 147966, 147967, 147968, 147969
+'Lead Sealing' aparece 4 vezes com os IDs: 146458, 146781, 146782, 146784
+'Amulet' aparece 2 vezes com os IDs: 146459, 146783
+'Follis of Justin I, Constantinople' aparece 3 vezes com os IDs: 146463, 146464, 146465
+'Pentanummium of Justin I, Constantinople' aparece 9 vezes com os IDs: 146467, 146468, 146469, 146736, 146737, 146738, 146739, 146740, 146741
+'Follis of Justin I, Nicomedia' aparece 2 vezes com os IDs: 146470, 146471
+'Solidus of Justin I and Justinian I, Constantinople' aparece 3 vezes com os IDs: 146472, 146473, 146474
+'One of Two Standing Court Ladies, Each with Upturned Shoes, a High-Waisted Dress or Skirt, a Shawl, and an Elaborate Coiffure Secured by a Headband, and Each with Her Hands Clasped at the Waist and Concealed within Her Sleeves' aparece 2 vezes com os IDs: 146526, 146562
+'Untitled [Head of a Man]' aparece 2 vezes com os IDs: 146544, 147697
+'Male Head' aparece 2 vezes com os IDs: 146549, 57195
+'Bauhaus Building, Dessau, 1925-1926: Two views' aparece 3 vezes com os IDs: 53018, 53019, 53020
+'Bauhaus Building, Dessau, 1925-1926: Three views' aparece 2 vezes com os IDs: 53021, 53022
+'Walter Gropius with his father at about 15 months' aparece 2 vezes com os IDs: 53024, 53025
+'Housing Development, Dessau-Törten, 1926-1928' aparece 10 vezes com os IDs: 53026, 53027, 53028, 53029, 53030, 53031, 53032, 53033, 53034, 53035
+'Housing Development, Berlin-Siemensstadt, 1929-1930' aparece 42 vezes com os IDs: 53039, 53050, 53076, 53077, 53078, 53079, 53092, 53258, 53259, 53260, 53261, 53262, 53263, 53291, 53292, 53293, 53294, 53295, 53296, 53297, 53298, 53299, 53300, 53301, 53567, 53568, 53569, 53570, 53571, 53572, 53620, 53621, 53622, 53623, 53624, 53625, 53626, 53627, 53628, 53650, 53651, 53652
+'Adler Limousine, 1930-1933' aparece 128 vezes com os IDs: 53040, 53041, 53042, 53043, 53044, 53045, 53046, 53047, 53048, 53049, 53056, 53057, 53058, 53060, 53061, 53064, 53065, 53066, 53067, 53068, 53069, 53070, 53071, 53072, 53073, 53080, 53081, 53082, 53083, 53084, 53085, 53086, 53087, 53088, 53089, 53090, 53091, 53094, 53095, 53096, 53097, 53100, 53101, 53102, 53103, 53106, 53107, 53108, 53109, 53110, 53111, 53414, 53415, 53439, 53440, 53441, 53445, 53446, 53447, 53448, 53449, 53450, 53451, 53452, 53453, 53454, 53455, 53456, 53457, 53459, 53460, 53461, 53471, 53472, 53473, 53474, 53475, 53476, 53477, 53478, 53479, 53480, 53481, 53482, 53494, 53495, 53496, 53497, 53498, 53499, 53500, 53501, 53502, 53503, 53504, 53505, 53506, 53507, 53512, 53513, 53542, 53543, 53544, 53545, 53546, 53547, 53573, 53574, 53575, 53611, 53612, 53613, 53614, 53615, 53616, 53617, 53618, 53619, 53635, 53636, 53637, 53638, 53639, 53640, 53641, 53642, 53643, 53644
+'Fagus Shoe-Last Factory, Alfeld a. d. Leine, 1911-1925' aparece 35 vezes com os IDs: 53051, 53052, 53053, 53054, 53055, 53093, 53221, 53222, 53223, 53224, 53225, 53226, 53227, 53228, 53249, 53250, 53251, 53264, 53265, 53266, 53267, 53268, 53269, 53270, 53271, 53272, 53303, 53304, 53305, 53306, 53307, 53308, 53309, 53629, 53648
+'Large Housing Development, Berlin, 1929' aparece 12 vezes com os IDs: 53059, 53062, 53063, 53098, 53099, 53104, 53105, 53212, 53213, 53214, 53215, 53216
+'Furniture Designs, 1929-1932' aparece 46 vezes com os IDs: 53074, 53075, 53514, 53515, 53516, 53517, 53518, 53519, 53520, 53521, 53522, 53523, 53524, 53525, 53526, 53527, 53550, 53551, 53557, 53558, 53559, 53560, 53561, 53562, 53563, 53564, 53565, 53566, 53576, 53577, 53578, 53579, 53588, 53589, 53590, 53591, 53592, 53593, 53594, 53595, 53606, 53607, 53608, 53609, 53610, 53649
+'Fourteen-Character Couplet in Bronze Script (Korean, 'Kŭm-mun'; Chinese, 'Jinwen')' aparece 2 vezes com os IDs: 146695, 146696
+'Sheet of Caricatures' aparece 2 vezes com os IDs: 146720, 146767
+'Pentanummium of Justin I, Nicomedia' aparece 2 vezes com os IDs: 146773, 146774
+'Carved Wooden Mask' aparece 2 vezes com os IDs: 146778, 146779
+'Competition Entry for Coeducational Vocational School, Berlin-Cöpenick, 1930' aparece 5 vezes com os IDs: 53217, 53218, 53219, 53220, 53302
+'Competition Entry for "Chicago Tribune" Tower, 1922' aparece 24 vezes com os IDs: 53229, 53230, 53231, 53232, 53233, 53234, 53235, 53236, 53237, 53238, 53239, 53240, 53254, 53255, 53256, 53257, 53285, 53286, 53287, 53288, 53289, 53290, 53310, 53311
+'Bauhaus Housing Development "Am Horn," Weimar, 1920-1922: Models' aparece 2 vezes com os IDs: 53241, 53242
+'Gebr. Kappe & Company Factory Warehouse, Alfeld a.d. Leine, 1922-1924' aparece 10 vezes com os IDs: 53243, 53244, 53245, 53246, 53247, 53248, 53273, 53274, 53275, 53276
+'Diesel Engine and Railway Cars, Königsberg, 1913-1914' aparece 7 vezes com os IDs: 53252, 53253, 53277, 53278, 53279, 53280, 53281
+'Sommerfeld Residence, Berlin, 1920-1921' aparece 3 vezes com os IDs: 53282, 53283, 53284
+'Drawing for woodcut, Death of King Saul' aparece 3 vezes com os IDs: 146967, 146968, 147714
+'from the series Cutout Pictures of Famous Places in Edo (Edo meisho harimaze zue)' aparece 4 vezes com os IDs: 147050, 147051, 147052, 147053
+'Lamp' aparece 20 vezes com os IDs: 147055, 147056, 147057, 147468, 147469, 147470, 147471, 147479, 147481, 147482, 147483, 147484, 147485, 147486, 147487, 147488, 147489, 147674, 147721, 148246
+'from the series Illustrated Tale of the Soga Brothers (Soga monogatari zue)' aparece 2 vezes com os IDs: 147063, 147064
+'Competition Entry for Dr. Aschrott Community Center, Kassel, 1929-1930' aparece 26 vezes com os IDs: 53416, 53417, 53418, 53419, 53420, 53421, 53422, 53423, 53442, 53463, 53464, 53465, 53483, 53484, 53485, 53486, 53487, 53488, 53489, 53490, 53491, 53538, 53539, 53540, 53541, 53633
+'Competition Entry for Model Housing Development, Berlin-Spandau-Haselhorst, 1928-1929' aparece 49 vezes com os IDs: 53424, 53435, 53436, 53443, 53444, 53466, 53467, 53468, 53469, 53470, 53492, 53493, 53528, 53529, 53530, 53531, 53532, 53533, 53534, 53535, 53536, 53537, 53552, 53553, 53554, 53555, 53556, 53580, 53581, 53582, 53583, 53584, 53585, 53586, 53587, 53596, 53597, 53598, 53599, 53600, 53601, 53602, 53603, 53604, 53605, 53630, 53631, 53632, 53634
+'Housing Development, Karlsruhe-Dammerstock, 1928-1929' aparece 25 vezes com os IDs: 53425, 53426, 53427, 53428, 53429, 53430, 53431, 53432, 53433, 53434, 53722, 53723, 53724, 53725, 53726, 53727, 53728, 53729, 53730, 53731, 53732, 53733, 53734, 53735, 53749
+'Lewin Residence, Berlin-Zehlendorf, 1928-1929' aparece 7 vezes com os IDs: 53458, 53508, 53509, 53510, 53511, 53548, 53549
+'Houses for Werkbund Development "Am Weissenhof," Stuttgart, 1927' aparece 15 vezes com os IDs: 53653, 53654, 53655, 53656, 53657, 53658, 53668, 53669, 53706, 53707, 53708, 53709, 53710, 53711, 53712
+'Vase' aparece 4 vezes com os IDs: 53659, 57196, 57197, 57227
+'Total Theater for Erwin Piscator, Berlin, 1927' aparece 20 vezes com os IDs: 53660, 53661, 53662, 53663, 53664, 53665, 53666, 53671, 53672, 53673, 53674, 53675, 53676, 53677, 53678, 53714, 53715, 53716, 53717, 53736
+'Bowl' aparece 3 vezes com os IDs: 53745, 147587, 148556
+'Races, Jews: United States. New Jersey. Woodbine. Baron de Hirsch Agricultural and Industrial School: Woodbine Settlement and School, Woodbine, N.J. Baron de Hirsch Fund.' aparece 17 vezes com os IDs: 147435, 151619, 151620, 151621, 151622, 151623, 151624, 151956, 151957, 151958, 151959, 151960, 151962, 151963, 152011, 152012, 152013
+'Fourteen-Character Couplet in Running Script (Korean, 'Haeng-sŏ'; Chinese, 'Xingshu')' aparece 2 vezes com os IDs: 147444, 147445
+'Untitled [Snapshot of Lyonel Feininger on a Bicycle]' aparece 2 vezes com os IDs: 147493, 147573
+'Drachm of Mithradates II, Ecbatana' aparece 2 vezes com os IDs: 147496, 147989
+'Drachm of Mithradates II of Parthia, Rhagai' aparece 6 vezes com os IDs: 147499, 147500, 147502, 147599, 147600, 147601
+'Sheet from Book of Instructions for Drawing Landscapes' aparece 6 vezes com os IDs: 147508, 147570, 147571, 147699, 147743, 148091
+'Landscape (recto and verso)' aparece 2 vezes com os IDs: 147539, 148113
+'Untitled [Wooden Toys by Lyonel Feininger]' aparece 5 vezes com os IDs: 147557, 147559, 147561, 147567, 147663
+'Untitled [Color Studies]' aparece 5 vezes com os IDs: 147564, 147657, 147660, 147664, 148067
+'Ceramic Vessel' aparece 3 vezes com os IDs: 147584, 147586, 147717
+'Tetradrachm of Demetrios II' aparece 5 vezes com os IDs: 147597, 148900, 148901, 148902, 148903
+'Tetradrachm of Antiochos VI Dionysos of Syria' aparece 2 vezes com os IDs: 147598, 147879
+'Drachm of Orodes I of Parthia, Rhagai' aparece 2 vezes com os IDs: 147602, 147880
+'Untitled [Snapshot of Lyonel Feininger]' aparece 3 vezes com os IDs: 147606, 147669, 148083
+'[Snapshot of Beach at Deep, Baltic Coast]' aparece 2 vezes com os IDs: 147670, 148078
+'Jar' aparece 2 vezes com os IDs: 147673, 148465
+'Susquehanna River at Catawissa, Pennsylvania' aparece 2 vezes com os IDs: 147740, 148055
+'[Watercolor by Lyonel Feininger, 1933]' aparece 5 vezes com os IDs: 54292, 54293, 54295, 54296, 54303
+'[Watercolor by Lyonel Feininger, 1930]' aparece 2 vezes com os IDs: 54300, 54301
+'[Pen drawing by Lyonel Feininger, 1934]' aparece 2 vezes com os IDs: 54304, 54328
+'[Watercolor by Lyonel Feininger, 1934]' aparece 4 vezes com os IDs: 54305, 54306, 54329, 54330
+'Photo Album' aparece 15 vezes com os IDs: 54307, 54308, 54354, 54355, 54372, 54373, 54389, 54390, 54391, 54407, 54408, 54409, 54410, 54411, 55395
+'Book of Transom Designs in Three Volumes' aparece 3 vezes com os IDs: 54356, 54392, 54393
+'Corinthian Globular Aryballos' aparece 2 vezes com os IDs: 54375, 54413
+'Madonna and Child' aparece 2 vezes com os IDs: 54424, 57287
+'Shekel of Tyre' aparece 4 vezes com os IDs: 147873, 148661, 148662, 148663
+'Half Denarius of the Himyarites, Raidan' aparece 2 vezes com os IDs: 147874, 147875
+'Catholic Church, Torreón, Mexico, 1944-1945: Duplicate of BRGA.103.9: Interior perspective' aparece 2 vezes com os IDs: 147887, 147902
+'Tetradrachm of Antiochos III the Great of Syria' aparece 8 vezes com os IDs: 147979, 147980, 148355, 148356, 148357, 148358, 148416, 148417
+'Tetradrachm of Antiochos IV Epiphanes of Syria' aparece 3 vezes com os IDs: 147982, 147983, 147984
+'Bauhaus Building, Dessau, 1925-1926: Studio wing and bridge' aparece 2 vezes com os IDs: 147990, 148023
+'Bauhaus Building, Dessau, 1925-1926: Main entrance' aparece 2 vezes com os IDs: 147992, 147994
+'Bauhaus Building, Dessau, 1925-1926: View during construction' aparece 3 vezes com os IDs: 147996, 147997, 147998
+'Chess Piece: blue pawn' aparece 8 vezes com os IDs: 148001, 148002, 148003, 148004, 148005, 148404, 148405, 148678
+'Chess Piece: blue knight' aparece 2 vezes com os IDs: 148032, 148453
+'Manhattan Skyline; verso: blank page' aparece 2 vezes com os IDs: 148036, 148372
+'Susquehanna River at Northumberland, Pennsylvania' aparece 2 vezes com os IDs: 148043, 148184
+'Unguentarium (cosmetic bottle)' aparece 2 vezes com os IDs: 148058, 148432
+'Untitled [Snapshot of Eleonora Feininger]' aparece 2 vezes com os IDs: 148063, 148080
+'Bauhaus Masters' Housing, Dessau, 1925-1926: Director's house, view from southeast' aparece 2 vezes com os IDs: 148127, 148128
+'PRINT' aparece 2 vezes com os IDs: 148132, 148133
+'Chess Piece: orange pawn' aparece 4 vezes com os IDs: 148217, 148218, 148255, 148673
+'Chess Piece: orange bishop' aparece 2 vezes com os IDs: 148220, 148676
+'Chess Piece: orange knight' aparece 2 vezes com os IDs: 148239, 148675
+'Bracelet' aparece 2 vezes com os IDs: 148244, 148450
+'Santos Figurine' aparece 9 vezes com os IDs: 148269, 148296, 148297, 148298, 148300, 148339, 148340, 148341, 148342
+'Tetradrachm of Demetrios I' aparece 4 vezes com os IDs: 148359, 148360, 148361, 148420
+'Drachm of Demetrios I' aparece 4 vezes com os IDs: 148362, 148364, 148365, 148421
+'"Growing and Shrinking House", 1942-1945: Duplicate of BRGA.98.17' aparece 3 vezes com os IDs: 148367, 148368, 148369
+'Chess Piece: blue bishop' aparece 2 vezes com os IDs: 148408, 148454
+'Tetradrachm of Antiochos I Soter of Syria, Seleucia on the Tigris' aparece 2 vezes com os IDs: 148413, 148589
+'Drachm of Alexander I Balas' aparece 3 vezes com os IDs: 148423, 148424, 148425
+'Basin' aparece 2 vezes com os IDs: 148479, 148554
+'Stater of Side' aparece 2 vezes com os IDs: 148482, 148536
+'Tetradrachm of Side' aparece 4 vezes com os IDs: 148483, 148484, 148485, 148537
+'Stater of Kelenderis' aparece 3 vezes com os IDs: 148487, 148488, 148489
+'Stater of Mallos' aparece 2 vezes com os IDs: 148490, 148648
+'Stater of Nagidos' aparece 3 vezes com os IDs: 148491, 148492, 148542
+'Tenth Stater of Euagoras I' aparece 2 vezes com os IDs: 148493, 148548
+'Tenth Stater of Nikokles, King of Salamis' aparece 2 vezes com os IDs: 148494, 148495
+'Drachm of Ariobarzanes I' aparece 9 vezes com os IDs: 148496, 148497, 148498, 148499, 148500, 148579, 148580, 148621, 148622
+'Drachm of Ariobarzanes III' aparece 3 vezes com os IDs: 148501, 148595, 148665
+'Tetradrachm of Arados' aparece 4 vezes com os IDs: 148504, 148505, 148590, 148591
+'Tetradrachm of Antiochos VIII Grypos of Syria' aparece 5 vezes com os IDs: 148526, 148527, 148528, 148529, 148904
+'Tetradrachm of Antiochos IX Kyzikenos of Syria' aparece 4 vezes com os IDs: 148530, 148531, 148532, 148533
+'Obol of Selge' aparece 2 vezes com os IDs: 148538, 148539
+'Obol of Kelenderis' aparece 2 vezes com os IDs: 148540, 148541
+'Stater of Soloi (Cilicia)' aparece 6 vezes com os IDs: 148543, 148544, 148649, 148650, 148653, 148983
+'Bottle' aparece 2 vezes com os IDs: 148555, 56018
+'Drachm of Ariarathes V' aparece 3 vezes com os IDs: 148578, 148616, 148617
+'Tetradrachm of Tripolis' aparece 2 vezes com os IDs: 148586, 148592
+'Tetradrachm of Seleucus I' aparece 3 vezes com os IDs: 148599, 148667, 148668
+'Tetradrachm of Seleucus II' aparece 2 vezes com os IDs: 148601, 148669
+'Drachm of Ariarathes VI' aparece 2 vezes com os IDs: 148618, 148619
+'Drachm of Ariarathes VII' aparece 2 vezes com os IDs: 148620, 148657
+'Tetradrachm of Philip I Philadelphos of Syria' aparece 2 vezes com os IDs: 148623, 148658
+'Obol of Soloi (Cilicia)' aparece 2 vezes com os IDs: 148651, 148652
+'Drachm of Rhodes' aparece 2 vezes com os IDs: 148684, 148980
+'Dewing coin - unpublished cast, electrotype or fake' aparece 6 vezes com os IDs: 55267, 55376, 55377, 55378, 55398, 55399
+'Untitled (portrait of boy in uniform)' aparece 4 vezes com os IDs: 55458, 55459, 55481, 55498
+'Untitled (portrait of five African American children in studio)' aparece 2 vezes com os IDs: 55460, 55482
+'Untitled (portrait of older man in suit and cowboy hat)' aparece 2 vezes com os IDs: 55461, 55462
+'Untitled (portrait of girl with grandfather [?])' aparece 2 vezes com os IDs: 55479, 55480
+'["Grotesque," 1955, drawing by Lyonel Feininger]' aparece 7 vezes com os IDs: 55488, 55938, 56420, 56421, 56423, 56424, 56435
+'[Drawing by Lyonel Feininger, 1955]' aparece 37 vezes com os IDs: 55490, 55491, 55492, 55724, 55725, 55727, 55733, 55734, 55735, 55749, 55751, 55778, 55779, 55780, 55782, 55783, 55784, 55787, 55878, 55879, 55880, 55912, 55913, 55914, 55915, 55916, 55917, 55918, 55923, 55924, 55925, 55926, 55986, 56175, 56177, 56422, 56438
+'[Drawing by Lyonel Feininger]' aparece 5 vezes com os IDs: 55493, 55750, 56376, 56632, 56637
+'Untitled (two portraits of two boys in matching uniforms)' aparece 2 vezes com os IDs: 55503, 55889
+'Untitled (twp full length portraits of young woman in short skirt)' aparece 2 vezes com os IDs: 55504, 55890
+'Untitled (two portraits of husband and wife)' aparece 2 vezes com os IDs: 55506, 55911
+'Tetradrachm of Antiochos VII Eurgetes of Syria' aparece 3 vezes com os IDs: 148898, 148899, 148905
+'Untitled (Gaiswinkel, Austria)' aparece 2 vezes com os IDs: 148928, 148932
+'Untitled (Lahngangsee, Steiermark, Austria)' aparece 2 vezes com os IDs: 148929, 149075
+'Stater of Phaistos' aparece 9 vezes com os IDs: 148956, 148957, 148974, 148978, 149008, 149009, 149046, 149047, 149048
+'Untitled (courtyard, Krems, Austria)' aparece 2 vezes com os IDs: 148969, 148970
+'Drachm of Phalasarna' aparece 2 vezes com os IDs: 148976, 149010
+'Stater of Praesos' aparece 2 vezes com os IDs: 148977, 149043
+'Trite of Lydia, before Croesus' aparece 2 vezes com os IDs: 148981, 148982
+'Hemidrachm of Colchis' aparece 2 vezes com os IDs: 149011, 149049
+'Drachm of Polyrhenion' aparece 2 vezes com os IDs: 149013, 149050
+'Tetradrachm of Rhodes' aparece 2 vezes com os IDs: 149052, 149053
+'Untitled (house and out buildings, Gössl, Austria)' aparece 2 vezes com os IDs: 149074, 149076
+'[Drawing by Lyonel Feininger, 1954]' aparece 26 vezes com os IDs: 55764, 55765, 55766, 55767, 55768, 55769, 55770, 55772, 55773, 55774, 55775, 55776, 55777, 56049, 56161, 56162, 56163, 56164, 56167, 56168, 56169, 56170, 56171, 56172, 56176, 56404
+'Untitled (two portraits of woman modeling for Luling Heart Fund)' aparece 2 vezes com os IDs: 55864, 55887
+'Untitled (two portraits of older man in overalls standing behind table with two large melons)' aparece 2 vezes com os IDs: 55865, 55888
+'["Grotesque," 1954, drawing by Lyonel Feininger]' aparece 16 vezes com os IDs: 55919, 55933, 56173, 56380, 56381, 56389, 56392, 56393, 56397, 56411, 56413, 56415, 56416, 56419, 56433, 56434
+'["Grotesk," 1954, drawing by Lyonel Feininger]' aparece 18 vezes com os IDs: 55931, 55932, 55936, 55939, 55944, 55945, 55954, 55956, 55957, 55959, 56390, 56394, 56395, 56412, 56414, 56417, 56427, 56428
+'[Drawing by Lyonel Feininger, 1911]' aparece 3 vezes com os IDs: 55934, 56031, 56052
+'[Drawing by Lyonel Feininger, 1914]' aparece 2 vezes com os IDs: 55935, 56041
+'["Bathers" (late stage), oil painting by Lyonel Feininger]' aparece 3 vezes com os IDs: 55937, 55963, 55975
+'["Grotesk," 1955, drawing by Lyonel Feininger]' aparece 5 vezes com os IDs: 55940, 55941, 55942, 55943, 56436
+'["Grotesk," 1953, drawing by Lyonel Feininger]' aparece 3 vezes com os IDs: 55946, 55974, 56429
+'["Bathers" (unfinished), oil painting by Lyonel Feininger]' aparece 4 vezes com os IDs: 55948, 55977, 55982, 55983
+'[Flower study]' aparece 4 vezes com os IDs: 55950, 55966, 55968, 56007
+'[Hospital buildings, New York]' aparece 2 vezes com os IDs: 55955, 56426
+'["Grotesk," 1951, drawing by Lyonel Feininger]' aparece 2 vezes com os IDs: 55958, 55972
+'[Drawing by Lyonel Feininger, 1915]' aparece 6 vezes com os IDs: 55960, 56038, 56046, 56055, 56056, 56057
+'[Drawing by Lyonel Feininger, 1916]' aparece 2 vezes com os IDs: 55961, 56044
+'["Bathers" (latest stage), oil painting by Lyonel Feininger]' aparece 2 vezes com os IDs: 55976, 56398
+'["Bathers," oil painting by Lyonel Feininger]' aparece 4 vezes com os IDs: 55980, 56002, 56430, 56431
+'Feininger slide [Drawing, May 17, 1889]' aparece 2 vezes com os IDs: 55998, 56029
+'Feininger slide [Cartoon published in Lustige Blätter]' aparece 2 vezes com os IDs: 56015, 56024
+'[Drawing by Lyonel Feininger, 1910]' aparece 3 vezes com os IDs: 56034, 56035, 56053
+'["The Birthday," 1914, drawing by Lyonel Feininger]' aparece 2 vezes com os IDs: 56042, 56058
+'["Strassenkehrer," 1916, drawing by Lyonel Feininger]' aparece 2 vezes com os IDs: 56045, 56047
+'Recreation, Parks and Playgrounds: United States. Missouri. St. Louis. Vacation Playgrounds: Vacation Playgrounds, St. Louis, Mo.' aparece 3 vezes com os IDs: 151552, 151554, 151560
+'Housing, Improved: United States. New York. New York City. Tenement House Department: Forms and records used by Tenement House Department. New York City' aparece 8 vezes com os IDs: 151555, 151574, 151575, 151954, 151955, 151992, 152007, 152008
+'Social Settlements: Great Britain, England. London. "Toynbee Hall": Toynbee Hall' aparece 2 vezes com os IDs: 151562, 151563
+'Defectives, Epileptics: United States. Massachusetts. Palmer. State Hospital for Epileptics: Nurses' Home, 1905.' aparece 2 vezes com os IDs: 151581, 151952
+'Defectives, Epileptics: United States. Massachusetts. Palmer. State Hospital for Epileptics: Power house.' aparece 2 vezes com os IDs: 151584, 151947
+'Social Settlements: United States. Illinois. Chicago. "Chicago Commons": Chicago Commons, Chicago, Ill.' aparece 2 vezes com os IDs: 151591, 152390
+'Miscellaneous: United States. Social Surveys: Schedules prepared for Use in Rural Social Surveys' aparece 5 vezes com os IDs: 151777, 151799, 152213, 152214, 152215
+'Housing, Improved: United States. Massachusetts. Cambridge. Massachusetts Building Permits' aparece 2 vezes com os IDs: 151784, 151785
+'Miscellaneous' aparece 2 vezes com os IDs: 151803, 152217
+'Social Settlements: United States. Pennsylvania. Pittsburgh. "Kingsley House": Kingsley House, Pittsburg, Pa.' aparece 3 vezes com os IDs: 151816, 151818, 151819
+'["The Red Fiddler," 1934, oil painting by Lyonel Feininger]' aparece 4 vezes com os IDs: 56178, 56633, 56645, 56646
+'["Gelmeroda XI," 1928, oil painting by Lyonel Feininger]' aparece 4 vezes com os IDs: 56179, 56254, 56647, 56670
+'[Watercolor by Lyonel Feininger]' aparece 46 vezes com os IDs: 56180, 56181, 56182, 56183, 56184, 56199, 56207, 56216, 56217, 56218, 56219, 56234, 56241, 56261, 56263, 56264, 56265, 56266, 56267, 56268, 56269, 56270, 56271, 56623, 56624, 56627, 56628, 56629, 56630, 56631, 56636, 56641, 56642, 56648, 56653, 56663, 56664, 56665, 56669, 56671, 56679, 56680, 56681, 56682, 56683, 56684
+'["Gelmeroda XII," 1929, oil painting by Lyonel Feininger]' aparece 2 vezes com os IDs: 56185, 56640
+'["The Blue Clown," 1916, oil painting by Lyonel Feininger]' aparece 2 vezes com os IDs: 56186, 56210
+'["Small Mask," 1926, oil painting by Lyonel Feininger]' aparece 3 vezes com os IDs: 56197, 56233, 56243
+'["Lady in Mauve," 1922, oil painting by Lyonel Feininger]' aparece 2 vezes com os IDs: 56198, 56643
+'["Trumpeter in the Village," 1915, oil painting by Lyonel Feininger]' aparece 3 vezes com os IDs: 56200, 56221, 56237
+'[Oil painting by Lyonel Feininger]' aparece 24 vezes com os IDs: 56201, 56202, 56203, 56205, 56206, 56220, 56222, 56224, 56236, 56238, 56239, 56240, 56252, 56253, 56255, 56256, 56635, 56638, 56649, 56650, 56666, 56685, 56686, 56687
+'["Woman with Red Hair," 1927, oil painting by Lyonel Feininger]' aparece 2 vezes com os IDs: 56204, 56223
+'[Oil paintings by Lyonel Feininger]' aparece 6 vezes com os IDs: 56209, 56242, 56639, 56651, 56652, 56654
+'["Avenue of Trees," 1915, oil painting by Lyonel Feininger]' aparece 4 vezes com os IDs: 56235, 56634, 56667, 56668
+'[Drawings by Lyonel Feininger]' aparece 2 vezes com os IDs: 56257, 56258
+'Defectives, Epileptics: United States. Massachusetts. Palmer. State Hospital for Epileptics: Christmas 1905.' aparece 2 vezes com os IDs: 151929, 151931
+'Races, Negroes: United States. Virginia. Hampton. Hampton Normal and Industrial School: Training in Scientific Agriculture' aparece 2 vezes com os IDs: 151978, 152009
+'Recreation, Parks and Playgrounds: United States. Missouri. St. Louis. Specimens of Playground Work: Specimens of Work' aparece 2 vezes com os IDs: 152005, 152006
+'Social Settlements: United States. Massachusetts. Boston. "Roxbury Neighborhood House": The Roxbury Neighborhood House, Boston, Mass.' aparece 2 vezes com os IDs: 152016, 152017
+'Social Settlements: United States. Massachusetts. Boston. "South End House": South End House, Boston, Mass.' aparece 4 vezes com os IDs: 152018, 152019, 152020, 152023
+'[Drawing by Lyonel Feininger, 1936]' aparece 2 vezes com os IDs: 56410, 56432
+'Untitled (two portraits of a child)' aparece 2 vezes com os IDs: 56439, 56969
+'Untitled (two portraits of baby in bonnet)' aparece 2 vezes com os IDs: 56440, 56450
+'Untitled (two portraits of two children)' aparece 4 vezes com os IDs: 56441, 56944, 56955, 56960
+'Untitled (two portraits of a baby)' aparece 4 vezes com os IDs: 56448, 56604, 56612, 56958
+'Untitled (two portraits of man in uniform)' aparece 2 vezes com os IDs: 56449, 56959
+'Social Settlements: United States. Pennsylvania. Philadelphia. "The Lighthouse": The Lighthouse, Philadelphia, Pa.' aparece 3 vezes com os IDs: 152124, 152181, 152182
+'Social Settlements: United States. New Jersey. Jersey City. "Whittier House": Whittier House, Jersey City, N.J.' aparece 3 vezes com os IDs: 152126, 152127, 152191
+'Social Settlements: United States. New York. Brooklyn. "Greenpoint Settlement": Greenpoint Settlement, Brooklyn, N.Y.' aparece 2 vezes com os IDs: 152129, 152131
+'Social Settlements: United States. New York. New York City. "Association of Neighborhood Workers": Arts and Festival Committee: Association of Neighborhood Workers of New York. Arts and Festivals Committee' aparece 2 vezes com os IDs: 152132, 152133
+'Social Settlements: United States. New York. New York City. "Greenwich House": Greenwich House, New York City.' aparece 2 vezes com os IDs: 152138, 152165
+'Social Settlements: United States. New York. New York City. "Boys' Club": The Boys' Club, New York City.' aparece 3 vezes com os IDs: 152148, 152149, 152163
+'Social Settlements: United States. New York. New York City. "Christodora House": Christodora House, New York City.' aparece 2 vezes com os IDs: 152154, 152155
+'Social Settlements: United States. New York. New York City. "Hudson Guild": The Hudson Guild, New York City.' aparece 2 vezes com os IDs: 152179, 152197
+'Social Settlements: United States. New Jersey. Englewood. "Neighborhood House": Neighborhood House, Englewood, N.J.' aparece 2 vezes com os IDs: 152189, 152190
+'Piccadilly Circus' aparece 8 vezes com os IDs: 56600, 56601, 56602, 56603, 56980, 56981, 56982, 57006
+'Untitled (portrait of older man in cowboy hat)' aparece 2 vezes com os IDs: 56606, 56613
+'Charity, Children: United States. New York. Pleasantville. Hebrew Sheltering Guardian Society: Hebrew Sheltering Guardian Society Orphan Asylum, Pleasantville, New York: Boys are taught woodwork, machine work, electric shop work and other trades.' aparece 2 vezes com os IDs: 56616, 56678
+'Coin' aparece 8 vezes com os IDs: 56693, 56694, 57191, 57193, 57205, 57207, 57216, 57217
+'Ceramic Fragments from Karakhoto' aparece 5 vezes com os IDs: 56696, 56697, 57194, 57218, 57219
+'Gallo-Roman mold fragment' aparece 2 vezes com os IDs: 56699, 56700
+'Sherd' aparece 2 vezes com os IDs: 56721, 56722
+'Untitled (Greeting Card for 1944: front image)' aparece 2 vezes com os IDs: 56738, 57210
+'Social Settlements: United States. Illinois. Chicago. "Hull House": Hull House, Chicago, Ill.' aparece 2 vezes com os IDs: 152331, 152409
+'Social Settlements: United States. Illinois. Chicago. "Neighborhood House": Neighborhood House, Chicago, Ill.' aparece 6 vezes com os IDs: 152335, 152350, 152351, 152352, 152353, 152376
+'Social Settlements: United States. Massachusetts. Boston. "Civic Service House": Civic Service House, Boston, Mass.: The Roof Garden.' aparece 3 vezes com os IDs: 152336, 152414, 152415
+'Social Settlements: United States. Massachusetts. Boston. "Denison House": Denison House, Boston, Mass.' aparece 2 vezes com os IDs: 152338, 152369
+'Social Settlements: United States. Maryland. Baltimore. "Lawrence House": The Lawrence House, Baltimore, Md.' aparece 4 vezes com os IDs: 152340, 152393, 152394, 152395
+'Crime, Children, Truant Schools: United States. Massachusetts. Walpole. Union Truant School: Union Truant School, Walpole.' aparece 2 vezes com os IDs: 152342, 152396
+'Social Settlements: United States. Illinois. Chicago. "Northwestern University Settlement": Northwestern University Settlement, Chicago, Ill.' aparece 4 vezes com os IDs: 152347, 152348, 152349, 152367
+'Social Settlements: United States. Maryland. Baltimore. "Locust Point Social Settlement": The Locust Point Social Settlement, Baltimore, Md.' aparece 3 vezes com os IDs: 152354, 152355, 152398
+'Crime, Children, Truant Schools: United States. Massachusetts. Oakdale. Worcester County Truant School: Worcester County Truant School, Oakdale.' aparece 3 vezes com os IDs: 152357, 152358, 152359
+'Social Settlements: United States. Illinois. Chicago. "Gads Hill Centre": Gads Hill Centre, Chicago, Ill.' aparece 2 vezes com os IDs: 152360, 152400
+'Social Settlements: United States. Massachusetts. Boston. "Elizabeth Peabody House": Elizabeth Peabody House, Boston, Mass.' aparece 3 vezes com os IDs: 152370, 152371, 152372
+'Social Settlements: United States. Illinois. Chicago. "South Parks": South Parks, Chicago, Ill.' aparece 3 vezes com os IDs: 152381, 152382, 152383
+'Crime, Children, Reform Schools: United States. Massachusetts. Westboro. Lyman School for Boys: Lyman School for Boys' aparece 2 vezes com os IDs: 152406, 152407
+'Social Settlements: United States. Maryland. Baltimore. "Maccabean House": Agencies Promoting Assimilation of the Immigrant. Imparting American Standards to the Foreign Born. Maccabean House, Baltimore, Md.' aparece 2 vezes com os IDs: 152410, 152411
+'Social Settlements: United States. Massachusetts. Boston. "Ellis Memorial and Eldridge House": Ellis Memorial and Eldridge House, Boston, Mass.' aparece 2 vezes com os IDs: 152418, 152419
+'Charivari Print' aparece 4 vezes com os IDs: 56933, 56934, 56948, 56949
+'Untitled (two portraits of woman with baby)' aparece 2 vezes com os IDs: 56945, 56956
+'Untitled (two portraits of little boy, with and without hat)' aparece 2 vezes com os IDs: 56947, 56957
+'CASTS FROM ARRETINE POTTERY AT THE MUSEUM OF FINE ARTS, BOSTON' aparece 6 vezes com os IDs: 56975, 56985, 57021, 57269, 57297, 57298
+'Arretine Bowl (reproduction)' aparece 6 vezes com os IDs: 56976, 56984, 57008, 57009, 57011, 57013
+'Various Ornamental Details' aparece 8 vezes com os IDs: 56987, 56988, 56989, 57018, 57022, 57023, 57024, 57025
+'Clocks and miscellaneous furniture' aparece 3 vezes com os IDs: 56990, 56991, 57026
+'Social Revolution (?): United States. New York. Mt. Lebanon. Shaker Communities: Shaker Communities, United States' aparece 2 vezes com os IDs: 152528, 152530
+'Social Settlements: Germany. Hamburg. Volksheim: Volksheim, Hamburg; Germany.' aparece 2 vezes com os IDs: 152533, 152590
+'Social Settlements: Great Britain, England. London. Bermondsey Settlement: Bermondsey Settlement, London, Eng.' aparece 2 vezes com os IDs: 152545, 152546
+'Charity, Hospitals: United States. Massachusetts. Tewksbury. State Hospital: State Hospital Tewksbury' aparece 9 vezes com os IDs: 152547, 152577, 152578, 152579, 152580, 152602, 152603, 152891, 152892
+'Charity, Hospitals: United States. Massachusetts. Tewksbury. State Hospital: State Hospital, Tewksbury' aparece 5 vezes com os IDs: 152548, 152549, 152550, 152604, 152605
+'Social Settlements: Great Britain, England. Manchester. "Art Museum and University Settlement": Manchester Art Museum and University Settlement, Manchester, Eng.' aparece 4 vezes com os IDs: 152554, 152555, 152556, 152557
+'Crime, Childrens Courts: United States. Illinois. Chicago. Juvenile Court' aparece 3 vezes com os IDs: 152559, 152560, 152561
+'Recreation, Parks and Playgrounds: Italy. Milan. Public Park: Social Conditions in Milan, Italy, 1903' aparece 2 vezes com os IDs: 152565, 152796
+'Social Settlements: Great Britain, England. London. "St. Margaret's House": St. Margaret's House, London, Eng.' aparece 2 vezes com os IDs: 152591, 152592
+'Charity, Tuberculosis: United States. Massachusetts. Rutland. Massachusetts State Sanatorium: Massachusetts State Sanatorium' aparece 5 vezes com os IDs: 152596, 152597, 152611, 152612, 152613
+'Social Settlements: United States. District of Columbia. Washington. "Noel House": Noel House, Washington, D.C.' aparece 4 vezes com os IDs: 152621, 152622, 152623, 152624
+'Fragment of a Coin' aparece 2 vezes com os IDs: 57192, 57206
+'View of the Campo Vaccino (Forum Romanum)' aparece 2 vezes com os IDs: 57267, 57293
+'Races, Indians: United States. New York. Iroquois. Thomas Asylum for Orphan and Destitute Indian Children: State Thomas Asylum for Orphan and Destitute Indian Children, Iroquois, N.Y.' aparece 11 vezes com os IDs: 152729, 152730, 152738, 152739, 152755, 152756, 152757, 152758, 152820, 152821, 152824
+'Races, Jews: Holland. Amsterdam. Jewish Quarter: Dutch Social Conditions, 1905. In the Jewish Quarter: Amsterdam.' aparece 3 vezes com os IDs: 152731, 152825, 152826
+'Races, Immigration: United States. New York. New York City. Immigrant Station: Regulation of Immigration at the Port of Entry. United States Immigrant Station, New York City' aparece 5 vezes com os IDs: 152735, 152736, 152737, 152822, 152823
+'Races, Jews: United States: Agencies Promoting Assimilation of the Immigrant. Directing the Immigrant into American Agricultural Life' aparece 2 vezes com os IDs: 152740, 152741
+'Races, Negroes: United States. Virginia. Hampton. Hampton Normal and Industrial School: Agencies Promoting Assimilation of the Negro. Training for Commercial and Industrial Employment. Hampton Normal and Agricultural Institute, Hampton, Va.' aparece 4 vezes com os IDs: 152747, 152748, 152750, 152751
+'Recreation, Parks and Playgrounds: Germany. Dresden. Verein "Volkswohl": Social Conditions in German Cities: 1905: Der Verein "Volkswohl," Dresden' aparece 2 vezes com os IDs: 152760, 152831
+'Recreation, Parks and Playgrounds: Great Britian, England. Liverpool. Playgrounds and Gardens: Social Conditions in Liverpool, England, 1903: Saint Peter's Gardens.' aparece 2 vezes com os IDs: 152762, 152763
+'Recreation, Parks and Playgrounds: Great Britain, England. London. Playgrounds and Parks: Social Conditions in London, England, 1903' aparece 6 vezes com os IDs: 152767, 152768, 152774, 152834, 152914, 152915
+'Races, Negroes: United States. Virginia. Hampton. Hampton Normal and Industrial School' aparece 3 vezes com os IDs: 152782, 153090, 153091
+'Recreation, Parks and Playgrounds: Great Britain, Scotland. Glasgow. Public Park: Social Conditions in Glasgow, Scotland, 1903' aparece 8 vezes com os IDs: 152790, 152791, 152792, 152793, 152794, 152795, 152866, 152867
+'Industrial Problems, Welfare Work: Great Britain, England. Bourneville. Cadbury Bros.: Welfare Institutions and Improved Housing: Bournville Works and Village, Bournville, England: Cocoa and Chocolate Works of Cadbury Brothers, Ltd. The Bournville Village Trust.' aparece 2 vezes com os IDs: 152801, 153078
+'Races, Negroes: United States. Virginia. Hampton. Hampton Normal and Industrial School: Environments Impeding the Assimilation of the Negro. Hampton Normal and Agricultural Institute, Hampton, Va.' aparece 2 vezes com os IDs: 152814, 152815
+'Recreation, Clubs: France. Paris. Alliance des unions chrétiennes de jeunes gens de France: État Comparatif de l'Alliance des Unions Chrétiennes des Jeunes Gens de France de l'année 1889 a l'année 1902' aparece 2 vezes com os IDs: 152828, 152907
+'Recreation, Parks and Playgrounds: United States. New York. New York City. Brooklyn, Vacation Playground, Public School No. 45: New York City Public Schools. Examples of the Adaptation of Education to Special City Needs: Public School No. 45 Brooklyn. Vacation Playgrounds.' aparece 2 vezes com os IDs: 152851, 152869
+'Recreation, Parks and Playgrounds: United States. New York. New York City. Public School No. 159: New York City Public Schools. Examples of the Adaptation of Education to Special City Needs: Vacation Playground - Basketball Game. Public School No. 159 Manhattan.' aparece 2 vezes com os IDs: 152853, 152863
+'Recreation, Park and Playgrounds: United States. New York. New York City. Seward Park, Open Air Playground: New York City Parks and Playgrounds: William H. Seward Park.' aparece 2 vezes com os IDs: 152857, 152878
+'Industrial Problems, Coöperation: United States. Massachusetts. Maynard. Riverside Coöperative Association: Coöperative Societies, United States: Riverside Coöperative Association, Maynard, Mass.: Sovereigns of Industry Store, 1908.' aparece 2 vezes com os IDs: 152941, 152942
+'Housing, Government: United States. Pennsylvania. Chester: Governmental Agencies of House Construction. U.S. Shipping Board, Emergency Fleet Corporation' aparece 2 vezes com os IDs: 152949, 152950
+'Industrial Problems, Welfare Work: France. Guise. Familistère de Guise: Le Familistère de Guise (founded by M. Godin, 1859), Guise, France' aparece 7 vezes com os IDs: 152959, 152969, 152970, 152982, 152985, 153007, 153116
+'Industrial Problems, Welfare Work: Great Britain, England. Port Sunlight. Lever Bros.: Improved Workmen's Dwellings: Improved Workmen's Dwellings: England' aparece 2 vezes com os IDs: 152960, 153119
+'Industrial Problems, Welfare Work: United States. Colorado. Pueblo. Colorado Fuel and Iron Company: Provision of Recreational Facilities for Employees: Industrial Betterment in the United States. Housing of Working People by Employers: Colorado Fuel and Iron Company, Pueblo, Colorado.' aparece 2 vezes com os IDs: 152962, 152989
+'Industrial Problems, Welfare Work: United States. Illinois. Leclaire. Nelson Manufacturing Company: Welfare Institutions. N. O. Nelson Co., Leclaire, Ill.' aparece 3 vezes com os IDs: 152972, 152973, 152992
+'Industrial Problems, Welfare Work: United States. Illinois. Leclaire. Nelson Manufacturing Company: Industrial Betterment in the United States. Housing of Working People by Employers: N.O. Nelson Manufacturing Company, Leclaire, Illinois.' aparece 3 vezes com os IDs: 152974, 152975, 153125
+'Industrial Problems, Welfare Work: United States. Maryland. Sparrow's Point. Maryland Steel Company: Maryland Steel Company, Sparrows Point, Md.' aparece 3 vezes com os IDs: 152978, 152979, 153021
+'Industrial Problems, Welfare Work: France. Guise. Familistère de Guise: Provision of Recreational Facilities for Employees: Le Familistère de Guise (founded by M. Godin, 1859), Guise, France' aparece 2 vezes com os IDs: 152983, 153117
+'Industrial Problems, Welfare Work: United States. Maryland. Sparrow's Point. Maryland Steel Company: Provision of Educational Facilities for Employees: Maryland Steel Company, Sparrows Point, Md.' aparece 2 vezes com os IDs: 152998, 153011
+'Industrial Problems, Welfare Work: United States. Massachusetts. North Billerica. Talbot Mills: Talbot Mills, North Billerica, Mass.: Dwellings of Employees' aparece 4 vezes com os IDs: 152999, 153012, 153022, 153023
+'Industrial Problems, Welfare Work: United States. Massachusetts. Hopedale. The Draper Company: Draper Company, Hopedale, Mass: Houses rented by the company to employees' aparece 5 vezes com os IDs: 153001, 153026, 153027, 153028, 153029
+'Industrial Problems, Welfare Work: United States. New York. Schenectady. General Electric Company: Welfare of Employees at the Factory: Welfare Institutions. General Electric Co., Schenectady, N. Y.' aparece 3 vezes com os IDs: 153019, 153033, 153073
+'Industrial Problems, Welfare Work: United States. Massachusetts. Ludlow. Ludlow Manufacturing Association: Industrial Betterment in the United States: Housing of the Working People by Employers: Ludlow Manufacturing Association, Ludlow, Massachusetts' aparece 2 vezes com os IDs: 153030, 153031
+'Industrial Problems, Welfare Work: Great Britain. England. Bourneville: Cadbury Bros.: Welfare Institutions and Improved Housing: Bournville Works and Village, Bournville, England: Cocoa and Chocolate Works of Cadbury Brothers, Ltd. The Bournville Village Trust.' aparece 4 vezes com os IDs: 153049, 153050, 153063, 153064
+'Industrial Problems, Welfare Work: Great Britain, England. Port Sunlight. Lever Bros.: Improved Workmen's Dwellings: Improved Workmen's Dwellings: England: Model Dwellings: Port Sunlight near Liverpool (Lever Bros., Soap Manufacturers).' aparece 3 vezes com os IDs: 153058, 153067, 153118
+'Industrial Problems, Welfare Work: United States. Pennsylvania. Wilmerding. Westinghouse Air Brake Company: Industrial Betterment in the United States. Housing of Working People by Employers: Westinghouse Air Brake Company, Wilmerding, Pennsylvania. Houses for employees. Plan CC.' aparece 2 vezes com os IDs: 153071, 153102
+'Industrial Problems, Welfare Work: United States: Social Conditions, United States, Census of 1900' aparece 2 vezes com os IDs: 153087, 153089
+'Races, Negroes: United States. Virginia. Hampton. Hampton Normal and Industrial School: Hampton Normal and Agricultural Institute, Hampton, Va.' aparece 2 vezes com os IDs: 153092, 153093
+'Races, Negroes: United States. Virginia. Hampton. Hampton Normal and Industrial School: Agencies Promoting Assimilation of the Negro. Training Negro Girls in Domestic Science. Hampton Normal and Agricultural Institute, Hampton, Va.' aparece 3 vezes com os IDs: 153094, 153095, 153096
+'Industrial Problems, Welfare Work: United States. Pennsylvania. Philadelphia. John B. Stetson Company: Industrial Betterment in the United States. Housing of Working People by Employers: Typical houses purchased by employees with aid of Building and Loan Association stock, given by the Company for efficient work. John B. Stetson Company, Philadelphia, Pennsylvania.' aparece 2 vezes com os IDs: 153100, 153101
+'Industrial Problems, Welfare Work: United States. Colorado. Pueblo. Colorado Fuel and Iron Company: Industrial Betterment in the United States. Housing of Working People by Employers: Colorado Fuel and Iron Company, Pueblo, Colorado.' aparece 2 vezes com os IDs: 153123, 153124
