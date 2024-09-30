@@ -6,11 +6,63 @@ import axiosInstance from "../../libs/axios/axios";
 import "../globals.css";
 import { Record } from "../util/models/models";
 
+type ImageObject = {
+  proportionalWidth: number;
+} & Record;
+
 export default function Home() {
   const [userSessionId, setUserSessionId] = useState<string>("");
   const [objects, setObjects] = useState<Record[]>([]);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
+
+  const numberColumns = 5;
+  const [columns, setColumns] = useState<ImageObject[][]>([]);
+
+  const calculateColumns = () => {
+    const newColumns: ImageObject[][] = Array(numberColumns)
+      .fill([])
+      .map(() => []); // Inicializa as colunas corretamente
+    const totalWidth = window.innerWidth; // Pega a largura total da tela
+
+    // Distribui as primeiras imagens proporcionalmente entre as colunas
+    const firstImages = objects.slice(0, numberColumns);
+    const totalFirstWidths = firstImages.reduce((acc, obj) => acc + obj.images[0].width, 0);
+
+    firstImages.forEach((obj, index) => {
+      const proportionalWidth = (obj.images[0].width / totalFirstWidths) * totalWidth;
+      newColumns[index] = [
+        {
+          ...obj,
+          proportionalWidth: proportionalWidth
+        }
+      ];
+    });
+
+    // Adiciona as próximas imagens na coluna com a menor altura
+    objects.slice(numberColumns).forEach((obj) => {
+      const columnHeights = newColumns.map((col) =>
+        col.reduce((acc, item) => acc + (item.images[0].height / item.images[0].width) * item.proportionalWidth!, 0)
+      );
+      const smallestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
+      newColumns[smallestColumnIndex].push({
+        ...obj,
+        proportionalWidth: newColumns[smallestColumnIndex][0].proportionalWidth // O width da coluna será o mesmo para todas as imagens
+      });
+    });
+
+    setColumns(newColumns);
+  };
+
+  useEffect(() => {
+    calculateColumns();
+    window.addEventListener("resize", calculateColumns);
+
+    return () => {
+      window.removeEventListener("resize", calculateColumns);
+    };
+  }, [objects, numberColumns]);
 
   useEffect(() => {
     async function fetchSession() {
@@ -72,24 +124,57 @@ export default function Home() {
         </div>
       )}
 
-      <div className="flex flex-wrap gap-4 overflow-y-auto">
+      <div style={{ display: "flex", width: "100vw", justifyContent: "space-between" }}>
+        {columns.map((column, index) => (
+          <div key={index} style={{ display: "flex", flexDirection: "column", flexBasis: `${100 / numberColumns}%` }}>
+            {column.map((image, i) => (
+              // <img
+              //   key={i}
+              //   src={image.url}
+              //   alt={image.title}
+              //   style={{
+              //     width: `${image.proportionalWidth}px`,
+              //     height: "auto",
+              //     marginBottom: "10px"
+              //   }}
+              // />
+
+              <div
+                key={i}
+                style={{
+                  width: `${image.proportionalWidth}px`,
+                  margin: "4px"
+                }}
+                className="bg-green-400"
+              >
+                {/* <p>{image.title}</p>
+                <p> PROPORCIONAL WIDTH {image.proportionalWidth} </p>
+                <p> HEIGHT: {image.images[0].height}</p>
+                <p> WIDTH: {image.images[0].width}</p> */}
+                <img
+                  src={image.images[0].baseimageurl}
+                  alt={image.images[0].alttext}
+                  style={{ width: `${image.proportionalWidth}px`, height: "auto" }}
+                  // className="hover:scale-105 transition-transform duration-100 hover:ring-4  hover:ring-almost-white"
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      {/* <div className="gridContainer">
         {!isLoading &&
           !isFirstLoad &&
-          objects.map((object, index) => {
-            return (
-              <div key={index} className="w-64 bg-green-600 h-96 ">
-                <img src={object.primaryimageurl} alt={object.title} className="object-contain" />
-                <p className="text-almost-white text-sm">{object.title}</p>
-                <p className="text-almost-white text-sm">{object.objectid}</p>
-
-                {/*
-              <div className="flex w-full h-96 justify-center items-center">
-                <img src={object.primaryimageurl} alt={object.title} className="w-1/2 h-1/2" />
-              </div> */}
-              </div>
-            );
-          })}
-      </div>
+          objects.map((object: Record) => (
+            <> */}
+      {/* <img src={object.primaryimageurl} alt={object.title} className="object-contain" /> */}
+      {/* <ImageGridItem image={object.images[0]} /> */}
+      {/* <p className="text-almost-white text-sm">{object.title}</p>
+                <p className="text-almost-white text-sm">{object.objectid}</p> */}
+      {/* </>
+          ))}
+      </div> */}
 
       {/* {!isLoading && !isFirstLoad && (
         <div className="flex flex-col w-[80%] h-fit border-4 border-almost-black rounded-2xl mb-4">
