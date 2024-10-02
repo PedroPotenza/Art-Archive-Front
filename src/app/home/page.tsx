@@ -1,5 +1,6 @@
 "use client";
 // import { getSession } from "next-auth/react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getSession } from "../../actions/authActions";
 import axiosInstance from "../../libs/axios/axios";
@@ -17,21 +18,37 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
 
-  const numberColumns = 5;
+  const numberColumns = 8;
   const [columns, setColumns] = useState<ImageObject[][]>([]);
 
   const calculateColumns = () => {
     const newColumns: ImageObject[][] = Array(numberColumns)
       .fill([])
-      .map(() => []); // Inicializa as colunas corretamente
-    const totalWidth = window.innerWidth; // Pega a largura total da tela
+      .map(() => []);
+    const totalWidth = window.innerWidth - 32; // get the total width of the window minus the padding of the container
 
     // Distribui as primeiras imagens proporcionalmente entre as colunas
     const firstImages = objects.slice(0, numberColumns);
-    const totalFirstWidths = firstImages.reduce((acc, obj) => acc + obj.images[0].width, 0);
+    const totalFirstWidths = firstImages.reduce((acc, obj) => acc + obj.images[0].width + 8, 0); //4px of margin on each side (8px total)
+
+    // console.group("calculateColumns");
+    // console.log("totalFirstWidths", totalFirstWidths);
+    // console.log("totalWidth", totalWidth);
+    // console.groupEnd();
 
     firstImages.forEach((obj, index) => {
-      const proportionalWidth = (obj.images[0].width / totalFirstWidths) * totalWidth;
+      const imageWidthWithMargin = obj.images[0].width; //4px of margin on each side
+      const porcentProportionalWidth = (imageWidthWithMargin * 100) / totalFirstWidths;
+
+      const proportionalWidth = (porcentProportionalWidth * totalWidth) / 100;
+
+      // const proportionalWidth = (imageWidthWithMargin * totalWidth) / totalFirstWidths;
+      console.group(`firstImages index ${index}`);
+      console.log("imageWidthWithMargin", imageWidthWithMargin);
+      console.log("totalFirstWidths", totalFirstWidths);
+      console.log("totalWidth", totalWidth);
+      console.log("proportionalWidth", proportionalWidth);
+
       newColumns[index] = [
         {
           ...obj,
@@ -124,9 +141,9 @@ export default function Home() {
         </div>
       )}
 
-      <div style={{ display: "flex", width: "100vw", justifyContent: "space-between" }}>
+      <div style={{ display: "flex" }}>
         {columns.map((column, index) => (
-          <div key={index} style={{ display: "flex", flexDirection: "column", flexBasis: `${100 / numberColumns}%` }}>
+          <div key={index} style={{ display: "flex", flexDirection: "column" }}>
             {column.map((image, i) => (
               // <img
               //   key={i}
@@ -142,20 +159,33 @@ export default function Home() {
               <div
                 key={i}
                 style={{
-                  width: `${image.proportionalWidth}px`,
+                  // width: `${image.proportionalWidth}px`,
+
                   margin: "4px"
                 }}
-                className="bg-green-400"
+                className="bg-gray-400 w-fit"
               >
                 {/* <p>{image.title}</p>
                 <p> PROPORCIONAL WIDTH {image.proportionalWidth} </p>
                 <p> HEIGHT: {image.images[0].height}</p>
                 <p> WIDTH: {image.images[0].width}</p> */}
+                {/*
+                
                 <img
                   src={image.images[0].baseimageurl}
                   alt={image.images[0].alttext}
                   style={{ width: `${image.proportionalWidth}px`, height: "auto" }}
                   // className="hover:scale-105 transition-transform duration-100 hover:ring-4  hover:ring-almost-white"
+                />
+                */}
+
+                <Image
+                  src={image.images[0].baseimageurl}
+                  alt={image.title}
+                  width={image.proportionalWidth}
+                  height={image.images[0].height}
+                  // layout="responsive"
+                  // onLoadingComplete={() => console.log(`Image ${image.id} loaded`)}
                 />
               </div>
             ))}
