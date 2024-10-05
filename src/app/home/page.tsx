@@ -9,6 +9,7 @@ import { Record } from "../util/models/models";
 
 type ImageObject = {
   proportionalWidth: number;
+  proportionalHeight: number;
 } & Record;
 
 export default function Home() {
@@ -18,14 +19,16 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
 
-  const numberColumns = 8;
+  const numberColumns = 5;
   const [columns, setColumns] = useState<ImageObject[][]>([]);
 
   const calculateColumns = () => {
     const newColumns: ImageObject[][] = Array(numberColumns)
       .fill([])
       .map(() => []);
-    const totalWidth = window.innerWidth - 32; // get the total width of the window minus the padding of the container
+
+    const whitespace = numberColumns * 8 + 32 + 16; // 4px of margin on each side + 16 padding of the container off each side + 16 because of the scrollbar
+    const totalWidth = window.innerWidth - whitespace; // get the total width of the window minus the whitespaces
 
     // Distribui as primeiras imagens proporcionalmente entre as colunas
     const firstImages = objects.slice(0, numberColumns);
@@ -37,22 +40,24 @@ export default function Home() {
     // console.groupEnd();
 
     firstImages.forEach((obj, index) => {
-      const imageWidthWithMargin = obj.images[0].width; //4px of margin on each side
+      const imageWidthWithMargin = obj.images[0].width + 8; //4px of margin on each side (8px total)
       const porcentProportionalWidth = (imageWidthWithMargin * 100) / totalFirstWidths;
 
       const proportionalWidth = (porcentProportionalWidth * totalWidth) / 100;
+      const proportionalHeight = (obj.images[0].height / obj.images[0].width) * proportionalWidth;
 
       // const proportionalWidth = (imageWidthWithMargin * totalWidth) / totalFirstWidths;
-      console.group(`firstImages index ${index}`);
-      console.log("imageWidthWithMargin", imageWidthWithMargin);
-      console.log("totalFirstWidths", totalFirstWidths);
-      console.log("totalWidth", totalWidth);
-      console.log("proportionalWidth", proportionalWidth);
+      // console.group(`firstImages index ${index}`);
+      // console.log("imageWidthWithMargin", imageWidthWithMargin);
+      // console.log("totalFirstWidths", totalFirstWidths);
+      // console.log("totalWidth", totalWidth);
+      // console.log("proportionalWidth", proportionalWidth);
 
       newColumns[index] = [
         {
           ...obj,
-          proportionalWidth: proportionalWidth
+          proportionalWidth: proportionalWidth,
+          proportionalHeight: proportionalHeight
         }
       ];
     });
@@ -65,7 +70,9 @@ export default function Home() {
       const smallestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
       newColumns[smallestColumnIndex].push({
         ...obj,
-        proportionalWidth: newColumns[smallestColumnIndex][0].proportionalWidth // O width da coluna será o mesmo para todas as imagens
+        proportionalWidth: newColumns[smallestColumnIndex][0].proportionalWidth, // O width da coluna será o mesmo para todas as imagens
+        proportionalHeight:
+          (obj.images[0].height / obj.images[0].width) * newColumns[smallestColumnIndex][0].proportionalWidth
       });
     });
 
@@ -134,14 +141,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full h-full p-4">
+    <div className="w-full h-full p-4 overflow-x-hidden">
       {(isLoading || isFirstLoad) && (
         <div className="flex h-full justify-center items-center">
           <p>Loading...</p>
         </div>
       )}
 
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex" }} className="w-fit">
         {columns.map((column, index) => (
           <div key={index} style={{ display: "flex", flexDirection: "column" }}>
             {column.map((image, i) => (
@@ -156,38 +163,50 @@ export default function Home() {
               //   }}
               // />
 
-              <div
-                key={i}
-                style={{
-                  // width: `${image.proportionalWidth}px`,
+              // IF the image still not loaded, show a placeholder
 
-                  margin: "4px"
-                }}
-                className="bg-gray-400 w-fit"
-              >
-                {/* <p>{image.title}</p>
+              // <div
+              //   key={i}
+              //   style={{
+              //     margin: "4px"
+              //   }}
+              //   className="bg-gray-300"
+
+              // >
+              <Image
+                // src={`${image.images[0].baseimageurl}?height=${image.proportionalHeight.toFixed(
+                //   0
+                // )}&width=${image.proportionalWidth.toFixed(0)}`}
+                key={i}
+                className="m-1"
+                style={{ backgroundColor: image.colors[0].color }}
+                src={image.images[0].baseimageurl}
+                alt={image.title}
+                width={image.proportionalWidth}
+                height={image.proportionalHeight}
+                title={`${image.proportionalHeight}`}
+
+                // placeholder="blur"
+                // blurDataURL={`${image.images[0].baseimageurl}?height=10&width=10`}
+                // layout="responsive"
+                // onLoadingComplete={() => console.log(`Image ${image.id} loaded`)}
+                // title={`Image ph ${image.proportionalHeight} and pw ${image.proportionalWidth}`}
+              />
+              /* <p>{image.title}</p>
                 <p> PROPORCIONAL WIDTH {image.proportionalWidth} </p>
                 <p> HEIGHT: {image.images[0].height}</p>
-                <p> WIDTH: {image.images[0].width}</p> */}
-                {/*
-                
+                <p> WIDTH: {image.images[0].width}</p> 
+
                 <img
                   src={image.images[0].baseimageurl}
                   alt={image.images[0].alttext}
                   style={{ width: `${image.proportionalWidth}px`, height: "auto" }}
                   // className="hover:scale-105 transition-transform duration-100 hover:ring-4  hover:ring-almost-white"
                 />
-                */}
 
-                <Image
-                  src={image.images[0].baseimageurl}
-                  alt={image.title}
-                  width={image.proportionalWidth}
-                  height={image.images[0].height}
-                  // layout="responsive"
-                  // onLoadingComplete={() => console.log(`Image ${image.id} loaded`)}
-                />
-              </div>
+                */
+
+              // </div>
             ))}
           </div>
         ))}
