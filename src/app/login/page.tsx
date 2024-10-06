@@ -39,6 +39,7 @@ export default function Login() {
     try {
       setLoading(true);
       const userUid = await signInEmailAndPassword(data.email, data.password);
+
       if (userUid) {
         await createSession(userUid);
         reset();
@@ -72,13 +73,20 @@ export default function Login() {
             <div className="flex flex-col w-full gap-1 ">
               <label className="text-almost-black text-md font-semibold">Email</label>
               <input
+                autoComplete="off"
                 className={`w-full h-fit border-2 ${
                   errors.email
                     ? "border-red-500 bg-transparent focus-visible:border-red-500"
                     : "border-almost-black bg-almost-white mb-4"
                 } focus-visible:border-golden-yellow-darker focus-visible:shadow-md rounded-md text-md px-2 py-1 `}
                 type="email"
-                {...register("email", { required: "Email is required" })}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email address"
+                  }
+                })}
                 onChange={() => clearErrors("email")}
               />
               {errors.email && <p className="text-red-500 text-xs font-medium mb-2">{errors.email.message}</p>}
@@ -87,6 +95,7 @@ export default function Login() {
             <div className="flex flex-col w-full gap-1 ">
               <label className="text-almost-black text-md font-semibold">Password</label>
               <input
+                autoComplete="off"
                 className={`w-full h-fit border-2 ${
                   errors.password
                     ? "border-red-500 bg-transparent focus-visible:border-red-500"

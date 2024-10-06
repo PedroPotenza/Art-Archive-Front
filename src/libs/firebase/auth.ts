@@ -3,10 +3,10 @@ import {
   onAuthStateChanged as _onAuthStateChanged,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
   signInWithPopup
 } from "firebase/auth";
 
+import axiosInstance from "../axios/axios";
 import { firebaseAuth } from "./config";
 
 export function onAuthStateChanged(callback: (authUser: User | null) => void) {
@@ -26,15 +26,25 @@ export async function signUpEmailAndPassword(email: string, password: string) {
 }
 
 export async function signInEmailAndPassword(email: string, password: string) {
-  const result = await signInWithEmailAndPassword(firebaseAuth, email, password).catch((error) => {
-    console.log("Error signing in", error);
-  });
+  try {
+    const result = await createUserWithEmailAndPassword(firebaseAuth, email, password).catch((error) => {
+      console.log("Error signing up", error);
+    });
 
-  if (!result || !result.user) {
-    throw new Error("Sign in failed");
+    const token = await result?.user.getIdToken();
+
+    const response = await axiosInstance.post("/api/login", {
+      token
+    });
+
+    return response.data.uid; // Você ainda precisa de um idToken para retornar o UID no backend
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data.error);
+    } else {
+      throw new Error("Error signing in");
+    }
   }
-
-  return result.user.uid;
 }
 
 export async function signInGoogle() {

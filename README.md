@@ -6,6 +6,12 @@ To run the project, use:
 
 `npm run dev`
 
+To run the proxy/backend, use:
+
+`cd proxy/`
+`source artArchive_python/bin/activate`
+`python proxy.py`
+
 ## Husky + Commitzen + Emoji Conventional
 
 To follow the pattern of semantic commits, we use the combo of Husky + Commitzen + Emoji Conventional to create a commit template direct of your terminal. You can run "git cz", or just "git commit" to display a menu option to create your commit.

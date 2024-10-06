@@ -15,7 +15,7 @@ export default function Header({ session }: { session: string | null }) {
   };
 
   return (
-    <header className="flex flex-row w-full h-24 bg-almost-black px-8 justify-between items-center">
+    <header className="flex flex-row w-full h-[80px] bg-almost-black px-8 justify-between items-center shrink-0">
       <div onClick={() => router.push("/home")} className="cursor-pointer">
         <ArtArchiveLogoWhite height={56} />
       </div>
