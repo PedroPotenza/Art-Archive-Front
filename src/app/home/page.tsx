@@ -18,6 +18,10 @@ export default function Home() {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
+  const [isInfiniteScrollLoading, setIsInfiniteScrollLoading] = useState<boolean>(false);
+  // const [loadedImages, setLoadedImages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [smallestColumnHeight, setSmallestColumnHeight] = useState(0);
 
   const numberColumns = 5;
   const [columns, setColumns] = useState<ImageObject[][]>([]);
@@ -34,24 +38,12 @@ export default function Home() {
     const firstImages = objects.slice(0, numberColumns);
     const totalFirstWidths = firstImages.reduce((acc, obj) => acc + obj.images[0].width + 8, 0); //4px of margin on each side (8px total)
 
-    // console.group("calculateColumns");
-    // console.log("totalFirstWidths", totalFirstWidths);
-    // console.log("totalWidth", totalWidth);
-    // console.groupEnd();
-
     firstImages.forEach((obj, index) => {
       const imageWidthWithMargin = obj.images[0].width + 8; //4px of margin on each side (8px total)
       const porcentProportionalWidth = (imageWidthWithMargin * 100) / totalFirstWidths;
 
       const proportionalWidth = (porcentProportionalWidth * totalWidth) / 100;
       const proportionalHeight = (obj.images[0].height / obj.images[0].width) * proportionalWidth;
-
-      // const proportionalWidth = (imageWidthWithMargin * totalWidth) / totalFirstWidths;
-      // console.group(`firstImages index ${index}`);
-      // console.log("imageWidthWithMargin", imageWidthWithMargin);
-      // console.log("totalFirstWidths", totalFirstWidths);
-      // console.log("totalWidth", totalWidth);
-      // console.log("proportionalWidth", proportionalWidth);
 
       newColumns[index] = [
         {
@@ -68,6 +60,7 @@ export default function Home() {
         col.reduce((acc, item) => acc + (item.images[0].height / item.images[0].width) * item.proportionalWidth!, 0)
       );
       const smallestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
+
       newColumns[smallestColumnIndex].push({
         ...obj,
         proportionalWidth: newColumns[smallestColumnIndex][0].proportionalWidth, // O width da coluna será o mesmo para todas as imagens
@@ -76,10 +69,16 @@ export default function Home() {
       });
     });
 
+    const columnHeights = newColumns.map((col) =>
+      col.reduce((acc, item) => acc + (item.images[0].height / item.images[0].width) * item.proportionalWidth!, 0)
+    );
+    setSmallestColumnHeight(Math.min(...columnHeights));
+
     setColumns(newColumns);
   };
 
   useEffect(() => {
+    if (objects.length === 0) return;
     calculateColumns();
     window.addEventListener("resize", calculateColumns);
 
@@ -114,34 +113,85 @@ export default function Home() {
     return response.data;
   };
 
+  const getMoreObjects = async () => {
+    console.log("currentPage", currentPage);
+
+    if (isInfiniteScrollLoading) return;
+    setIsInfiniteScrollLoading(true);
+
+    try {
+      const response = await axiosInstance.get(
+        `proxy/object?sort=random&size=100&page=${currentPage + 1}&hasimage=1&q=imagepermissionlevel:0`
+      );
+      const newObjects = response.data.records;
+
+      setObjects((prevObjects) => [...prevObjects, ...newObjects]);
+      setCurrentPage((prevPage) => prevPage + 1);
+    } catch (error) {
+      console.log("Erro ao carregar mais dados", error);
+    } finally {
+      setIsInfiniteScrollLoading(false);
+    }
+  };
+
   useEffect(() => {
+    const container = document.getElementById("image-grid");
+    if (!container) {
+      console.error("Contêiner não encontrado");
+      return;
+    }
+
+    const handleScroll = () => {
+      if (smallestColumnHeight === 0) return;
+
+      const scrollPosition = container.scrollTop;
+
+      if (scrollPosition >= smallestColumnHeight - 1000 && !isInfiniteScrollLoading) {
+        getMoreObjects();
+      }
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, [smallestColumnHeight, isInfiniteScrollLoading]);
+
+  useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
-      if (isLoading) {
-        console.log("Loading data...");
+      if (isLoading || !isMounted) {
         return;
       }
 
       try {
         setIsLoading(true);
         const objects = await getObjects();
-        if (objects) {
+        if (objects && isMounted) {
           setObjects(objects.records);
         }
       } catch (error) {
         console.log("Error fetching data", error);
       } finally {
-        setIsLoading(false);
-        if (isFirstLoad) {
-          setIsFirstLoad(false);
+        if (isMounted) {
+          setIsLoading(false);
+          if (isFirstLoad) {
+            setIsFirstLoad(false);
+          }
         }
       }
     };
 
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
-    <div className="w-full h-full p-4 overflow-x-hidden">
+    <div className="w-full h-full p-4 overflow-x-hidden" id="image-grid">
       {(isLoading || isFirstLoad) && (
         <div className="flex h-full justify-center items-center">
           <p>Loading...</p>
@@ -152,96 +202,31 @@ export default function Home() {
         {columns.map((column, index) => (
           <div key={index} style={{ display: "flex", flexDirection: "column" }}>
             {column.map((image, i) => (
-              // <img
-              //   key={i}
-              //   src={image.url}
-              //   alt={image.title}
-              //   style={{
-              //     width: `${image.proportionalWidth}px`,
-              //     height: "auto",
-              //     marginBottom: "10px"
-              //   }}
-              // />
-
-              // IF the image still not loaded, show a placeholder
-
-              // <div
-              //   key={i}
-              //   style={{
-              //     margin: "4px"
-              //   }}
-              //   className="bg-gray-300"
-
-              // >
               <Image
-                // src={`${image.images[0].baseimageurl}?height=${image.proportionalHeight.toFixed(
-                //   0
-                // )}&width=${image.proportionalWidth.toFixed(0)}`}
                 key={i}
                 className="m-1"
-                style={{ backgroundColor: image.colors[0].color }}
+                style={{ backgroundColor: image.colors ? image.colors[0].color : "LightGray" }}
                 src={image.images[0].baseimageurl}
                 alt={image.title}
                 width={image.proportionalWidth}
                 height={image.proportionalHeight}
-                title={`${image.proportionalHeight}`}
-
+                title={`coluna ${index}, imagem ${i}`}
+                priority={i <= 6} //the first 7 images will be prioritized bacuase they are the first to be shown of this column
+                // onLoad={() => setLoadedImages((prev) => prev + 1)}
                 // placeholder="blur"
                 // blurDataURL={`${image.images[0].baseimageurl}?height=10&width=10`}
                 // layout="responsive"
                 // onLoadingComplete={() => console.log(`Image ${image.id} loaded`)}
                 // title={`Image ph ${image.proportionalHeight} and pw ${image.proportionalWidth}`}
               />
-              /* <p>{image.title}</p>
-                <p> PROPORCIONAL WIDTH {image.proportionalWidth} </p>
-                <p> HEIGHT: {image.images[0].height}</p>
-                <p> WIDTH: {image.images[0].width}</p> 
-
-                <img
-                  src={image.images[0].baseimageurl}
-                  alt={image.images[0].alttext}
-                  style={{ width: `${image.proportionalWidth}px`, height: "auto" }}
-                  // className="hover:scale-105 transition-transform duration-100 hover:ring-4  hover:ring-almost-white"
-                />
-
-                */
-
-              // </div>
             ))}
           </div>
         ))}
       </div>
 
-      {/* <div className="gridContainer">
-        {!isLoading &&
-          !isFirstLoad &&
-          objects.map((object: Record) => (
-            <> */}
-      {/* <img src={object.primaryimageurl} alt={object.title} className="object-contain" /> */}
-      {/* <ImageGridItem image={object.images[0]} /> */}
-      {/* <p className="text-almost-white text-sm">{object.title}</p>
-                <p className="text-almost-white text-sm">{object.objectid}</p> */}
-      {/* </>
-          ))}
-      </div> */}
-
-      {/* {!isLoading && !isFirstLoad && (
-        <div className="flex flex-col w-[80%] h-fit border-4 border-almost-black rounded-2xl mb-4">
-          <div className="flex bg-almost-black w-full h-16 p-4 justify-start items-center">
-            <p className="text-almost-white text-2xl">{objects[0].title}</p>
-          </div>
-        </div>
-      )} */}
-
       {!isLoading && !isFirstLoad && !objects && (
         <p>No objects found</p> // Renderiza uma mensagem caso objects não tenha nenhum dado
       )}
-
-      {/* <div className="flex flex-col w-[80%] h-fit border-4 border-almost-black rounded-2xl">
-        <div className="flex bg-almost-black w-full h-16 p-4 justify-start items-center">
-          <p className="text-almost-white text-2xl">Home Page</p>
-        </div>
-      </div> */}
     </div>
   );
 }
