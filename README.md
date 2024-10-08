@@ -2,6 +2,9 @@
 
 This teis a repository with the website and the documentation about it. It was developed using React, Next.js, Typescript, Tailwind and some other technologies.
 
+To run using docker compose:
+`docker compose up `
+
 To run the project, use:
 
 `npm run dev`

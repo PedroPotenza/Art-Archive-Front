@@ -1,0 +1,19 @@
+Image grid:
+
+    FEITAS
+    - Calculo das larguras proporcionais e o algoritmo para preenchimento das colunas
+    - Optimização e Lazy Loading
+    - Color Placeholder 
+    - Quick image visualizator
+    - Random Seed Generator 
+    - Infinite Scroll
+    
+    TRABALHANDO EM CIMA
+    - Seed URL Param
+
+    AINDA A TRABALHAR
+    - Quick Negative Colors Button
+    - Better Image Visualizator UI
+    - Dedicated Image Service
+    - Limitador para tamanho de imagens (seeds problematicas)
+

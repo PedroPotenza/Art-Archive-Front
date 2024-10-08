@@ -1,16 +1,34 @@
 "use client";
 // import { getSession } from "next-auth/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getSession } from "../../actions/authActions";
 import axiosInstance from "../../libs/axios/axios";
 import "../globals.css";
 import { Record } from "../util/models/models";
+import ImageViewer from "./components/imageViewer";
+// import { useRouter } from "next/router";
 
 type ImageObject = {
   proportionalWidth: number;
   proportionalHeight: number;
 } & Record;
+
+function useDebounce(func: (...args: any[]) => void, delay: number) {
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  return useCallback(
+    (...args: any[]) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        func(...args);
+      }, delay);
+    },
+    [func, delay]
+  );
+}
 
 export default function Home() {
   const [userSessionId, setUserSessionId] = useState<string>("");
@@ -21,10 +39,14 @@ export default function Home() {
   const [isInfiniteScrollLoading, setIsInfiniteScrollLoading] = useState<boolean>(false);
   // const [loadedImages, setLoadedImages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [smallestColumnHeight, setSmallestColumnHeight] = useState(0);
+  // const [smallestColumnHeight, setSmallestColumnHeight] = useState(0);
+  const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
 
   const numberColumns = 5;
   const [columns, setColumns] = useState<ImageObject[][]>([]);
+
+  const [randomSeed, setRandomSeed] = useState(0);
+  // const router = useRouter();
 
   const calculateColumns = () => {
     const newColumns: ImageObject[][] = Array(numberColumns)
@@ -69,10 +91,10 @@ export default function Home() {
       });
     });
 
-    const columnHeights = newColumns.map((col) =>
-      col.reduce((acc, item) => acc + (item.images[0].height / item.images[0].width) * item.proportionalWidth!, 0)
-    );
-    setSmallestColumnHeight(Math.min(...columnHeights));
+    // const columnHeights = newColumns.map((col) =>
+    //   col.reduce((acc, item) => acc + (item.images[0].height / item.images[0].width) * item.proportionalWidth!, 0)
+    // );
+    // setSmallestColumnHeight(Math.min(...columnHeights));
 
     setColumns(newColumns);
   };
@@ -106,56 +128,93 @@ export default function Home() {
     }
   }, [userSessionId]);
 
-  const getObjects = async () => {
+  // ----------------------------------------------------------------- //
+
+  // useEffect(() => {
+  //   if (!router.isReady) return; // Espera o router estar pronto (necessário no Next.js)
+
+  //   const seedFromUrl = router.query.seed;
+
+  //   if (seedFromUrl) {
+  //     // Se houver uma seed na URL, use-a
+  //     setRandomSeed(parseInt(seedFromUrl as string, 10));
+  //     console.log('Seed from URL:', seedFromUrl);
+  //   } else if (isFirstLoad) {
+  //     // Caso contrário, gere uma nova seed e adicione à URL
+  //     const newSeed = Math.floor(Math.random() * 1000000);
+  //     setRandomSeed(newSeed);
+  //     console.log('Generated random seed:', newSeed);
+
+  //     // Atualize a URL para incluir a seed sem recarregar a página
+  //     router.replace(
+  //       {
+  //         pathname: router.pathname,
+  //         query: { seed: newSeed },
+  //       },
+  //       undefined,
+  //       { shallow: true } // Evita uma nova requisição de página
+  //     );
+  //   }
+
+  //   setIsFirstLoad(false); // Marca que a página foi carregada pela primeira vez
+  // }, [isFirstLoad, router]);
+
+  // ----------------------------------------------------------------- //
+
+  const getObjects = async (seed: number) => {
     const response = await axiosInstance.get(
-      "proxy/object?sort=random&size=100&page=1&hasimage=1&q=imagepermissionlevel:0"
+      `proxy/object?sort=random:${seed}&size=100&page=1&hasimage=1&q=imagepermissionlevel:0`
     );
     return response.data;
   };
 
   const getMoreObjects = async () => {
-    console.log("currentPage", currentPage);
-
-    if (isInfiniteScrollLoading) return;
-    setIsInfiniteScrollLoading(true);
-
     try {
       const response = await axiosInstance.get(
-        `proxy/object?sort=random&size=100&page=${currentPage + 1}&hasimage=1&q=imagepermissionlevel:0`
+        `proxy/object?sort=random:${randomSeed}&size=100&page=${currentPage}&hasimage=1&q=imagepermissionlevel:0`
       );
       const newObjects = response.data.records;
-
       setObjects((prevObjects) => [...prevObjects, ...newObjects]);
-      setCurrentPage((prevPage) => prevPage + 1);
     } catch (error) {
-      console.log("Erro ao carregar mais dados", error);
+      console.error("Error fetching more objects", error);
     } finally {
       setIsInfiniteScrollLoading(false);
     }
   };
 
+  const handleScroll = () => {
+    const container = document.getElementById("image-grid");
+    if (!container) return;
+
+    const scrollPosition = container.scrollTop;
+    const containerHeight = container.scrollHeight;
+    const containerOffsetHeight = container.offsetHeight;
+
+    if (scrollPosition + containerOffsetHeight >= containerHeight - 800 && !isInfiniteScrollLoading) {
+      setIsInfiniteScrollLoading(true);
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const debouncedHandleScroll = useDebounce(handleScroll, 500);
+
   useEffect(() => {
     const container = document.getElementById("image-grid");
     if (!container) {
-      console.error("Contêiner não encontrado");
+      console.error("Image grid container not found");
       return;
     }
 
-    const handleScroll = () => {
-      if (smallestColumnHeight === 0) return;
-
-      const scrollPosition = container.scrollTop;
-
-      if (scrollPosition >= smallestColumnHeight - 1000 && !isInfiniteScrollLoading) {
-        getMoreObjects();
-      }
-    };
-
-    container.addEventListener("scroll", handleScroll);
+    container.addEventListener("scroll", debouncedHandleScroll);
     return () => {
-      container.removeEventListener("scroll", handleScroll);
+      container.removeEventListener("scroll", debouncedHandleScroll);
     };
-  }, [smallestColumnHeight, isInfiniteScrollLoading]);
+  }, [debouncedHandleScroll]);
+
+  useEffect(() => {
+    if (currentPage === 1) return;
+    getMoreObjects();
+  }, [currentPage]);
 
   useEffect(() => {
     let isMounted = true;
@@ -165,9 +224,16 @@ export default function Home() {
         return;
       }
 
+      const seed = Math.floor(Math.random() * 1000000);
+
+      if (isFirstLoad) {
+        setRandomSeed(seed);
+        console.log("randomSeed", seed);
+      }
+
       try {
         setIsLoading(true);
-        const objects = await getObjects();
+        const objects = await getObjects(seed);
         if (objects && isMounted) {
           setObjects(objects.records);
         }
@@ -189,6 +255,18 @@ export default function Home() {
       isMounted = false;
     };
   }, []);
+
+  // useEffect(() => {
+  //   if(!isFirstLoad) {
+  //   setRandomSeed(Math.floor(Math.random() * 1000000));
+  //   console.log("randomSeed", randomSeed);
+  //   console.log("Math.random()", Math.floor(Math.random() * 1000000));
+  //   }
+  // }, [isFirstLoad]);
+
+  const handleImageClick = (image: ImageObject) => {
+    setSelectedImage(image);
+  };
 
   return (
     <div className="w-full h-full p-4 overflow-x-hidden" id="image-grid">
@@ -212,6 +290,7 @@ export default function Home() {
                 height={image.proportionalHeight}
                 title={`coluna ${index}, imagem ${i}`}
                 priority={i <= 6} //the first 7 images will be prioritized bacuase they are the first to be shown of this column
+                onClick={() => handleImageClick(image)}
                 // onLoad={() => setLoadedImages((prev) => prev + 1)}
                 // placeholder="blur"
                 // blurDataURL={`${image.images[0].baseimageurl}?height=10&width=10`}
@@ -226,6 +305,16 @@ export default function Home() {
 
       {!isLoading && !isFirstLoad && !objects && (
         <p>No objects found</p> // Renderiza uma mensagem caso objects não tenha nenhum dado
+      )}
+
+      {selectedImage && (
+        <ImageViewer
+          image={{
+            url: selectedImage.images[0].baseimageurl,
+            description: selectedImage.title
+          }}
+          onClose={() => setSelectedImage(null)}
+        />
       )}
     </div>
   );

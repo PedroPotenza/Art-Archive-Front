@@ -31,6 +31,8 @@ export async function signInEmailAndPassword(email: string, password: string) {
       console.log("Error signing up", error);
     });
 
+    if (result === undefined) return;
+
     const token = await result?.user.getIdToken();
 
     const response = await axiosInstance.post("/api/login", {
