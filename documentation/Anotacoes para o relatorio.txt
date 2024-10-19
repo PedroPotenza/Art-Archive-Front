@@ -1,0 +1,6 @@
+
+- Adição de novos endpoints na colection do postman
+
+
+
+

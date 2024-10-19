@@ -1,3 +1,7 @@
+Proxy: 
+    - Proxy endpoint 
+    - Hide the next and prev attributes 
+
 Image grid:
 
     FEITAS
@@ -7,13 +11,30 @@ Image grid:
     - Quick image visualizator
     - Random Seed Generator 
     - Infinite Scroll
-    
-    TRABALHANDO EM CIMA
     - Seed URL Param
+    - Quick Negative Colors Button
+    - Quick Favorite Button
+    - Hover style
+  
+    TRABALHANDO EM CIMA
+    
 
     AINDA A TRABALHAR
-    - Quick Negative Colors Button
+    
     - Better Image Visualizator UI
     - Dedicated Image Service
     - Limitador para tamanho de imagens (seeds problematicas)
+    
+Filter
+    - Materials also can have paths...
+    - colors are in reality spectrum to filter objects
+
+
+
+Detalhes da obra:
+
+    IDEIA 
+    - Related or similar artworks
+    - Vision OpenAI description
+    - 
 

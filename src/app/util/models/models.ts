@@ -103,6 +103,7 @@ export type Record = {
     worktype: string;
     worktypeid: string;
   }[];
+  isInverted?: boolean;
 };
 
 export type HomepageRequest = {

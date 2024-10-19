@@ -34,7 +34,16 @@ def proxy(endpoint):
         )
 
     try:
-        return jsonify(response.json())
+
+        response = response.json()
+
+        if "info" in response:
+            if "next" in response["info"]:
+                del response["info"]["next"]
+            if "prev" in response["info"]:
+                del response["info"]["prev"]
+
+        return jsonify(response)
     except ValueError:
         print("Resposta recebida da API de Harvard:", response.text)
         return (

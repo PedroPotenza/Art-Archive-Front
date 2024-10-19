@@ -1,5 +1,6 @@
 "use client";
 // import { getSession } from "next-auth/react";
+import { Contrast, Expand, Heart } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getSession } from "../../actions/authActions";
@@ -7,7 +8,7 @@ import axiosInstance from "../../libs/axios/axios";
 import "../globals.css";
 import { Record } from "../util/models/models";
 import ImageViewer from "./components/imageViewer";
-// import { useRouter } from "next/router";
+// import { useRouter } from "next/navigation";
 
 type ImageObject = {
   proportionalWidth: number;
@@ -37,16 +38,16 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
   const [isInfiniteScrollLoading, setIsInfiniteScrollLoading] = useState<boolean>(false);
-  // const [loadedImages, setLoadedImages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [smallestColumnHeight, setSmallestColumnHeight] = useState(0);
   const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
 
   const numberColumns = 5;
   const [columns, setColumns] = useState<ImageObject[][]>([]);
 
-  const [randomSeed, setRandomSeed] = useState(0);
-  // const router = useRouter();
+  const url = new URL(window.location.href);
+  const [randomSeed] = useState(
+    url.searchParams.get("seed") ? parseInt(url.searchParams.get("seed")!, 10) : Math.floor(Math.random() * 1000000)
+  );
 
   const calculateColumns = () => {
     const newColumns: ImageObject[][] = Array(numberColumns)
@@ -54,9 +55,8 @@ export default function Home() {
       .map(() => []);
 
     const whitespace = numberColumns * 8 + 32 + 16; // 4px of margin on each side + 16 padding of the container off each side + 16 because of the scrollbar
-    const totalWidth = window.innerWidth - whitespace; // get the total width of the window minus the whitespaces
+    const totalWidth = window.innerWidth - whitespace;
 
-    // Distribui as primeiras imagens proporcionalmente entre as colunas
     const firstImages = objects.slice(0, numberColumns);
     const totalFirstWidths = firstImages.reduce((acc, obj) => acc + obj.images[0].width + 8, 0); //4px of margin on each side (8px total)
 
@@ -76,7 +76,6 @@ export default function Home() {
       ];
     });
 
-    // Adiciona as próximas imagens na coluna com a menor altura
     objects.slice(numberColumns).forEach((obj) => {
       const columnHeights = newColumns.map((col) =>
         col.reduce((acc, item) => acc + (item.images[0].height / item.images[0].width) * item.proportionalWidth!, 0)
@@ -84,17 +83,13 @@ export default function Home() {
       const smallestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
 
       newColumns[smallestColumnIndex].push({
+        //ERROR HERE SOMETIMES
         ...obj,
-        proportionalWidth: newColumns[smallestColumnIndex][0].proportionalWidth, // O width da coluna será o mesmo para todas as imagens
+        proportionalWidth: newColumns[smallestColumnIndex][0].proportionalWidth,
         proportionalHeight:
           (obj.images[0].height / obj.images[0].width) * newColumns[smallestColumnIndex][0].proportionalWidth
       });
     });
-
-    // const columnHeights = newColumns.map((col) =>
-    //   col.reduce((acc, item) => acc + (item.images[0].height / item.images[0].width) * item.proportionalWidth!, 0)
-    // );
-    // setSmallestColumnHeight(Math.min(...columnHeights));
 
     setColumns(newColumns);
   };
@@ -121,45 +116,16 @@ export default function Home() {
     fetchSession();
   }, []);
 
+  useEffect(() => {
+    console.log("randomSeed", randomSeed);
+  }, [randomSeed]);
+
   // quick test to see user session id
   useEffect(() => {
     if (userSessionId) {
       // console.log("userSessionId", userSessionId);
     }
   }, [userSessionId]);
-
-  // ----------------------------------------------------------------- //
-
-  // useEffect(() => {
-  //   if (!router.isReady) return; // Espera o router estar pronto (necessário no Next.js)
-
-  //   const seedFromUrl = router.query.seed;
-
-  //   if (seedFromUrl) {
-  //     // Se houver uma seed na URL, use-a
-  //     setRandomSeed(parseInt(seedFromUrl as string, 10));
-  //     console.log('Seed from URL:', seedFromUrl);
-  //   } else if (isFirstLoad) {
-  //     // Caso contrário, gere uma nova seed e adicione à URL
-  //     const newSeed = Math.floor(Math.random() * 1000000);
-  //     setRandomSeed(newSeed);
-  //     console.log('Generated random seed:', newSeed);
-
-  //     // Atualize a URL para incluir a seed sem recarregar a página
-  //     router.replace(
-  //       {
-  //         pathname: router.pathname,
-  //         query: { seed: newSeed },
-  //       },
-  //       undefined,
-  //       { shallow: true } // Evita uma nova requisição de página
-  //     );
-  //   }
-
-  //   setIsFirstLoad(false); // Marca que a página foi carregada pela primeira vez
-  // }, [isFirstLoad, router]);
-
-  // ----------------------------------------------------------------- //
 
   const getObjects = async (seed: number) => {
     const response = await axiosInstance.get(
@@ -173,8 +139,8 @@ export default function Home() {
       const response = await axiosInstance.get(
         `proxy/object?sort=random:${randomSeed}&size=100&page=${currentPage}&hasimage=1&q=imagepermissionlevel:0`
       );
-      const newObjects = response.data.records;
-      setObjects((prevObjects) => [...prevObjects, ...newObjects]);
+
+      return response.data;
     } catch (error) {
       console.error("Error fetching more objects", error);
     } finally {
@@ -212,8 +178,17 @@ export default function Home() {
   }, [debouncedHandleScroll]);
 
   useEffect(() => {
-    if (currentPage === 1) return;
-    getMoreObjects();
+    const fetchMoreObjects = async () => {
+      if (currentPage === 1) return;
+      const newObjects = await getMoreObjects();
+      newObjects.records.forEach((obj: Record) => {
+        obj.isInverted = false;
+      });
+
+      setObjects((prevObjects) => [...prevObjects, ...newObjects.records]);
+    };
+
+    fetchMoreObjects();
   }, [currentPage]);
 
   useEffect(() => {
@@ -224,16 +199,13 @@ export default function Home() {
         return;
       }
 
-      const seed = Math.floor(Math.random() * 1000000);
-
-      if (isFirstLoad) {
-        setRandomSeed(seed);
-        console.log("randomSeed", seed);
-      }
-
       try {
         setIsLoading(true);
-        const objects = await getObjects(seed);
+        const objects = await getObjects(randomSeed);
+        objects.records.forEach((obj: Record) => {
+          obj.isInverted = false;
+        });
+
         if (objects && isMounted) {
           setObjects(objects.records);
         }
@@ -256,14 +228,6 @@ export default function Home() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if(!isFirstLoad) {
-  //   setRandomSeed(Math.floor(Math.random() * 1000000));
-  //   console.log("randomSeed", randomSeed);
-  //   console.log("Math.random()", Math.floor(Math.random() * 1000000));
-  //   }
-  // }, [isFirstLoad]);
-
   const handleImageClick = (image: ImageObject) => {
     setSelectedImage(image);
   };
@@ -278,26 +242,113 @@ export default function Home() {
 
       <div style={{ display: "flex" }} className="w-fit">
         {columns.map((column, index) => (
-          <div key={index} style={{ display: "flex", flexDirection: "column" }}>
+          <div key={index} className="flex flex-col cursor-pointer">
             {column.map((image, i) => (
-              <Image
+              <div
                 key={i}
-                className="m-1"
-                style={{ backgroundColor: image.colors ? image.colors[0].color : "LightGray" }}
-                src={image.images[0].baseimageurl}
-                alt={image.title}
-                width={image.proportionalWidth}
-                height={image.proportionalHeight}
-                title={`coluna ${index}, imagem ${i}`}
-                priority={i <= 6} //the first 7 images will be prioritized bacuase they are the first to be shown of this column
-                onClick={() => handleImageClick(image)}
-                // onLoad={() => setLoadedImages((prev) => prev + 1)}
-                // placeholder="blur"
-                // blurDataURL={`${image.images[0].baseimageurl}?height=10&width=10`}
-                // layout="responsive"
-                // onLoadingComplete={() => console.log(`Image ${image.id} loaded`)}
-                // title={`Image ph ${image.proportionalHeight} and pw ${image.proportionalWidth}`}
-              />
+                className="relative group"
+                onClick={() => console.log("redirect to image page")}
+                onAuxClick={() => console.log("open image in new tab")}
+              >
+                <div className="absolute top-1 left-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <button
+                    onClick={() => handleImageClick(image)}
+                    className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
+                  >
+                    <Heart className="text-white w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="absolute top-1 right-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  {image.classification === "Photographs" && (
+                    <button
+                      onClick={() => {
+                        setObjects((prev) =>
+                          prev.map((obj) => {
+                            if (obj.id === image.id) {
+                              return { ...obj, isInverted: !obj.isInverted };
+                            }
+                            return obj;
+                          })
+                        );
+                      }}
+                      className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
+                    >
+                      <Contrast className="text-white w-5 h-5" />
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => handleImageClick(image)}
+                    className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
+                  >
+                    <Expand className="text-white w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="absolute flex flex-col gap-1 justify-end inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 p-3">
+                  <p className="text-almost-white text-sm font-semibold line-clamp-2" title={image.title}>
+                    {image.title}
+                  </p>
+                  <p
+                    className="text-almost-white text-sm line-clamp-2"
+                    title={`${
+                      image.people
+                        ?.filter((person) => person.role === "Artist")
+                        .map((artist) => artist.displayname)
+                        .join(", ") || "Unidentified Artist"
+                    }`}
+                  >
+                    {image.people
+                      ?.filter((person) => person.role === "Artist")
+                      .map((artist, index) => (
+                        <span key={index}>
+                          {`${image.people
+                            ?.filter((person) => person.role === "Artist")
+                            .map((artist) => artist.displayname)
+                            .join(", ")}`}
+                        </span>
+                      )) || <span>Unidentified Artist</span>}
+                  </p>
+                </div>
+
+                <Image
+                  className={`m-1 ${image.isInverted ? "invert" : ""}`}
+                  style={{ backgroundColor: image.colors ? image.colors[0].color : "LightGray" }}
+                  src={image.images[0].baseimageurl}
+                  alt={image.title}
+                  width={image.proportionalWidth}
+                  height={image.proportionalHeight}
+                  title={`coluna ${index}, imagem ${i}, classification: ${image.classification}`}
+                  priority={i <= 6} //the first 7 images will be prioritized bacause they are the first to be shown of this column
+                  onMouseEnter={() => {
+                    setObjects((prev) =>
+                      prev.map((obj) => {
+                        if (obj.id === image.id) {
+                          return { ...obj, isHover: true };
+                        }
+                        return obj;
+                      })
+                    );
+                  }}
+                  onMouseLeave={() => {
+                    setObjects((prev) =>
+                      prev.map((obj) => {
+                        if (obj.id === image.id) {
+                          return { ...obj, isHover: false };
+                        }
+                        return obj;
+                      })
+                    );
+                  }}
+                  // onLoad={() => setLoadedImages((prev) => prev + 1)}
+                  // placeholder="blur"
+                  // blurDataURL={`${image.images[0].baseimageurl}?height=10&width=10`}
+                  // layout="responsive"
+                  // onLoadingComplete={() => console.log(`Image ${image.id} loaded`)}
+                  // title={`Image ph ${image.proportionalHeight} and pw ${image.proportionalWidth}`}
+                />
+              </div>
             ))}
           </div>
         ))}
