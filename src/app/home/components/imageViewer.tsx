@@ -25,7 +25,7 @@ export default function ImageViewer({ image, onClose }: ImageViewerProps) {
 
   return (
     <div
-      className="fixed inset-0 bg-gray-800 bg-opacity-60 backdrop-blur-sm flex flex-row items-center justify-center z-50 p-6"
+      className="fixed inset-0 bg-gray-800 bg-opacity-60 backdrop-blur-sm flex flex-row items-center justify-center z-[100] p-6"
       onClick={onClose}
     >
       <button

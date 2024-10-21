@@ -16,6 +16,13 @@ export default {
         },
         "almost-black": {
           DEFAULT: "#151515"
+        },
+        "sweet-gray": {
+          DEFAULT: "#333333",
+          light: "#3b3b3b",
+          lighter: "#666666",
+          lightest: "#999999",
+          dark: "#1a1a1a"
         }
       }
     }

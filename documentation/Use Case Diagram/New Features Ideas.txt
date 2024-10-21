@@ -1,0 +1,11 @@
+
+- Dark mode
+- toogle to always invert colors when a photograph is in negative 
+    (in worktypes we can know if it's in negative)
+- OpenAI Vision image description
+- Tags dinamicas com base no texto do Vision
+- Uso das Annotations
+- Natural Language Filter
+- Usar com base nas informações da obra um texto gerado por AI detalhando e explicando alguns aspectos da obra sem alucinar
+- 
+

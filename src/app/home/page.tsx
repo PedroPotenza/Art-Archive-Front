@@ -1,5 +1,5 @@
 "use client";
-// import { getSession } from "next-auth/react";
+import { useAtom } from "jotai";
 import { Contrast, Expand, Heart } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -7,8 +7,9 @@ import { getSession } from "../../actions/authActions";
 import axiosInstance from "../../libs/axios/axios";
 import "../globals.css";
 import { Record } from "../util/models/models";
+import { isFilterOpenAtom } from "./atoms";
+import FiltersSideMenu from "./components/filterSideMenu";
 import ImageViewer from "./components/imageViewer";
-// import { useRouter } from "next/navigation";
 
 type ImageObject = {
   proportionalWidth: number;
@@ -42,6 +43,9 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
 
   const numberColumns = 5;
+
+  // const MINIMUM_WIDTH = 230;
+
   const [columns, setColumns] = useState<ImageObject[][]>([]);
 
   const url = new URL(window.location.href);
@@ -49,13 +53,90 @@ export default function Home() {
     url.searchParams.get("seed") ? parseInt(url.searchParams.get("seed")!, 10) : Math.floor(Math.random() * 1000000)
   );
 
-  const calculateColumns = () => {
+  const [isFilterOpen] = useAtom(isFilterOpenAtom);
+
+  // const balanceColumns = (columnIndexBelowMinimum: number, newColumns: ImageObject[][]) => {
+  //   if (columnIndexBelowMinimum === -1) return newColumns;
+
+  //   // console.log("newColumns", newColumns);
+  //   console.log("columnIndexBelowMinimum", columnIndexBelowMinimum);
+  //   console.log(
+  //     "newColumns[columnIndexBelowMinimum][0].proportionalWidth",
+  //     newColumns[columnIndexBelowMinimum][0].proportionalWidth + 8
+  //   );
+
+  //   const difference = MINIMUM_WIDTH - newColumns[columnIndexBelowMinimum][0].proportionalWidth + 8; //4px of margin on each side (8px total)
+
+  //   console.log("difference", difference);
+
+  //   //somar o valor de todos os proportionalWidths menos o do columnIndexBelowMinimum
+  //   const totalWidth = newColumns.reduce((acc, col, index) => {
+  //     if (index === columnIndexBelowMinimum) return acc;
+  //     return acc + col[0].proportionalWidth + 8; //4px of margin on each side (8px total)
+  //   }, 0);
+
+  //   console.log("totalWidth", totalWidth);
+
+  //   console.group("Before");
+  //   newColumns.forEach((col, index) => {
+  //     // if (index === columnIndexBelowMinimum) return;
+  //     // NÃO APAGA PEDRO PELO AMOR DE DEUS
+  //     if (index === columnIndexBelowMinimum) {
+  //       const proportionalHeight = (col[0].images[0].height / col[0].images[0].width) * MINIMUM_WIDTH;
+
+  //       newColumns[index] = [
+  //         {
+  //           ...col[0],
+  //           proportionalWidth: MINIMUM_WIDTH,
+  //           proportionalHeight: proportionalHeight
+  //         }
+  //       ];
+  //     }
+
+  //     const imageWidthWithMargin = col[0].proportionalWidth + 8; //4px of margin on each side (8px total)
+  //     const porcentProportionalWidth = imageWidthWithMargin / totalWidth;
+
+  //     const widthTosubtract = difference * porcentProportionalWidth;
+
+  //     const newWidth = imageWidthWithMargin - widthTosubtract;
+
+  //     console.log(
+  //       `coluna ${index} - ${imageWidthWithMargin.toFixed(2)} - ${porcentProportionalWidth.toFixed(
+  //         2
+  //       )} - ${widthTosubtract.toFixed(2)} - ${newWidth.toFixed(2)}`
+  //     );
+
+  //     const proportionalHeight = (col[0].images[0].height / col[0].images[0].width) * newWidth;
+
+  //     newColumns[index] = [
+  //       {
+  //         ...col[0],
+  //         proportionalWidth: newWidth,
+  //         proportionalHeight: proportionalHeight
+  //       }
+  //     ];
+  //   });
+  //   console.groupEnd();
+
+  //   console.log("newColumns final balance", newColumns);
+
+  //   return newColumns;
+  // };
+
+  const calculateColumns = (numberColumns: number) => {
+    console.log("calculating columns");
+
     const newColumns: ImageObject[][] = Array(numberColumns)
       .fill([])
       .map(() => []);
 
+    const imageGrid = document.getElementById("image-grid");
+    if (!imageGrid) return;
+    const imageGridWidth = imageGrid.getBoundingClientRect().width;
+
     const whitespace = numberColumns * 8 + 32 + 16; // 4px of margin on each side + 16 padding of the container off each side + 16 because of the scrollbar
-    const totalWidth = window.innerWidth - whitespace;
+
+    const totalWidth = isFilterOpen ? imageGridWidth - whitespace - 350 : imageGridWidth - whitespace;
 
     const firstImages = objects.slice(0, numberColumns);
     const totalFirstWidths = firstImages.reduce((acc, obj) => acc + obj.images[0].width + 8, 0); //4px of margin on each side (8px total)
@@ -76,19 +157,26 @@ export default function Home() {
       ];
     });
 
+    // const columnIndexBelowMinimum = newColumns.findIndex((col) => col[0].proportionalWidth + 8 < MINIMUM_WIDTH); //4px of margin on each side (8px total)
+    // newColumns = balanceColumns(columnIndexBelowMinimum, newColumns);
+
+    // console.log("newColumns", newColumns);
+
+    // POPULATING THE COLUMNS
     objects.slice(numberColumns).forEach((obj) => {
       const columnHeights = newColumns.map((col) =>
         col.reduce((acc, item) => acc + (item.images[0].height / item.images[0].width) * item.proportionalWidth!, 0)
       );
       const smallestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
 
-      newColumns[smallestColumnIndex].push({
-        //ERROR HERE SOMETIMES
-        ...obj,
-        proportionalWidth: newColumns[smallestColumnIndex][0].proportionalWidth,
-        proportionalHeight:
-          (obj.images[0].height / obj.images[0].width) * newColumns[smallestColumnIndex][0].proportionalWidth
-      });
+      if (newColumns[smallestColumnIndex].length !== 0) {
+        newColumns[smallestColumnIndex].push({
+          ...obj,
+          proportionalWidth: newColumns[smallestColumnIndex][0].proportionalWidth,
+          proportionalHeight:
+            (obj.images[0].height / obj.images[0].width) * newColumns[smallestColumnIndex][0].proportionalWidth
+        });
+      }
     });
 
     setColumns(newColumns);
@@ -96,13 +184,13 @@ export default function Home() {
 
   useEffect(() => {
     if (objects.length === 0) return;
-    calculateColumns();
-    window.addEventListener("resize", calculateColumns);
+    calculateColumns(numberColumns);
+    window.addEventListener("resize", () => calculateColumns(numberColumns));
 
     return () => {
-      window.removeEventListener("resize", calculateColumns);
+      window.removeEventListener("resize", () => calculateColumns(numberColumns));
     };
-  }, [objects, numberColumns]);
+  }, [objects, numberColumns, window.innerWidth, isFilterOpen]);
 
   useEffect(() => {
     async function fetchSession() {
@@ -128,6 +216,7 @@ export default function Home() {
   }, [userSessionId]);
 
   const getObjects = async (seed: number) => {
+    //OPTIMIZE this could be refactored to be only one function with the getMoreObjects
     const response = await axiosInstance.get(
       `proxy/object?sort=random:${seed}&size=100&page=1&hasimage=1&q=imagepermissionlevel:0`
     );
@@ -233,140 +322,144 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full h-full p-4 overflow-x-hidden" id="image-grid">
-      {(isLoading || isFirstLoad) && (
-        <div className="flex h-full justify-center items-center">
-          <p>Loading...</p>
-        </div>
-      )}
+    <div className="flex w-full h-full overflow-y-hidden">
+      <FiltersSideMenu />
 
-      <div style={{ display: "flex" }} className="w-fit">
-        {columns.map((column, index) => (
-          <div key={index} className="flex flex-col cursor-pointer">
-            {column.map((image, i) => (
-              <div
-                key={i}
-                className="relative group"
-                onClick={() => console.log("redirect to image page")}
-                onAuxClick={() => console.log("open image in new tab")}
-              >
-                <div className="absolute top-1 left-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <button
-                    onClick={() => handleImageClick(image)}
-                    className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
-                  >
-                    <Heart className="text-white w-5 h-5" />
-                  </button>
-                </div>
+      <div className="w-full p-4 overflow-x-hidden flex justify-end" id="image-grid">
+        {(isLoading || isFirstLoad) && (
+          <div className="flex h-full justify-center items-center self-center">
+            <p>Loading...</p>
+          </div>
+        )}
 
-                <div className="absolute top-1 right-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  {image.classification === "Photographs" && (
+        <div className="w-fit flex">
+          {columns.map((column, index) => (
+            <div key={index} className="flex flex-col cursor-pointer">
+              {column.map((image, i) => (
+                <div
+                  key={i}
+                  className="relative group"
+                  onClick={() => console.log("redirect to image page")}
+                  onAuxClick={() => console.log("open image in new tab")}
+                >
+                  <div className="absolute top-1 left-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <button
-                      onClick={() => {
-                        setObjects((prev) =>
-                          prev.map((obj) => {
-                            if (obj.id === image.id) {
-                              return { ...obj, isInverted: !obj.isInverted };
-                            }
-                            return obj;
-                          })
-                        );
-                      }}
+                      onClick={() => handleImageClick(image)}
                       className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
                     >
-                      <Contrast className="text-white w-5 h-5" />
+                      <Heart className="text-white w-5 h-5" />
                     </button>
-                  )}
+                  </div>
 
-                  <button
-                    onClick={() => handleImageClick(image)}
-                    className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
-                  >
-                    <Expand className="text-white w-5 h-5" />
-                  </button>
-                </div>
+                  <div className="absolute top-1 right-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    {image.classification === "Photographs" && (
+                      <button
+                        onClick={() => {
+                          setColumns((prevColumns) =>
+                            prevColumns.map((col) =>
+                              col.map((obj) => {
+                                if (obj.id === image.id) {
+                                  return { ...obj, isInverted: !obj.isInverted };
+                                }
+                                return obj;
+                              })
+                            )
+                          );
+                        }}
+                        className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
+                      >
+                        <Contrast className="text-white w-5 h-5" />
+                      </button>
+                    )}
 
-                <div className="absolute flex flex-col gap-1 justify-end inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 p-3">
-                  <p className="text-almost-white text-sm font-semibold line-clamp-2" title={image.title}>
-                    {image.title}
-                  </p>
-                  <p
-                    className="text-almost-white text-sm line-clamp-2"
-                    title={`${
-                      image.people
+                    <button
+                      onClick={() => handleImageClick(image)}
+                      className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
+                    >
+                      <Expand className="text-white w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div className="absolute flex flex-col gap-1 justify-end inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 p-3">
+                    <p className="text-almost-white text-sm font-semibold line-clamp-2" title={image.title}>
+                      {image.title}
+                    </p>
+                    <p
+                      className="text-almost-white text-sm line-clamp-2"
+                      title={`${
+                        image.people
+                          ?.filter((person) => person.role === "Artist")
+                          .map((artist) => artist.displayname)
+                          .join(", ") || "Unidentified Artist"
+                      }`}
+                    >
+                      {image.people
                         ?.filter((person) => person.role === "Artist")
-                        .map((artist) => artist.displayname)
-                        .join(", ") || "Unidentified Artist"
-                    }`}
-                  >
-                    {image.people
-                      ?.filter((person) => person.role === "Artist")
-                      .map((artist, index) => (
-                        <span key={index}>
-                          {`${image.people
-                            ?.filter((person) => person.role === "Artist")
-                            .map((artist) => artist.displayname)
-                            .join(", ")}`}
-                        </span>
-                      )) || <span>Unidentified Artist</span>}
-                  </p>
+                        .map((artist, index) => (
+                          <span key={index}>
+                            {`${image.people
+                              ?.filter((person) => person.role === "Artist")
+                              .map((artist) => artist.displayname)
+                              .join(", ")}`}
+                          </span>
+                        )) || <span>Unidentified Artist</span>}
+                    </p>
+                  </div>
+
+                  <Image
+                    className={`m-1 ${image.isInverted ? "invert" : ""}`}
+                    style={{ backgroundColor: image.colors ? image.colors[0].color : "LightGray" }}
+                    src={image.images[0].baseimageurl}
+                    alt={image.title}
+                    width={image.proportionalWidth}
+                    height={image.proportionalHeight}
+                    title={`coluna ${index}, imagem ${i}, classification: ${image.classification}`}
+                    priority={i <= 6} //the first 7 images will be prioritized bacause they are the first to be shown of this column
+                    onMouseEnter={() => {
+                      setObjects((prev) =>
+                        prev.map((obj) => {
+                          if (obj.id === image.id) {
+                            return { ...obj, isHover: true };
+                          }
+                          return obj;
+                        })
+                      );
+                    }}
+                    onMouseLeave={() => {
+                      setObjects((prev) =>
+                        prev.map((obj) => {
+                          if (obj.id === image.id) {
+                            return { ...obj, isHover: false };
+                          }
+                          return obj;
+                        })
+                      );
+                    }}
+                    // onLoad={() => setLoadedImages((prev) => prev + 1)}
+                    // placeholder="blur"
+                    // blurDataURL={`${image.images[0].baseimageurl}?height=10&width=10`}
+                    // layout="responsive"
+                    // onLoadingComplete={() => console.log(`Image ${image.id} loaded`)}
+                    // title={`Image ph ${image.proportionalHeight} and pw ${image.proportionalWidth}`}
+                  />
                 </div>
+              ))}
+            </div>
+          ))}
+        </div>
 
-                <Image
-                  className={`m-1 ${image.isInverted ? "invert" : ""}`}
-                  style={{ backgroundColor: image.colors ? image.colors[0].color : "LightGray" }}
-                  src={image.images[0].baseimageurl}
-                  alt={image.title}
-                  width={image.proportionalWidth}
-                  height={image.proportionalHeight}
-                  title={`coluna ${index}, imagem ${i}, classification: ${image.classification}`}
-                  priority={i <= 6} //the first 7 images will be prioritized bacause they are the first to be shown of this column
-                  onMouseEnter={() => {
-                    setObjects((prev) =>
-                      prev.map((obj) => {
-                        if (obj.id === image.id) {
-                          return { ...obj, isHover: true };
-                        }
-                        return obj;
-                      })
-                    );
-                  }}
-                  onMouseLeave={() => {
-                    setObjects((prev) =>
-                      prev.map((obj) => {
-                        if (obj.id === image.id) {
-                          return { ...obj, isHover: false };
-                        }
-                        return obj;
-                      })
-                    );
-                  }}
-                  // onLoad={() => setLoadedImages((prev) => prev + 1)}
-                  // placeholder="blur"
-                  // blurDataURL={`${image.images[0].baseimageurl}?height=10&width=10`}
-                  // layout="responsive"
-                  // onLoadingComplete={() => console.log(`Image ${image.id} loaded`)}
-                  // title={`Image ph ${image.proportionalHeight} and pw ${image.proportionalWidth}`}
-                />
-              </div>
-            ))}
-          </div>
-        ))}
+        {!isLoading && !isFirstLoad && !objects && <p>No objects found</p>}
+
+        {selectedImage && (
+          <ImageViewer
+            image={{
+              url: selectedImage.images[0].baseimageurl,
+              description: selectedImage.title
+            }}
+            onClose={() => setSelectedImage(null)}
+          />
+        )}
       </div>
-
-      {!isLoading && !isFirstLoad && !objects && (
-        <p>No objects found</p> // Renderiza uma mensagem caso objects não tenha nenhum dado
-      )}
-
-      {selectedImage && (
-        <ImageViewer
-          image={{
-            url: selectedImage.images[0].baseimageurl,
-            description: selectedImage.title
-          }}
-          onClose={() => setSelectedImage(null)}
-        />
-      )}
     </div>
   );
 }
