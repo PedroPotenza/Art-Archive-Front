@@ -7,8 +7,8 @@ import { getSession } from "../../actions/authActions";
 import axiosInstance from "../../libs/axios/axios";
 import "../globals.css";
 import { Record } from "../util/models/models";
-import { isFilterOpenAtom } from "./atoms";
-import FiltersSideMenu from "./components/filterSideMenu";
+import { isFilterOpenAtom } from "./components/filterSideMenu/atoms";
+import FiltersSideMenu from "./components/filterSideMenu/filterSideMenu";
 import ImageViewer from "./components/imageViewer";
 
 type ImageObject = {
@@ -124,8 +124,6 @@ export default function Home() {
   // };
 
   const calculateColumns = (numberColumns: number) => {
-    console.log("calculating columns");
-
     const newColumns: ImageObject[][] = Array(numberColumns)
       .fill([])
       .map(() => []);
