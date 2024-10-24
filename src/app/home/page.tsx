@@ -10,6 +10,7 @@ import { Record } from "../util/models/models";
 import { isFilterOpenAtom } from "./components/filterSideMenu/atoms";
 import FiltersSideMenu from "./components/filterSideMenu/filterSideMenu";
 import ImageViewer from "./components/imageViewer";
+import { selectedFiltersAtom } from "./components/filterSideMenu/atoms";
 
 type ImageObject = {
   proportionalWidth: number;
@@ -35,6 +36,8 @@ function useDebounce(func: (...args: any[]) => void, delay: number) {
 export default function Home() {
   const [userSessionId, setUserSessionId] = useState<string>("");
   const [objects, setObjects] = useState<Record[]>([]);
+
+  const [selectedFilters] = useAtom(selectedFiltersAtom);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
@@ -213,25 +216,47 @@ export default function Home() {
     }
   }, [userSessionId]);
 
-  const getObjects = async (seed: number) => {
-    //OPTIMIZE this could be refactored to be only one function with the getMoreObjects
-    const response = await axiosInstance.get(
-      `proxy/object?sort=random:${seed}&size=100&page=1&hasimage=1&q=imagepermissionlevel:0`
-    );
-    return response.data;
-  };
+  const fetchObjects = async ({
+    seed,
+    page = 1,
+    size = 75,
+    setLoading = false,
+    useFilters = false
+  }: {
+    seed?: number;
+    page?: number;
+    size?: number;
+    setLoading?: boolean;
+    useFilters?: boolean;
+  }) => {
+    if (setLoading) {
+      setIsInfiniteScrollLoading(true);
+    }
 
-  const getMoreObjects = async () => {
+    let filters = "";
+
+    if (useFilters) {
+      if (selectedFilters?.colors.length > 0) {
+        filters += `&color=${selectedFilters.colors.join("|")}`;
+      }
+      if (selectedFilters?.classifications.length > 0) {
+        filters += `&classification=${selectedFilters.classifications.join("|")}`;
+      }
+    }
+
     try {
       const response = await axiosInstance.get(
-        `proxy/object?sort=random:${randomSeed}&size=100&page=${currentPage}&hasimage=1&q=imagepermissionlevel:0`
+        `proxy/object?sort=random:${seed ?? randomSeed}&size=${size}&page=${page}${
+          useFilters ? filters : ""
+        }&hasimage=1&q=imagepermissionlevel:0`
       );
-
       return response.data;
     } catch (error) {
-      console.error("Error fetching more objects", error);
+      console.error("Error fetching objects", error);
     } finally {
-      setIsInfiniteScrollLoading(false);
+      if (setLoading) {
+        setIsInfiniteScrollLoading(false);
+      }
     }
   };
 
@@ -267,7 +292,7 @@ export default function Home() {
   useEffect(() => {
     const fetchMoreObjects = async () => {
       if (currentPage === 1) return;
-      const newObjects = await getMoreObjects();
+      const newObjects = await fetchObjects({ page: currentPage, setLoading: true, useFilters: !!selectedFilters });
       newObjects.records.forEach((obj: Record) => {
         obj.isInverted = false;
       });
@@ -288,7 +313,7 @@ export default function Home() {
 
       try {
         setIsLoading(true);
-        const objects = await getObjects(randomSeed);
+        const objects = await fetchObjects({ seed: randomSeed, page: 1 });
         objects.records.forEach((obj: Record) => {
           obj.isInverted = false;
         });
@@ -314,6 +339,23 @@ export default function Home() {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (selectedFilters) {
+      setObjects([]);
+
+      const fetchFilteredObjects = async () => {
+        const filteredObjects = await fetchObjects({ seed: randomSeed, page: 1, useFilters: true });
+        filteredObjects.records.forEach((obj: Record) => {
+          obj.isInverted = false;
+        });
+
+        setObjects(filteredObjects.records);
+      };
+
+      fetchFilteredObjects();
+    }
+  }, [selectedFilters]);
 
   const handleImageClick = (image: ImageObject) => {
     setSelectedImage(image);

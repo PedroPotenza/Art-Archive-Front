@@ -27,7 +27,15 @@ Image grid:
     
 Filter
     - Materials also can have paths...
-    - colors are in reality spectrum to filter objects
+    - Color Sort
+    - Color Search
+    - Color Proximity Search (WIP)
+    - Contrast Check for Color Swatch
+    - Sort 
+    - Show Selected Only
+    - Every change in the filter will trigger the grid
+    - Maybe the request can exceed the length limit (that's the reason why I used ids instead of name)
+    
 
 
 

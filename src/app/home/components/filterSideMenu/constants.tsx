@@ -4,6 +4,7 @@ import {
   Calendar,
   CircleOff,
   Hourglass,
+  Landmark,
   MapPinned,
   Palette,
   PencilRuler,
@@ -13,20 +14,13 @@ import {
 } from "lucide-react";
 
 import { FilterSection, FilterSectionsEnum } from "./models";
-import React from "react";
 
 export const FilterSections: FilterSection[] = [
   {
     section: FilterSectionsEnum.ActiveFilters,
     icon: <Blend size={32} />,
     displayName: "Active Filters",
-    shouldRender: true,
-    sectionContent: (
-      <div className="flex flex-col gap-2 text-white w-[350px] transition-transform duration-200 ease-in-out">
-        <h1 className="text-4xl text-center font-bold mt-4">Example</h1>
-        <p>example 1</p>
-      </div>
-    )
+    shouldRender: true
   },
   {
     section: FilterSectionsEnum.ExcludedFilters,
@@ -34,6 +28,12 @@ export const FilterSections: FilterSection[] = [
     displayName: "Excluded Filters",
     shouldRender: true,
     divisionLine: true
+  },
+  {
+    section: FilterSectionsEnum.Person,
+    icon: <SquareUserRound size={32} />,
+    displayName: "Person",
+    shouldRender: true
   },
   {
     section: FilterSectionsEnum.Colors,
@@ -65,6 +65,7 @@ export const FilterSections: FilterSection[] = [
     displayName: "Technique",
     shouldRender: true
   },
+
   {
     section: FilterSectionsEnum.Periods,
     icon: <Calendar size={32} />,
@@ -78,15 +79,15 @@ export const FilterSections: FilterSection[] = [
     shouldRender: true
   },
   {
-    section: FilterSectionsEnum.Place,
-    icon: <MapPinned size={32} />,
-    displayName: "Place",
+    section: FilterSectionsEnum.Culture,
+    icon: <Landmark size={32} />,
+    displayName: "Culture",
     shouldRender: true
   },
   {
-    section: FilterSectionsEnum.Person,
-    icon: <SquareUserRound size={32} />,
-    displayName: "Person",
+    section: FilterSectionsEnum.Place,
+    icon: <MapPinned size={32} />,
+    displayName: "Place",
     shouldRender: true
   }
 ];

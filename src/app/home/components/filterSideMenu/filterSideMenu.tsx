@@ -15,10 +15,10 @@ import Person from "./sections/person";
 import Place from "./sections/place";
 import Technique from "./sections/technique";
 import WorkType from "./sections/workType";
+import Culture from "./sections/culture";
 
 export default function FiltersSideMenu() {
   const [isFilterOpen, setIsFilterOpen] = useAtom(isFilterOpenAtom);
-  // const [selectedFilters, setSelectedFilters] = useAtom(selectedFilters);
   // const [excludedFilters, setExcludedFilters] = useAtom(excludedFilters);
   const [selectedFilterSection, setSelectedFilterSection] = useState("Active Filters");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,6 +52,8 @@ export default function FiltersSideMenu() {
         return <Place />;
       case "person":
         return <Person />;
+      case "culture":
+        return <Culture />;
       default:
         return null;
     }
@@ -82,7 +84,7 @@ export default function FiltersSideMenu() {
                 className={`flex gap-4 p-4 items-center border-transparent hover:border-white border-y-2 hover:shadow-2xl hover:bg-sweet-gray-light cursor-pointer ${
                   section.divisionLine ? "border-b-2 border-b-sweet-gray-dark" : ""
                 } ${
-                  selectedFilterSection === section.section
+                  selectedFilterSection === section.section && isFilterOpen
                     ? "bg-sweet-gray-light border-white border-opacity-30 bg-opacity-30 border-b-white shadow-2xl"
                     : ""
                 }
@@ -111,9 +113,9 @@ export default function FiltersSideMenu() {
         <div className="sticky top-2 flex justify-end  z-10">
           <button
             onClick={() => setIsFilterOpen(false)}
-            className="text-white bg-transparent w-fit hover:bg-transparent hover:scale-110 transition-transform duration-300 ease-in-out px-0 mr-4"
+            className="text-white bg-black bg-opacity-50 w-fit h-fit hover:bg-black hover:scale-110 transition-transform duration-300 ease-in-out p-1 mr-4 rounded-full "
           >
-            <X size={32} />
+            <X size={24} />
           </button>
         </div>
 
@@ -122,7 +124,7 @@ export default function FiltersSideMenu() {
           {showBackToStart && (
             <button
               onClick={scrollToTop}
-              className="w-fit h-fit flex justify-center text-almost-black bg-almost-white hover:scale-110 transition-transform duration-300 ease-in-out drop-shadow-xl p-1 rounded-full hover:bg-almost-white mr-4"
+              className="w-fit h-fit flex justify-center text-almost-black bg-almost-white hover:scale-110 transition-transform duration-300 ease-in-out drop-shadow-2xl p-1 rounded-full hover:bg-almost-white mr-4"
               title="Back to top"
             >
               <ArrowUp size={24} />
