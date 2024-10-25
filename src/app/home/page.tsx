@@ -39,8 +39,7 @@ export default function Home() {
 
   const [selectedFilters] = useAtom(selectedFiltersAtom);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
+  const [isFullLoading, setIsFullLoading] = useState<boolean>(false);
   const [isInfiniteScrollLoading, setIsInfiniteScrollLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
@@ -220,27 +219,30 @@ export default function Home() {
     seed,
     page = 1,
     size = 75,
-    setLoading = false,
     useFilters = false
   }: {
     seed?: number;
     page?: number;
     size?: number;
-    setLoading?: boolean;
     useFilters?: boolean;
   }) => {
-    if (setLoading) {
-      setIsInfiniteScrollLoading(true);
+    if (page === 1) {
+      setIsFullLoading(true);
+    } else {
+      setIsInfiniteScrollLoading(false);
     }
 
     let filters = "";
 
     if (useFilters) {
       if (selectedFilters?.colors.length > 0) {
-        filters += `&color=${selectedFilters.colors.join("|")}`;
+        filters += `&color=${selectedFilters.colors.map((color) => color.replace("#", "%23")).join("|")}`;
       }
       if (selectedFilters?.classifications.length > 0) {
         filters += `&classification=${selectedFilters.classifications.join("|")}`;
+      }
+      if (selectedFilters?.workTypes.length > 0) {
+        filters += `&worktype=${selectedFilters.workTypes.join("|")}`;
       }
     }
 
@@ -254,7 +256,9 @@ export default function Home() {
     } catch (error) {
       console.error("Error fetching objects", error);
     } finally {
-      if (setLoading) {
+      if (page === 1) {
+        setIsFullLoading(false);
+      } else {
         setIsInfiniteScrollLoading(false);
       }
     }
@@ -292,7 +296,7 @@ export default function Home() {
   useEffect(() => {
     const fetchMoreObjects = async () => {
       if (currentPage === 1) return;
-      const newObjects = await fetchObjects({ page: currentPage, setLoading: true, useFilters: !!selectedFilters });
+      const newObjects = await fetchObjects({ page: currentPage, useFilters: !!selectedFilters });
       newObjects.records.forEach((obj: Record) => {
         obj.isInverted = false;
       });
@@ -304,47 +308,36 @@ export default function Home() {
   }, [currentPage]);
 
   useEffect(() => {
-    let isMounted = true;
-
     const fetchData = async () => {
-      if (isLoading || !isMounted) {
+      if (isFullLoading) {
         return;
       }
 
       try {
-        setIsLoading(true);
         const objects = await fetchObjects({ seed: randomSeed, page: 1 });
         objects.records.forEach((obj: Record) => {
           obj.isInverted = false;
         });
 
-        if (objects && isMounted) {
+        if (objects) {
           setObjects(objects.records);
         }
       } catch (error) {
         console.log("Error fetching data", error);
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-          if (isFirstLoad) {
-            setIsFirstLoad(false);
-          }
-        }
       }
     };
 
     fetchData();
 
-    return () => {
-      isMounted = false;
-    };
+    return () => {};
   }, []);
 
   useEffect(() => {
     if (selectedFilters) {
-      setObjects([]);
-
       const fetchFilteredObjects = async () => {
+        await setObjects([]);
+        await setColumns([]);
+        setCurrentPage(1);
         const filteredObjects = await fetchObjects({ seed: randomSeed, page: 1, useFilters: true });
         filteredObjects.records.forEach((obj: Record) => {
           obj.isInverted = false;
@@ -366,129 +359,132 @@ export default function Home() {
       <FiltersSideMenu />
 
       <div className="w-full p-4 overflow-x-hidden flex justify-end" id="image-grid">
-        {(isLoading || isFirstLoad) && (
+        {isFullLoading ? (
           <div className="flex h-full justify-center items-center self-center">
             <p>Loading...</p>
           </div>
-        )}
-
-        <div className="w-fit flex">
-          {columns.map((column, index) => (
-            <div key={index} className="flex flex-col cursor-pointer">
-              {column.map((image, i) => (
-                <div
-                  key={i}
-                  className="relative group"
-                  onClick={() => console.log("redirect to image page")}
-                  onAuxClick={() => console.log("open image in new tab")}
-                >
-                  <div className="absolute top-1 left-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <button
-                      onClick={() => handleImageClick(image)}
-                      className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
-                    >
-                      <Heart className="text-white w-5 h-5" />
-                    </button>
-                  </div>
-
-                  <div className="absolute top-1 right-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    {image.classification === "Photographs" && (
+        ) : !isFullLoading && !objects ? (
+          <div className="flex h-full justify-center items-center self-center">
+            <p>No objects found</p>
+          </div>
+        ) : (
+          <div className="w-fit flex">
+            {columns.map((column, index) => (
+              <div key={index} className="flex flex-col cursor-pointer">
+                {column.map((image, i) => (
+                  <div
+                    key={i}
+                    className="relative group"
+                    onClick={() => console.log("redirect to image page")}
+                    onAuxClick={() => console.log("open image in new tab")}
+                  >
+                    <div className="absolute top-1 left-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                       <button
-                        onClick={() => {
-                          setColumns((prevColumns) =>
-                            prevColumns.map((col) =>
-                              col.map((obj) => {
-                                if (obj.id === image.id) {
-                                  return { ...obj, isInverted: !obj.isInverted };
-                                }
-                                return obj;
-                              })
-                            )
-                          );
-                        }}
+                        onClick={() => handleImageClick(image)}
                         className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
                       >
-                        <Contrast className="text-white w-5 h-5" />
+                        <Heart className="text-white w-5 h-5" />
                       </button>
-                    )}
+                    </div>
 
-                    <button
-                      onClick={() => handleImageClick(image)}
-                      className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
-                    >
-                      <Expand className="text-white w-5 h-5" />
-                    </button>
-                  </div>
+                    <div className="absolute top-1 right-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      {image.classification === "Photographs" && (
+                        <button
+                          onClick={() => {
+                            setColumns((prevColumns) =>
+                              prevColumns.map((col) =>
+                                col.map((obj) => {
+                                  if (obj.id === image.id) {
+                                    return { ...obj, isInverted: !obj.isInverted };
+                                  }
+                                  return obj;
+                                })
+                              )
+                            );
+                          }}
+                          className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
+                        >
+                          <Contrast className="text-white w-5 h-5" />
+                        </button>
+                      )}
 
-                  <div className="absolute flex flex-col gap-1 justify-end inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 p-3">
-                    <p className="text-almost-white text-sm font-semibold line-clamp-2" title={image.title}>
-                      {image.title}
-                    </p>
-                    <p
-                      className="text-almost-white text-sm line-clamp-2"
-                      title={`${
-                        image.people
+                      <button
+                        onClick={() => handleImageClick(image)}
+                        className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
+                      >
+                        <Expand className="text-white w-5 h-5" />
+                      </button>
+                    </div>
+
+                    <div className="absolute flex flex-col gap-1 justify-end inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 p-3">
+                      <p className="text-almost-white text-sm font-semibold line-clamp-2" title={image.title}>
+                        {image.title}
+                      </p>
+                      <p
+                        className="text-almost-white text-sm line-clamp-2"
+                        title={`${
+                          image.people
+                            ?.filter((person) => person.role === "Artist")
+                            .map((artist) => artist.displayname)
+                            .join(", ") || "Unidentified Artist"
+                        }`}
+                      >
+                        {image.people
                           ?.filter((person) => person.role === "Artist")
-                          .map((artist) => artist.displayname)
-                          .join(", ") || "Unidentified Artist"
-                      }`}
-                    >
-                      {image.people
-                        ?.filter((person) => person.role === "Artist")
-                        .map((artist, index) => (
-                          <span key={index}>
-                            {`${image.people
-                              ?.filter((person) => person.role === "Artist")
-                              .map((artist) => artist.displayname)
-                              .join(", ")}`}
-                          </span>
-                        )) || <span>Unidentified Artist</span>}
-                    </p>
+                          .map((artist, index) => (
+                            <span key={index}>
+                              {`${image.people
+                                ?.filter((person) => person.role === "Artist")
+                                .map((artist) => artist.displayname)
+                                .join(", ")}`}
+                            </span>
+                          )) || <span>Unidentified Artist</span>}
+                      </p>
+                    </div>
+
+                    <Image
+                      className={`m-1 ${image.isInverted ? "invert" : ""}`}
+                      style={{ backgroundColor: image.colors ? image.colors[0].color : "LightGray" }}
+                      src={image.images[0].baseimageurl}
+                      alt={image.title}
+                      width={image.proportionalWidth}
+                      height={image.proportionalHeight}
+                      title={`coluna ${index}, imagem ${i}, classification: ${image.classification}`}
+                      priority={i <= 6} //the first 7 images will be prioritized bacause they are the first to be shown of this column
+                      onMouseEnter={() => {
+                        setObjects((prev) =>
+                          prev.map((obj) => {
+                            if (obj.id === image.id) {
+                              return { ...obj, isHover: true };
+                            }
+                            return obj;
+                          })
+                        );
+                      }}
+                      onMouseLeave={() => {
+                        setObjects((prev) =>
+                          prev.map((obj) => {
+                            if (obj.id === image.id) {
+                              return { ...obj, isHover: false };
+                            }
+                            return obj;
+                          })
+                        );
+                      }}
+                      // onLoad={() => setLoadedImages((prev) => prev + 1)}
+                      // placeholder="blur"
+                      // blurDataURL={`${image.images[0].baseimageurl}?height=10&width=10`}
+                      // layout="responsive"
+                      // onLoadingComplete={() => console.log(`Image ${image.id} loaded`)}
+                      // title={`Image ph ${image.proportionalHeight} and pw ${image.proportionalWidth}`}
+                    />
                   </div>
-
-                  <Image
-                    className={`m-1 ${image.isInverted ? "invert" : ""}`}
-                    style={{ backgroundColor: image.colors ? image.colors[0].color : "LightGray" }}
-                    src={image.images[0].baseimageurl}
-                    alt={image.title}
-                    width={image.proportionalWidth}
-                    height={image.proportionalHeight}
-                    title={`coluna ${index}, imagem ${i}, classification: ${image.classification}`}
-                    priority={i <= 6} //the first 7 images will be prioritized bacause they are the first to be shown of this column
-                    onMouseEnter={() => {
-                      setObjects((prev) =>
-                        prev.map((obj) => {
-                          if (obj.id === image.id) {
-                            return { ...obj, isHover: true };
-                          }
-                          return obj;
-                        })
-                      );
-                    }}
-                    onMouseLeave={() => {
-                      setObjects((prev) =>
-                        prev.map((obj) => {
-                          if (obj.id === image.id) {
-                            return { ...obj, isHover: false };
-                          }
-                          return obj;
-                        })
-                      );
-                    }}
-                    // onLoad={() => setLoadedImages((prev) => prev + 1)}
-                    // placeholder="blur"
-                    // blurDataURL={`${image.images[0].baseimageurl}?height=10&width=10`}
-                    // layout="responsive"
-                    // onLoadingComplete={() => console.log(`Image ${image.id} loaded`)}
-                    // title={`Image ph ${image.proportionalHeight} and pw ${image.proportionalWidth}`}
-                  />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-
-        {!isLoading && !isFirstLoad && !objects && <p>No objects found</p>}
+                ))}
+              </div>
+            ))}
+          </div>
+          //TODO ADD THE INFINITE SCROLL LOADING ICON
+        )}
 
         {selectedImage && (
           <ImageViewer

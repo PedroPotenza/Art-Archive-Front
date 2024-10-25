@@ -24,13 +24,15 @@ Image grid:
     - Better Image Visualizator UI
     - Dedicated Image Service
     - Limitador para tamanho de imagens (seeds problematicas)
+    - Results without image, like classification Frames or Documents
+    - Results when end the pages, getMoreObjects need to stop
     
 Filter
     - Materials also can have paths...
     - Color Sort
     - Color Search
     - Color Proximity Search (WIP)
-    - Contrast Check for Color Swatch
+    - Contrast Check for Color Swatch (https://24ways.org/2010/calculating-color-contrast)
     - Sort 
     - Show Selected Only
     - Every change in the filter will trigger the grid

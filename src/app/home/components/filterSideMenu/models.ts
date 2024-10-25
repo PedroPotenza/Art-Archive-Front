@@ -24,7 +24,7 @@ export enum FilterSectionsEnum {
 export type SelectedFilters = {
   centuries: number[];
   classifications: number[];
-  colors: number[];
+  colors: string[];
   materials: number[];
   periods: number[];
   places: number[];
@@ -49,6 +49,16 @@ export type ClassificationFilter = {
   lastupdate: string;
   name: string;
   objectcount: number;
+};
+
+export type WorkTypeOrderType = "alphabetical-asc" | "alphabetical-desc" | "objectCount-desc" | "objectCount-asc";
+
+export type WorkTypeFilter = {
+  objectcount: number;
+  id: number;
+  lastupdate: string;
+  name: string;
+  worktypeid: number;
 };
 
 export enum ColorDisplayName {

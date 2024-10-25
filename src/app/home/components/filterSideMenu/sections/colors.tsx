@@ -1,13 +1,16 @@
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../../libs/axios/axios";
-import { colorsAtom } from "../atoms";
-import { ColorFilter, ColorDisplayName } from "../models";
+import { colorsAtom, selectedFiltersAtom } from "../atoms";
+import { ColorDisplayName, ColorFilter } from "../models";
+import { Loader2Icon, SwatchBook } from "lucide-react";
 
 export default function Colors() {
   const [colors, setColors] = useAtom<ColorFilter[]>(colorsAtom);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredColors, setFilteredColors] = useState<ColorFilter[]>([]);
+  const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   function hexToRgb(hex: string) {
     const bigint = parseInt(hex.slice(1), 16);
@@ -47,8 +50,16 @@ export default function Colors() {
   }
 
   const getColors = async (): Promise<ColorFilter[]> => {
-    const response = await axiosInstance.get(`proxy/color?size=1000`);
-    return response.data.records;
+    try {
+      setIsLoading(true);
+      const response = await axiosInstance.get(`proxy/color?size=1000`);
+      return response.data.records;
+    } catch (error) {
+      console.error("Error fetching colors:", error);
+      return [];
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -79,6 +90,8 @@ export default function Colors() {
         });
 
         setColors(sortedColors);
+      } else {
+        setIsLoading(false);
       }
     };
     fetchColors();
@@ -99,43 +112,75 @@ export default function Colors() {
     }
   }, [searchTerm, colors]);
 
+  const handleSelectColor = (colorHex: string) => {
+    const colorIndex = selectedFilters.colors.indexOf(colorHex); // -1 if not found
+    if (colorIndex === -1) {
+      setSelectedFilters((prev) => ({ ...prev, colors: [...prev.colors, colorHex] }));
+    } else {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        colors: prev.colors.filter((color) => color !== colorHex)
+      }));
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-6 text-white w-full transition-transform duration-200 ease-in-out px-4">
-      <h1 className="text-4xl font-bold mt-4">Colors</h1>
+    <div className="flex flex-col gap-6 text-white w-full transition-transform duration-200 ease-in-out ">
+      <h1 className="text-4xl font-bold mt-4 ml-4">Colors</h1>
 
-      <input
-        type="text"
-        placeholder="Search colors by name or hex code..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="p-2 border border-gray-400 rounded-lg w-full"
-      />
+      {isLoading && colors.length === 0 ? (
+        <div className="self-center mt-8 flex flex-col items-center gap-2">
+          <Loader2Icon size={80} className="animate-spin stroke-1" />
+          <span className="text-sm">Searching Colors</span>
+        </div>
+      ) : (
+        <div className="flex flex-col w-full px-4 gap-4">
+          <input
+            type="text"
+            placeholder="Search colors by name or hex code..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="p-2 border border-gray-400 rounded-lg w-full"
+          />
 
-      <div className="grid grid-cols-2 gap-4">
-        {filteredColors.length !== 0 ? (
-          filteredColors.map((color) => {
-            const rgb = hexToRgb(color.hex);
-            const textColorClass = getContrastYIQ(rgb);
+          <div className="grid grid-cols-2 gap-4">
+            {filteredColors.length !== 0
+              ? filteredColors.map((color) => {
+                  const rgb = hexToRgb(color.hex);
+                  const textColorClass = getContrastYIQ(rgb);
 
-            return (
-              <div
-                key={color.name}
-                className={`flex items-end h-20 border-[1px] border-almost-white bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2`}
-                style={{ backgroundColor: color.hex }}
-              >
-                <div className={`flex flex-col gap-1 ${textColorClass}`}>
-                  <span className="text-xs font-medium">
-                    {ColorDisplayName[color.name as keyof typeof ColorDisplayName]}
-                  </span>
-                  <span className="text-md font-bold">{color.hex.toUpperCase()}</span>
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <p>No colors found...</p>
-        )}
-      </div>
+                  return (
+                    <div
+                      key={color.name}
+                      className={`flex items-end h-20 border-[1px] border-almost-white bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2 cursor-pointer ${
+                        selectedFilters.colors.includes(color.hex) ? "border-2 border-almost-white" : ""
+                      }`}
+                      style={{ backgroundColor: color.hex }}
+                      onClick={() => handleSelectColor(color.hex)}
+                    >
+                      {" "}
+                      {/* TODO WIP, FINALIZE STYLE WHEN SELECTED ALREADY */}
+                      <div className={`flex flex-col gap-1 ${textColorClass}`}>
+                        <span className="text-xs font-medium">
+                          {ColorDisplayName[color.name as keyof typeof ColorDisplayName]}
+                        </span>
+                        <span className="text-md font-bold">{color.hex.toUpperCase()}</span>
+                      </div>
+                    </div>
+                  );
+                })
+              : searchTerm !== "" && (
+                  <div className="self-center justify-self-center flex flex-col items-center text-center max-w-[70%] col-span-2 ">
+                    <SwatchBook size={64} className="stroke-1 text-sweet-gray-lighter mb-4" />
+                    <span className="mb-4">
+                      No results for <span className="font-semibold">&quot;{searchTerm}&quot;</span>
+                    </span>
+                    <span>Try a different search term usign the color name or hex code.</span>
+                  </div>
+                )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

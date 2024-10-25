@@ -7,5 +7,5 @@
 - Uso das Annotations
 - Natural Language Filter
 - Usar com base nas informações da obra um texto gerado por AI detalhando e explicando alguns aspectos da obra sem alucinar
-- 
+- Toogle for same width for images
 
