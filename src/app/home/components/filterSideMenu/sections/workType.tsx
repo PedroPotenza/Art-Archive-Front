@@ -54,6 +54,10 @@ export default function WorkType() {
 
     if (showSelectedOnly) {
       updatedWorkTypes = updatedWorkTypes.filter((workType) => selectedFilters.workTypes.includes(workType.id));
+
+      if (updatedWorkTypes.length === 0) {
+        setShowSelectedOnly(false);
+      }
     }
 
     updatedWorkTypes.sort((a, b) => {

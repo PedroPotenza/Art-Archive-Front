@@ -31,6 +31,7 @@ export type SelectedFilters = {
   techniques: number[];
   workTypes: number[];
   persons: number[];
+  cultures: number[];
 };
 
 export type ColorFilter = {
@@ -59,6 +60,116 @@ export type WorkTypeFilter = {
   lastupdate: string;
   name: string;
   worktypeid: number;
+};
+
+export type MaterialOrderType = "alphabetical-asc" | "alphabetical-desc" | "objectCount-desc" | "objectCount-asc";
+
+export type MaterialFilter = {
+  pathforward: string;
+  level: number;
+  objectcount: number;
+  parentmediumid: number | null;
+  mediumid: number;
+  name: string;
+  id: number;
+  lastupdate: string;
+  haschildren: number;
+};
+
+export type CultureOrderType = "alphabetical-asc" | "alphabetical-desc" | "objectCount-desc" | "objectCount-asc";
+
+export type CultureFilter = {
+  objectcount: number;
+  name: string;
+  id: number;
+  lastupdate: string;
+};
+
+export type CenturyOrderType =
+  | "alphabetical-asc"
+  | "alphabetical-desc"
+  | "objectCount-desc"
+  | "objectCount-asc"
+  | "temporalOrder-asc"
+  | "temporalOrder-desc";
+
+export type CenturyFilter = {
+  objectcount: number;
+  name: string;
+  id: number;
+  lastupdate: string;
+  temporalorder: number;
+};
+
+export type PeriodOrderType = "alphabetical-asc" | "alphabetical-desc" | "objectCount-desc" | "objectCount-asc";
+
+export type PeriodFilter = {
+  objectcount: number;
+  name: string;
+  id: number;
+  lastupdate: string;
+};
+
+export type PlaceOrderType = "alphabetical-asc" | "alphabetical-desc" | "objectCount-desc" | "objectCount-asc";
+
+export type PlaceFilter = {
+  geo: {
+    lon: number;
+    lat: number;
+  };
+  pathforward: string;
+  level: number;
+  objectcount: number;
+  parentplaceid: number | null;
+  placeid: number;
+  name: string;
+  id: number;
+  lastupdate: string;
+  haschildren: number;
+  tgn_id: number;
+};
+
+export type PersonOrderType = "alphabetical-asc" | "alphabetical-desc" | "objectCount-desc" | "objectCount-asc";
+
+export type PersonFilter = {
+  gender: string;
+  displaydate: string;
+  objectcount: number;
+  roles: {
+    role: string;
+    context: string;
+    frequency: number;
+  }[];
+  wikidata_id: string;
+  dateend: number;
+  url: string;
+  viaf_id: string;
+  names: {
+    displayname: string;
+    type: string;
+  }[];
+  birthplace: string;
+  wikipedia_id: string;
+  datebegin: number;
+  culture: string;
+  displayname: string;
+  alphasort: string;
+  ulan_id: string;
+  personid: number;
+  deathplace: string;
+  id: number;
+  lastupdate: string;
+  lcnaf_id: string;
+};
+
+export type TechniqueOrderType = "alphabetical-asc" | "alphabetical-desc" | "objectCount-desc" | "objectCount-asc";
+
+export type TechniqueFilter = {
+  objectcount: number;
+  id: number;
+  lastupdate: string;
+  name: string;
+  techniqueid: number;
 };
 
 export enum ColorDisplayName {

@@ -33,6 +33,7 @@ Filter
     - Color Search
     - Color Proximity Search (WIP)
     - Contrast Check for Color Swatch (https://24ways.org/2010/calculating-color-contrast)
+    - COLOR DIDN'T FILTER
     - Sort 
     - Show Selected Only
     - Every change in the filter will trigger the grid

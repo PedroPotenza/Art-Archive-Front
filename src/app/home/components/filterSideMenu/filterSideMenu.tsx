@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 
-import { ArrowUp, X } from "lucide-react";
+import { ArrowUp, ChevronLeft, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { isFilterOpenAtom } from "./atoms";
 import { FilterSections } from "./constants";
@@ -8,6 +8,7 @@ import ActiveFilters from "./sections/activeFilters";
 import Century from "./sections/century";
 import Classifications from "./sections/classifications";
 import Colors from "./sections/colors";
+import Culture from "./sections/culture";
 import ExcludedFilters from "./sections/excludedFilters";
 import Materials from "./sections/materials";
 import Periods from "./sections/periods";
@@ -15,7 +16,6 @@ import Person from "./sections/person";
 import Place from "./sections/place";
 import Technique from "./sections/technique";
 import WorkType from "./sections/workType";
-import Culture from "./sections/culture";
 
 export default function FiltersSideMenu() {
   const [isFilterOpen, setIsFilterOpen] = useAtom(isFilterOpenAtom);
@@ -82,7 +82,7 @@ export default function FiltersSideMenu() {
               <div
                 key={section.section}
                 className={`flex gap-4 p-4 items-center border-transparent hover:border-white border-y-2 hover:shadow-2xl hover:bg-sweet-gray-light cursor-pointer ${
-                  section.divisionLine ? "border-b-2 border-b-sweet-gray-dark" : ""
+                  section.divisionLine ? "border-b-2 border-b-sweet-gray-darker" : ""
                 } ${
                   selectedFilterSection === section.section && isFilterOpen
                     ? "bg-sweet-gray-light border-white border-opacity-30 bg-opacity-30 border-b-white shadow-2xl"
@@ -104,32 +104,42 @@ export default function FiltersSideMenu() {
       </div>
 
       <div
-        ref={containerRef}
-        className={`bg-sweet-gray flex flex-col gap-0 text-white w-[350px] transition-transform duration-200 ease-in-out overflow-y-auto no-scrollbar
+        className={`bg-sweet-gray flex text-white w-fit transition-transform duration-200 ease-in-out 
           ${isFilterOpen ? "translate-x-0" : "-translate-x-full"}
           absolute top-0 left-full h-full z-50`}
         style={{ willChange: "transform" }}
       >
-        <div className="sticky top-2 flex justify-end  z-10">
-          <button
-            onClick={() => setIsFilterOpen(false)}
-            className="text-white bg-black bg-opacity-50 w-fit h-fit hover:bg-black hover:scale-110 transition-transform duration-300 ease-in-out p-1 mr-4 rounded-full "
-          >
-            <X size={24} />
-          </button>
+        <div
+          className="w-[350px] flex flex-col gap-0 overflow-y-auto no-scrollbar border-r-2 border-r-sweet-gray-darker"
+          ref={containerRef}
+        >
+          <div>{renderSection(selectedFilterSection)}</div>
         </div>
-
-        <div className="mt-[-36px]">{renderSection(selectedFilterSection)}</div>
-        <div className="sticky bottom-4 flex justify-end z-10">
-          {showBackToStart && (
+        <div className="w-10 bg-sweet-gray-dark flex flex-col justify-between p-1 items-center px-4">
+          <div className="flex flex-col gap-2 items-center">
             <button
-              onClick={scrollToTop}
-              className="w-fit h-fit flex justify-center text-almost-black bg-almost-white hover:scale-110 transition-transform duration-300 ease-in-out drop-shadow-2xl p-1 rounded-full hover:bg-almost-white mr-4"
-              title="Back to top"
+              onClick={() => setIsFilterOpen(false)}
+              className="text-almost-white bg-transparent w-fit h-fit hover:scale-110 transition-transform duration-300 ease-in-out p-0 hover:bg-transparent focus:scale-110 focus:outline-none"
             >
-              <ArrowUp size={24} />
+              <ChevronLeft size={36} />
             </button>
-          )}
+
+            <div title="Scroll click to desactive filter focus:outline-none">
+              <Info size={28} />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            {showBackToStart && (
+              <button
+                onClick={scrollToTop}
+                className="w-fit h-fit flex justify-center bg-transparent text-almost-white hover:scale-110 transition-transform duration-300 ease-in-out p-0 hover:bg-transparent focus:scale-110 focus:outline-none"
+                title="Back to top"
+              >
+                <ArrowUp size={36} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

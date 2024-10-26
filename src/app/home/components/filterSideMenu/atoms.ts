@@ -1,5 +1,17 @@
 import { atom } from "jotai";
-import { ColorFilter, ClassificationFilter, SelectedFilters, WorkTypeFilter } from "./models";
+import {
+  ColorFilter,
+  ClassificationFilter,
+  SelectedFilters,
+  WorkTypeFilter,
+  TechniqueFilter,
+  PersonFilter,
+  PlaceFilter,
+  PeriodFilter,
+  CenturyFilter,
+  CultureFilter,
+  MaterialFilter
+} from "./models";
 
 export const selectedFiltersAtom = atom<SelectedFilters>({
   centuries: [],
@@ -10,7 +22,8 @@ export const selectedFiltersAtom = atom<SelectedFilters>({
   places: [],
   techniques: [],
   workTypes: [],
-  persons: []
+  persons: [],
+  cultures: []
 });
 
 export const excludedFiltersAtom = atom("Japan");
@@ -22,3 +35,17 @@ export const colorsAtom = atom<ColorFilter[]>([]);
 export const classificationsAtom = atom<ClassificationFilter[]>([]);
 
 export const workTypesAtom = atom<WorkTypeFilter[]>([]);
+
+export const techniquesAtom = atom<TechniqueFilter[]>([]);
+
+export const personsAtom = atom<PersonFilter[]>([]);
+
+export const placesAtom = atom<PlaceFilter[]>([]);
+
+export const periodsAtom = atom<PeriodFilter[]>([]);
+
+export const centuriesAtom = atom<CenturyFilter[]>([]);
+
+export const culturesAtom = atom<CultureFilter[]>([]);
+
+export const materialsAtom = atom<MaterialFilter[]>([]);

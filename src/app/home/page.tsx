@@ -136,7 +136,7 @@ export default function Home() {
 
     const whitespace = numberColumns * 8 + 32 + 16; // 4px of margin on each side + 16 padding of the container off each side + 16 because of the scrollbar
 
-    const totalWidth = isFilterOpen ? imageGridWidth - whitespace - 350 : imageGridWidth - whitespace;
+    const totalWidth = isFilterOpen ? imageGridWidth - whitespace - 390 : imageGridWidth - whitespace; //390 px is the width of the filter side menu
 
     const firstImages = objects.slice(0, numberColumns);
     const totalFirstWidths = firstImages.reduce((acc, obj) => acc + obj.images[0].width + 8, 0); //4px of margin on each side (8px total)
@@ -243,6 +243,27 @@ export default function Home() {
       }
       if (selectedFilters?.workTypes.length > 0) {
         filters += `&worktype=${selectedFilters.workTypes.join("|")}`;
+      }
+      if (selectedFilters?.techniques.length > 0) {
+        filters += `&technique=${selectedFilters.techniques.join("|")}`;
+      }
+      if (selectedFilters?.persons.length > 0) {
+        filters += `&person=${selectedFilters.persons.join("|")}`;
+      }
+      if (selectedFilters?.places.length > 0) {
+        filters += `&place=${selectedFilters.places.join("|")}`;
+      }
+      if (selectedFilters?.periods.length > 0) {
+        filters += `&period=${selectedFilters.periods.join("|")}`;
+      }
+      if (selectedFilters?.centuries.length > 0) {
+        filters += `&century=${selectedFilters.centuries.join("|")}`;
+      }
+      if (selectedFilters?.materials.length > 0) {
+        filters += `&material=${selectedFilters.materials.join("|")}`;
+      }
+      if (selectedFilters?.cultures.length > 0) {
+        filters += `&culture=${selectedFilters.cultures.join("|")}`;
       }
     }
 

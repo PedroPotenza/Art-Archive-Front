@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownZA, Loader2Icon, PackageOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../../libs/axios/axios";
-import { formatNumber } from "../../../../util/converters";
+import { capitalizeWords, formatNumber } from "../../../../util/converters";
 import { classificationsAtom, selectedFiltersAtom } from "../atoms";
 import { ClassificationFilter, ClassificationOrderType } from "../models";
 
@@ -56,6 +56,10 @@ export default function Classification() {
       updatedClassifications = updatedClassifications.filter((classification) =>
         selectedFilters.classifications.includes(classification.id)
       );
+
+      if (updatedClassifications.length === 0) {
+        setShowSelectedOnly(false);
+      }
     }
 
     updatedClassifications.sort((a, b) => {
@@ -191,9 +195,13 @@ export default function Classification() {
                     }`}
                     onClick={() => handleSelectClassification(classification.id)}
                   >
-                    <span className="text-md font-medium">{classification.name}</span>
+                    <span className="text-md font-medium">{capitalizeWords(classification.name)}</span>
                     <span
-                      className="text-sm font-medium text-sweet-gray-lighter"
+                      className={`text-sm font-medium ${
+                        selectedFilters.classifications.includes(classification.id)
+                          ? "text-almost-white"
+                          : "text-sweet-gray-lighter"
+                      }`}
                       title={`${classification.objectcount} Objects`}
                     >
                       {formatNumber(classification.objectcount)}

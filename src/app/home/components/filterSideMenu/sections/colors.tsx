@@ -1,9 +1,9 @@
 import { useAtom } from "jotai";
+import { Loader2Icon, SwatchBook } from "lucide-react";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../../libs/axios/axios";
 import { colorsAtom, selectedFiltersAtom } from "../atoms";
 import { ColorDisplayName, ColorFilter } from "../models";
-import { Loader2Icon, SwatchBook } from "lucide-react";
 
 export default function Colors() {
   const [colors, setColors] = useAtom<ColorFilter[]>(colorsAtom);
@@ -153,13 +153,13 @@ export default function Colors() {
                     <div
                       key={color.name}
                       className={`flex items-end h-20 border-[1px] border-almost-white bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2 cursor-pointer ${
-                        selectedFilters.colors.includes(color.hex) ? "border-2 border-almost-white" : ""
+                        selectedFilters.colors.includes(color.hex)
+                          ? `ring-4 ring-almost-white ring-offset-2 ring-offset-golden-yellow border-golden-yellow`
+                          : ""
                       }`}
                       style={{ backgroundColor: color.hex }}
                       onClick={() => handleSelectColor(color.hex)}
                     >
-                      {" "}
-                      {/* TODO WIP, FINALIZE STYLE WHEN SELECTED ALREADY */}
                       <div className={`flex flex-col gap-1 ${textColorClass}`}>
                         <span className="text-xs font-medium">
                           {ColorDisplayName[color.name as keyof typeof ColorDisplayName]}
