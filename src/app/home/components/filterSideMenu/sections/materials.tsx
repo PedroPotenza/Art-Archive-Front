@@ -1,8 +1,18 @@
+import { Tooltip } from "@nextui-org/tooltip";
 import { useAtom } from "jotai";
-import { ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownZA, Loader2Icon, PackageOpen } from "lucide-react";
+import {
+  ArrowDown01,
+  ArrowDown10,
+  ArrowDownAZ,
+  ArrowDownZA,
+  ChevronDown,
+  ChevronUp,
+  Loader2Icon,
+  PackageOpen
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../../libs/axios/axios";
-import { capitalizeWords, formatNumber } from "../../../../util/converters";
+import { capitalizeWords, formatNumber, formatNumberWithCommas } from "../../../../util/converters";
 import { materialsAtom, selectedFiltersAtom } from "../atoms";
 import { MaterialFilter, MaterialOrderType } from "../models";
 
@@ -42,15 +52,35 @@ export default function Material() {
     fetchMaterials();
   }, [materials, setMaterials]);
 
+  const hasMatchingChild = (parentMaterial: MaterialFilter, term: string, allMaterials: MaterialFilter[]): boolean => {
+    return allMaterials.some((material) => {
+      const materialName = material.name?.toLowerCase() || "";
+      if (
+        material.parentmediumid === parentMaterial.id &&
+        (materialName.includes(term) || hasMatchingChild(material, term, allMaterials))
+      ) {
+        setExpandedParents((prev) => [...new Set([...prev, parentMaterial.id])]);
+        return true;
+      }
+      return false;
+    });
+  };
+
   useEffect(() => {
     let updatedMaterials = [...materials];
 
     if (searchTerm) {
+      const searchTermLower = searchTerm.toLowerCase();
       updatedMaterials = updatedMaterials.filter((material) => {
         const materialName = material.name?.toLowerCase() || "";
-        const term = searchTerm.toLowerCase();
-        return materialName.includes(term);
+        return materialName.includes(searchTermLower) || hasMatchingChild(material, searchTermLower, materials);
       });
+
+      setExpandedParents((prev) =>
+        prev.filter((parentId) => updatedMaterials.some((material) => material.id === parentId))
+      );
+    } else {
+      setExpandedParents([]);
     }
 
     if (showSelectedOnly) {
@@ -91,7 +121,6 @@ export default function Material() {
   };
 
   const handleSelectMaterial = (materialId: number) => {
-    console.log("materialId", materialId);
     setSelectedFilters((prev) => ({
       ...prev,
       materials: prev.materials.includes(materialId)
@@ -101,7 +130,6 @@ export default function Material() {
   };
 
   const toggleExpandMaterial = (materialId: number) => {
-    console.log("materialId", materialId);
     setExpandedParents((prev) =>
       prev.includes(materialId) ? prev.filter((id) => id !== materialId) : [...prev, materialId]
     );
@@ -109,58 +137,119 @@ export default function Material() {
 
   const renderMaterials = (materials: MaterialFilter[], parentId: number | null, level: number) => {
     return materials
-      .filter((material) => material.parentmediumid === parentId)
+      .filter((material) => material.parentmediumid === parentId && material.objectcount > 0)
       .map((material) => (
-        <div key={material.id} className="flex flex-col">
-          <div
-            className={`flex flex-col border-[1px] border-almost-white bg-opacity-30 p-2 px-4 mb-3 ${
-              expandedParents.includes(material.id)
-                ? `rounded-3xl justify-center ${
-                    level === 0 ? "bg-silver-gray" : level === 1 ? "bg-silver-gray-darker" : "bg-silver-gray-darkest"
-                  }`
-                : "rounded-full"
-            }`}
+        <div
+          key={material.id}
+          className={`flex flex-col mb-3 rounded-3xl shadow-inner ${
+            level === 0 ? "bg-silver-gray-dark " : level === 1 ? "bg-silver-gray-darker" : "bg-silver-gray-darkest"
+          }`}
+        >
+          {/*  PARENT MATERIAL */}
+          <Tooltip
+            content={
+              <div className="px-1 py-2 max-w-[280px]">
+                <p className="font-semibold text-lg">{capitalizeWords(material.name)} </p>
+                <p>
+                  <span className="font-semibold">{formatNumberWithCommas(material.objectcount)}</span>{" "}
+                  {material.objectcount > 1 ? "Items" : "Item"} Available
+                </p>
+                {material.haschildren &&
+                !expandedParents.includes(material.id) &&
+                materials.some((child) => child.parentmediumid === material.id) ? (
+                  <p>
+                    <span className="font-semibold">
+                      {materials.filter((child) => child.parentmediumid === material.id).length}
+                    </span>{" "}
+                    Subcategories
+                  </p>
+                ) : null}
+              </div>
+            }
+            placement="right"
+            showArrow
+            delay={0}
+            offset={16}
+            closeDelay={0}
+            classNames={{
+              base: [
+                // arrow color
+                "before:bg-silver-gray-darkest"
+              ],
+              content: ["py-2 px-4 shadow-xl", "text-almost-white bg-silver-gray-darkest"]
+            }}
+            motionProps={{
+              variants: {
+                exit: {
+                  opacity: 0,
+                  transition: {
+                    duration: 0.1,
+                    ease: "easeIn"
+                  }
+                },
+                enter: {
+                  opacity: 1,
+                  transition: {
+                    duration: 0.15,
+                    ease: "easeOut"
+                  }
+                }
+              }
+            }}
           >
             <div
-              className={`flex items-center justify-between cursor-pointer bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out
-                ${expandedParents.includes(material.id) ? "mb-3" : "hover:scale-105"}
-              ${selectedFilters.materials.includes(material.id) ? "bg-almost-white bg-opacity-20" : ""} `}
+              className={`flex items-center border-[1px] border-almost-white p-2 px-4 justify-between rounded-full cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out
+          ${
+            selectedFilters.materials.includes(material.id)
+              ? "bg-almost-white bg-opacity-30"
+              : level === 0
+              ? "bg-silver-gray"
+              : level === 1
+              ? "bg-silver-gray-dark"
+              : "bg-silver-gray-darkest"
+          } 
+        `}
               onClick={() => handleSelectMaterial(material.id)}
-              // style={{ marginLeft: `${level * 32}px` }}
             >
-              <div className="flex items-center gap-2">
-                <span className="text-md font-medium">{capitalizeWords(material.name)}</span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span
-                  className={`text-sm font-medium ${
-                    selectedFilters.materials.includes(material.id) ? "text-almost-white" : "text-silver-gray-lighter"
-                  }`}
-                  title={`${material.objectcount} Objects`}
-                >
-                  {formatNumber(material.objectcount)}
-                </span>
-              </div>
+              <span className="text-md font-medium max-w-[80%] line-clamp-2">{capitalizeWords(material.name)}</span>
+              <span
+                className={`text-sm font-medium ${
+                  selectedFilters.materials.includes(material.id) ? "text-almost-white" : "text-silver-gray-lighter"
+                }`}
+                title={`${material.objectcount} Objects`}
+              >
+                {formatNumber(material.objectcount)}
+              </span>
             </div>
+          </Tooltip>
 
-            {expandedParents.includes(material.id) && renderMaterials(materials, material.id, level + 1)}
+          {/*  CHILD MATERIALS */}
+          {material.haschildren &&
+          expandedParents.includes(material.id) &&
+          materials.some((child) => child.parentmediumid === material.id) ? (
+            <div
+              className={`
+          flex flex-col mt-3
+          pl-6 pr-2 rounded-b-2xl
+          ${level === 0 ? "bg-silver-gray-dark " : level === 1 ? "bg-silver-gray-darker" : "bg-silver-gray-darkest"}`}
+            >
+              {expandedParents.includes(material.id) && renderMaterials(materials, material.id, level + 1)}
 
-            {material.haschildren &&
-            expandedParents.includes(material.id) &&
-            materials.some((child) => child.parentmediumid === material.id) ? (
+              {/* STOP SHOWING CHILDREN MATERIALS */}
+
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleExpandMaterial(material.id);
                 }}
-                className="bg-transparent hover:bg-transparent p-0 border-0 w-fit h-fit focus:outline-none mb-3"
-                // style={{ marginLeft: `${(level + 1) * 16}px` }}
+                className="self-center bg-transparent hover:bg-transparent p-0 border-0 w-fit h-fit focus:outline-none mb-3"
               >
-                <p>See less</p>
+                <ChevronUp size={24} className="mt-1" />
               </button>
-            ) : null}
-          </div>
+            </div>
+          ) : null}
+
+          {/* SHOW CHILDREN MATERIALS */}
           {material.haschildren &&
           !expandedParents.includes(material.id) &&
           materials.some((child) => child.parentmediumid === material.id) ? (
@@ -169,10 +258,9 @@ export default function Material() {
                 e.stopPropagation();
                 toggleExpandMaterial(material.id);
               }}
-              className="bg-transparent hover:bg-transparent p-0 border-0 w-fit h-fit focus:outline-none mt-[-12px] mb-3"
-              // style={{ marginLeft: `${(level + 1) * 16}px` }}
+              className="self-center bg-transparent hover:bg-transparent p-0 border-0 w-fit h-fit focus:outline-none"
             >
-              <p>See more</p>
+              <ChevronDown size={24} className="mt-1" />
             </button>
           ) : (
             <div className="w-5" />
