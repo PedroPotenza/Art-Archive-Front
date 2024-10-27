@@ -154,9 +154,7 @@ export default function Material() {
                   <span className="font-semibold">{formatNumberWithCommas(material.objectcount)}</span>{" "}
                   {material.objectcount > 1 ? "Items" : "Item"} Available
                 </p>
-                {material.haschildren &&
-                !expandedParents.includes(material.id) &&
-                materials.some((child) => child.parentmediumid === material.id) ? (
+                {material.haschildren && materials.some((child) => child.parentmediumid === material.id) ? (
                   <p>
                     <span className="font-semibold">
                       {materials.filter((child) => child.parentmediumid === material.id).length}

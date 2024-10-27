@@ -3,12 +3,13 @@ import { ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownZA, Loader2Icon, Packag
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../../libs/axios/axios";
 import { capitalizeWords, formatNumber } from "../../../../util/converters";
-import { classificationsAtom, selectedFiltersAtom } from "../atoms";
+import { classificationsAtom, negativeFiltersAtom, selectedFiltersAtom } from "../atoms";
 import { ClassificationFilter, ClassificationOrderType } from "../models";
 
 export default function Classification() {
   const [classifications, setClassifications] = useAtom<ClassificationFilter[]>(classificationsAtom);
   const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom);
+  const [negativeFilters, setNegativeFilters] = useAtom(negativeFiltersAtom);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredClassifications, setFilteredClassifications] = useState<ClassificationFilter[]>([]);
   const [orderType, setOrderType] = useState<ClassificationOrderType>("objectCount-desc");
@@ -53,8 +54,10 @@ export default function Classification() {
     }
 
     if (showSelectedOnly) {
-      updatedClassifications = updatedClassifications.filter((classification) =>
-        selectedFilters.classifications.includes(classification.id)
+      updatedClassifications = updatedClassifications.filter(
+        (classification) =>
+          selectedFilters.classifications.includes(classification.id) ||
+          negativeFilters.classifications.includes(classification.id)
       );
 
       if (updatedClassifications.length === 0) {
@@ -97,6 +100,25 @@ export default function Classification() {
       classifications: prev.classifications.includes(classificationId)
         ? prev.classifications.filter((id) => id !== classificationId)
         : [...prev.classifications, classificationId]
+    }));
+
+    setNegativeFilters((prev) => ({
+      ...prev,
+      classifications: prev.classifications.filter((id) => id !== classificationId)
+    }));
+  };
+
+  const handleNegativeSelectClassification = (classificationId: number) => {
+    setNegativeFilters((prev) => ({
+      ...prev,
+      classifications: prev.classifications.includes(classificationId)
+        ? prev.classifications.filter((id) => id !== classificationId)
+        : [...prev.classifications, classificationId]
+    }));
+
+    setSelectedFilters((prev) => ({
+      ...prev,
+      classifications: prev.classifications.filter((id) => id !== classificationId)
     }));
   };
 
@@ -170,7 +192,7 @@ export default function Classification() {
             )}
           </div>
 
-          {selectedFilters.classifications.length > 0 && (
+          {(selectedFilters.classifications.length > 0 || negativeFilters.classifications.length > 0) && (
             <div className="flex items-center gap-2 ml-2">
               <input
                 type="checkbox"
@@ -192,13 +214,19 @@ export default function Classification() {
                     key={classification.id}
                     className={`flex items-end justify-between h-fit border-[1px] border-almost-white cursor-pointer bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2 px-4 rounded-full ${
                       selectedFilters.classifications.includes(classification.id) ? "bg-almost-white bg-opacity-20" : ""
+                    } ${
+                      negativeFilters.classifications.includes(classification.id)
+                        ? "bg-red-500 bg-opacity-40 border-red-600 ring-1 ring-red-600"
+                        : ""
                     }`}
                     onClick={() => handleSelectClassification(classification.id)}
+                    onAuxClick={() => handleNegativeSelectClassification(classification.id)}
                   >
                     <span className="text-md font-medium">{capitalizeWords(classification.name)}</span>
                     <span
                       className={`text-sm font-medium ${
-                        selectedFilters.classifications.includes(classification.id)
+                        selectedFilters.classifications.includes(classification.id) ||
+                        negativeFilters.classifications.includes(classification.id)
                           ? "text-almost-white"
                           : "text-silver-gray-lighter"
                       }`}

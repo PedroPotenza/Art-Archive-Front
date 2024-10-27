@@ -7,7 +7,7 @@ import { getSession } from "../../actions/authActions";
 import axiosInstance from "../../libs/axios/axios";
 import "../globals.css";
 import { Record } from "../util/models/models";
-import { isFilterOpenAtom } from "./components/filterSideMenu/atoms";
+import { isFilterOpenAtom, negativeFiltersAtom } from "./components/filterSideMenu/atoms";
 import FiltersSideMenu from "./components/filterSideMenu/filterSideMenu";
 import ImageViewer from "./components/imageViewer";
 import { selectedFiltersAtom } from "./components/filterSideMenu/atoms";
@@ -38,6 +38,7 @@ export default function Home() {
   const [objects, setObjects] = useState<Record[]>([]);
 
   const [selectedFilters] = useAtom(selectedFiltersAtom);
+  const [negativeFilters] = useAtom(negativeFiltersAtom);
 
   const [isFullLoading, setIsFullLoading] = useState<boolean>(false);
   const [isInfiniteScrollLoading, setIsInfiniteScrollLoading] = useState<boolean>(false);
@@ -233,6 +234,7 @@ export default function Home() {
     }
 
     let filters = "";
+    let negativeFiltersQuery = "";
 
     if (useFilters) {
       if (selectedFilters?.colors.length > 0) {
@@ -265,13 +267,20 @@ export default function Home() {
       if (selectedFilters?.cultures.length > 0) {
         filters += `&culture=${selectedFilters.cultures.join("|")}`;
       }
+
+      // NEGATIVE FILTERS
+      if (negativeFilters?.classifications.length > 0) {
+        negativeFiltersQuery += ` AND -classificationid:${negativeFilters.classifications.join(
+          " AND -classificationid:"
+        )}`;
+      }
     }
 
     try {
       const response = await axiosInstance.get(
-        `proxy/object?sort=random:${seed ?? randomSeed}&size=${size}&page=${page}${
-          useFilters ? filters : ""
-        }&hasimage=1&q=imagepermissionlevel:0`
+        `proxy/object?sort=random:${
+          seed ?? randomSeed
+        }&size=${size}&page=${page}${filters}&hasimage=1&q=imagepermissionlevel:0 ${negativeFiltersQuery}`
       );
       return response.data;
     } catch (error) {

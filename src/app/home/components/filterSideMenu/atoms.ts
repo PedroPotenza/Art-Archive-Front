@@ -26,7 +26,18 @@ export const selectedFiltersAtom = atom<SelectedFilters>({
   cultures: []
 });
 
-export const excludedFiltersAtom = atom("Japan");
+export const negativeFiltersAtom = atom<SelectedFilters>({
+  centuries: [],
+  classifications: [],
+  colors: [],
+  materials: [],
+  periods: [],
+  places: [],
+  techniques: [],
+  workTypes: [],
+  persons: [],
+  cultures: []
+});
 
 export const isFilterOpenAtom = atom(false);
 
