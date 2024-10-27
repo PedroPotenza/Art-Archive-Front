@@ -134,32 +134,32 @@ export default function Classification() {
               <div className="absolute top-full right-0 mt-2 w-48 bg-white text-black rounded-2xl drop-shadow-2xl z-10 overflow-hidden border-[1px] border-white">
                 <ul className="flex flex-col text-almost-white">
                   <li
-                    className={`p-2 bg-sweet-gray-light hover:bg-sweet-gray-lighter cursor-pointer ${
-                      orderType === "objectCount-desc" ? "bg-sweet-gray-lighter" : ""
+                    className={`p-2 bg-silver-gray-light hover:bg-silver-gray-lighter cursor-pointer ${
+                      orderType === "objectCount-desc" ? "bg-silver-gray-lighter" : ""
                     }`}
                     onClick={() => handleOrderChange("objectCount-desc")}
                   >
                     Object Count (Higher First)
                   </li>
                   <li
-                    className={`p-2 bg-sweet-gray-light hover:bg-sweet-gray-lighter cursor-pointer ${
-                      orderType === "objectCount-asc" ? "bg-sweet-gray-lighter" : ""
+                    className={`p-2 bg-silver-gray-light hover:bg-silver-gray-lighter cursor-pointer ${
+                      orderType === "objectCount-asc" ? "bg-silver-gray-lighter" : ""
                     }`}
                     onClick={() => handleOrderChange("objectCount-asc")}
                   >
                     Object Count (Lower First)
                   </li>
                   <li
-                    className={`p-2 bg-sweet-gray-light hover:bg-sweet-gray-lighter cursor-pointer ${
-                      orderType === "alphabetical-asc" ? "bg-sweet-gray-lighter" : ""
+                    className={`p-2 bg-silver-gray-light hover:bg-silver-gray-lighter cursor-pointer ${
+                      orderType === "alphabetical-asc" ? "bg-silver-gray-lighter" : ""
                     }`}
                     onClick={() => handleOrderChange("alphabetical-asc")}
                   >
                     Alphabetical (A - Z)
                   </li>
                   <li
-                    className={`p-2 bg-sweet-gray-light hover:bg-sweet-gray-lighter cursor-pointer ${
-                      orderType === "alphabetical-desc" ? "bg-sweet-gray-lighter" : ""
+                    className={`p-2 bg-silver-gray-light hover:bg-silver-gray-lighter cursor-pointer ${
+                      orderType === "alphabetical-desc" ? "bg-silver-gray-lighter" : ""
                     }`}
                     onClick={() => handleOrderChange("alphabetical-desc")}
                   >
@@ -185,7 +185,7 @@ export default function Classification() {
             </div>
           )}
 
-          <div className="flex flex-col gap-3 mt-4">
+          <div className="flex flex-col gap-3 my-4">
             {filteredClassifications.length !== 0
               ? filteredClassifications.map((classification) => (
                   <div
@@ -200,7 +200,7 @@ export default function Classification() {
                       className={`text-sm font-medium ${
                         selectedFilters.classifications.includes(classification.id)
                           ? "text-almost-white"
-                          : "text-sweet-gray-lighter"
+                          : "text-silver-gray-lighter"
                       }`}
                       title={`${classification.objectcount} Objects`}
                     >
@@ -210,7 +210,7 @@ export default function Classification() {
                 ))
               : searchTerm !== "" && (
                   <div className="self-center flex flex-col items-center text-center max-w-[70%] ">
-                    <PackageOpen size={64} className="stroke-1 text-sweet-gray-lighter mb-4" />
+                    <PackageOpen size={64} className="stroke-1 text-silver-gray-lighter mb-4" />
                     <span className="mb-4">
                       No results for <span className="font-semibold">&quot;{searchTerm}&quot;</span>
                     </span>

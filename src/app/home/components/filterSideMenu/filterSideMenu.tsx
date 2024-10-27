@@ -1,5 +1,6 @@
 import { useAtom } from "jotai";
 
+import { Tooltip } from "@nextui-org/tooltip";
 import { ArrowUp, ChevronLeft, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { isFilterOpenAtom } from "./atoms";
@@ -75,17 +76,17 @@ export default function FiltersSideMenu() {
 
   return (
     <div className="relative flex">
-      <div className="bg-sweet-gray flex flex-col text-white border-r-almost-black border-r-[1px] z-[60] shadow-2xl">
+      <div className="bg-silver-gray flex flex-col text-white border-r-almost-black border-r-[1px] z-[60] shadow-2xl">
         {FilterSections.map((section) => {
           return (
             section.shouldRender && (
               <div
                 key={section.section}
-                className={`flex gap-4 p-4 items-center border-transparent hover:border-white border-y-2 hover:shadow-2xl hover:bg-sweet-gray-light cursor-pointer ${
-                  section.divisionLine ? "border-b-2 border-b-sweet-gray-darker" : ""
+                className={`flex gap-4 p-4 items-center border-transparent hover:border-white border-y-2 hover:shadow-2xl hover:bg-silver-gray-light cursor-pointer ${
+                  section.divisionLine ? "border-b-2 border-b-silver-gray-darker" : ""
                 } ${
                   selectedFilterSection === section.section && isFilterOpen
-                    ? "bg-sweet-gray-light border-white border-opacity-30 bg-opacity-30 border-b-white shadow-2xl"
+                    ? "bg-silver-gray-light border-white border-opacity-30 bg-opacity-30 border-b-white shadow-2xl"
                     : ""
                 }
                   `}
@@ -104,18 +105,18 @@ export default function FiltersSideMenu() {
       </div>
 
       <div
-        className={`bg-sweet-gray flex text-white w-fit transition-transform duration-200 ease-in-out 
+        className={`bg-silver-gray flex text-white w-fit transition-transform duration-200 ease-in-out 
           ${isFilterOpen ? "translate-x-0" : "-translate-x-full"}
           absolute top-0 left-full h-full z-50`}
         style={{ willChange: "transform" }}
       >
         <div
-          className="w-[350px] flex flex-col gap-0 overflow-y-auto no-scrollbar border-r-2 border-r-sweet-gray-darker"
+          className="w-[350px] flex flex-col gap-0 overflow-y-auto no-scrollbar border-r-2 border-r-silver-gray-darker"
           ref={containerRef}
         >
           <div>{renderSection(selectedFilterSection)}</div>
         </div>
-        <div className="w-10 bg-sweet-gray-dark flex flex-col justify-between p-1 items-center px-4">
+        <div className="w-10 bg-silver-gray-dark flex flex-col justify-between p-1 items-center px-4">
           <div className="flex flex-col gap-2 items-center">
             <button
               onClick={() => setIsFilterOpen(false)}
@@ -124,9 +125,43 @@ export default function FiltersSideMenu() {
               <ChevronLeft size={36} />
             </button>
 
-            <div title="Scroll click to desactive filter focus:outline-none">
-              <Info size={28} />
-            </div>
+            <Tooltip
+              showArrow={true}
+              content="Scroll click to desactive filter"
+              placement="right"
+              offset={10}
+              classNames={{
+                base: [
+                  // arrow color
+                  "before:bg-silver-gray"
+                ],
+                content: ["py-2 px-4 shadow-xl", "text-almost-white bg-silver-gray"]
+              }}
+              delay={0}
+              closeDelay={0}
+              motionProps={{
+                variants: {
+                  exit: {
+                    opacity: 0,
+                    transition: {
+                      duration: 0.1,
+                      ease: "easeIn"
+                    }
+                  },
+                  enter: {
+                    opacity: 1,
+                    transition: {
+                      duration: 0.15,
+                      ease: "easeOut"
+                    }
+                  }
+                }
+              }}
+            >
+              <div>
+                <Info size={28} />
+              </div>
+            </Tooltip>
           </div>
 
           <div className="flex flex-col gap-2">

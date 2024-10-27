@@ -171,7 +171,7 @@ export default function Colors() {
                 })
               : searchTerm !== "" && (
                   <div className="self-center justify-self-center flex flex-col items-center text-center max-w-[70%] col-span-2 ">
-                    <SwatchBook size={64} className="stroke-1 text-sweet-gray-lighter mb-4" />
+                    <SwatchBook size={64} className="stroke-1 text-silver-gray-lighter mb-4" />
                     <span className="mb-4">
                       No results for <span className="font-semibold">&quot;{searchTerm}&quot;</span>
                     </span>

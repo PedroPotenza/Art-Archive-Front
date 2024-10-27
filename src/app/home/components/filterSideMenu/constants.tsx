@@ -20,13 +20,14 @@ export const FilterSections: FilterSection[] = [
     section: FilterSectionsEnum.ActiveFilters,
     icon: <Blend size={32} />,
     displayName: "Active Filters",
-    shouldRender: true
+    shouldRender: true,
+    divisionLine: true
   },
   {
     section: FilterSectionsEnum.ExcludedFilters,
     icon: <CircleOff size={32} />,
     displayName: "Excluded Filters",
-    shouldRender: true,
+    shouldRender: false,
     divisionLine: true
   },
   {

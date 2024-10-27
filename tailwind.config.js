@@ -1,6 +1,11 @@
+import { nextui } from "@nextui-org/theme";
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
+    "./node_modules/@nextui-org/theme/dist/components/popover.js"
+  ],
   theme: {
     extend: {
       colors: {
@@ -17,16 +22,18 @@ export default {
         "almost-black": {
           DEFAULT: "#151515"
         },
-        "sweet-gray": {
+        "silver-gray": {
           DEFAULT: "#333333",
           light: "#3b3b3b",
           lighter: "#666666",
           lightest: "#999999",
           dark: "#262626",
-          darker: "#1a1a1a"
+          darker: "#1a1a1a",
+          darkest: "#0d0d0d",
+          black: "#000000"
         }
       }
     }
   },
-  plugins: []
+  plugins: [nextui()]
 };

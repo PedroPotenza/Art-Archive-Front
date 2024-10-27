@@ -260,7 +260,7 @@ export default function Home() {
         filters += `&century=${selectedFilters.centuries.join("|")}`;
       }
       if (selectedFilters?.materials.length > 0) {
-        filters += `&material=${selectedFilters.materials.join("|")}`;
+        filters += `&medium=${selectedFilters.materials.join("|")}`;
       }
       if (selectedFilters?.cultures.length > 0) {
         filters += `&culture=${selectedFilters.cultures.join("|")}`;
