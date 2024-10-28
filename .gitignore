@@ -25,6 +25,8 @@ node_modules
 !.vscode/extensions.json
 
 *.env
+*.env.development
+*.env.production
 *.env.local
 *.lock
 
