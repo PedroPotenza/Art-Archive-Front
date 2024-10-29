@@ -462,7 +462,7 @@ export default function Home() {
                         {image.people
                           ?.filter((person) => person.role === "Artist")
                           .map((artist, index) => (
-                            <span key={index}>
+                            <span key={`${index}-${artist}`}>
                               {`${image.people
                                 ?.filter((person) => person.role === "Artist")
                                 .map((artist) => artist.displayname)
