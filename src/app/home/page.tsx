@@ -11,6 +11,7 @@ import { isFilterOpenAtom, negativeFiltersAtom } from "./components/filterSideMe
 import FiltersSideMenu from "./components/filterSideMenu/filterSideMenu";
 import ImageViewer from "./components/imageViewer";
 import { selectedFiltersAtom } from "./components/filterSideMenu/atoms";
+import { useRouter } from "next/navigation";
 
 type ImageObject = {
   proportionalWidth: number;
@@ -46,6 +47,8 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
 
   const numberColumns = 5;
+
+  const router = useRouter();
 
   // const MINIMUM_WIDTH = 230;
 
@@ -401,16 +404,16 @@ export default function Home() {
           <div className="w-fit flex">
             {columns.map((column, index) => (
               <div key={index} className="flex flex-col cursor-pointer">
-                {column.map((image, i) => (
+                {column.map((object, i) => (
                   <div
                     key={i}
                     className="relative group"
-                    onClick={() => console.log("redirect to image page")}
+                    onClick={() => router.push(`/object/${object.id}`)}
                     onAuxClick={() => console.log("open image in new tab")}
                   >
                     <div className="absolute top-1 left-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                       <button
-                        onClick={() => handleImageClick(image)}
+                        onClick={() => handleImageClick(object)}
                         className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
                       >
                         <Heart className="text-white w-5 h-5" />
@@ -418,13 +421,14 @@ export default function Home() {
                     </div>
 
                     <div className="absolute top-1 right-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      {image.classification === "Photographs" && (
+                      {object.classification === "Photographs" && (
                         <button
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             setColumns((prevColumns) =>
                               prevColumns.map((col) =>
                                 col.map((obj) => {
-                                  if (obj.id === image.id) {
+                                  if (obj.id === object.id) {
                                     return { ...obj, isInverted: !obj.isInverted };
                                   }
                                   return obj;
@@ -439,7 +443,10 @@ export default function Home() {
                       )}
 
                       <button
-                        onClick={() => handleImageClick(image)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleImageClick(object);
+                        }}
                         className="bg-black bg-opacity-50 border-none w-fit h-fit p-1 focus:outline-none"
                       >
                         <Expand className="text-white w-5 h-5" />
@@ -447,23 +454,23 @@ export default function Home() {
                     </div>
 
                     <div className="absolute flex flex-col gap-1 justify-end inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 p-3">
-                      <p className="text-almost-white text-sm font-semibold line-clamp-2" title={image.title}>
-                        {image.title}
+                      <p className="text-almost-white text-sm font-semibold line-clamp-2" title={object.title}>
+                        {object.title}
                       </p>
                       <p
                         className="text-almost-white text-sm line-clamp-2"
                         title={`${
-                          image.people
+                          object.people
                             ?.filter((person) => person.role === "Artist")
                             .map((artist) => artist.displayname)
                             .join(", ") || "Unidentified Artist"
                         }`}
                       >
-                        {image.people
+                        {object.people
                           ?.filter((person) => person.role === "Artist")
                           .map((artist, index) => (
                             <span key={`${index}-${artist}`}>
-                              {`${image.people
+                              {`${object.people
                                 ?.filter((person) => person.role === "Artist")
                                 .map((artist) => artist.displayname)
                                 .join(", ")}`}
@@ -473,18 +480,18 @@ export default function Home() {
                     </div>
 
                     <Image
-                      className={`m-1 ${image.isInverted ? "invert" : ""}`}
-                      style={{ backgroundColor: image.colors ? image.colors[0].color : "LightGray" }}
-                      src={image.images[0].baseimageurl}
-                      alt={image.title}
-                      width={image.proportionalWidth}
-                      height={image.proportionalHeight}
-                      title={`coluna ${index}, imagem ${i}, classification: ${image.classification}`}
+                      className={`m-1 ${object.isInverted ? "invert" : ""}`}
+                      style={{ backgroundColor: object.colors ? object.colors[0].color : "LightGray" }}
+                      src={object.images[0].baseimageurl}
+                      alt={object.title}
+                      width={object.proportionalWidth}
+                      height={object.proportionalHeight}
+                      title={`coluna ${index}, imagem ${i}, classification: ${object.classification}`}
                       priority={i <= 6} //the first 7 images will be prioritized bacause they are the first to be shown of this column
                       onMouseEnter={() => {
                         setObjects((prev) =>
                           prev.map((obj) => {
-                            if (obj.id === image.id) {
+                            if (obj.id === object.id) {
                               return { ...obj, isHover: true };
                             }
                             return obj;
@@ -494,7 +501,7 @@ export default function Home() {
                       onMouseLeave={() => {
                         setObjects((prev) =>
                           prev.map((obj) => {
-                            if (obj.id === image.id) {
+                            if (obj.id === object.id) {
                               return { ...obj, isHover: false };
                             }
                             return obj;
@@ -530,4 +537,4 @@ export default function Home() {
   );
 }
 
-Home.requireAuth = true;
+Home.requireAuth = false;
