@@ -8,7 +8,7 @@ const LOADER_TYPES = {
 } as const;
 
 const LOADER_CSS_CLASSES = {
-  [LOADER_TYPES.rectangle]: "rounded",
+  [LOADER_TYPES.rectangle]: "rounded-lg",
   [LOADER_TYPES.circle]: "rounded-full"
 };
 
