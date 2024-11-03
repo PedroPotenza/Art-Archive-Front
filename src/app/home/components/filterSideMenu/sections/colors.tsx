@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../../../libs/axios/axios";
 import { colorsAtom, selectedFiltersAtom } from "../atoms";
 import { ColorDisplayName, ColorFilter } from "../models";
+import { getContrastYIQ, hexToRgb } from "../../../../util/converters";
 
 export default function Colors() {
   const [colors, setColors] = useAtom<ColorFilter[]>(colorsAtom);
@@ -11,14 +12,6 @@ export default function Colors() {
   const [filteredColors, setFilteredColors] = useState<ColorFilter[]>([]);
   const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  function hexToRgb(hex: string) {
-    const bigint = parseInt(hex.slice(1), 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return { r, g, b };
-  }
 
   function isGray(r: number, g: number, b: number): boolean {
     return r === g && g === b;
@@ -42,11 +35,6 @@ export default function Colors() {
       h /= 6;
     }
     return { h: h * 360, s, l };
-  }
-
-  function getContrastYIQ({ r, g, b }: { r: number; g: number; b: number }) {
-    const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-    return yiq >= 128 ? "text-almost-black" : "text-almost-white";
   }
 
   const getColors = async (): Promise<ColorFilter[]> => {

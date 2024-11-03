@@ -126,7 +126,7 @@ export interface RecordDetails {
   classification?: string;
   classificationid?: number;
   colorcount?: number;
-  colors?: Color[];
+  colors: Color[];
   commentary?: string;
   contact?: string;
   contextualtext?: ContextualText[];
@@ -153,7 +153,7 @@ export interface RecordDetails {
   id?: number;
   imagecount?: number;
   imagepermissionlevel?: number;
-  images?: Image[];
+  images: ImageDetails[];
   labeltext?: string;
   lastupdate?: string;
   lendingpermissionlevel?: number;
@@ -181,14 +181,14 @@ export interface RecordDetails {
   technique?: string;
   techniqueid?: number;
   terms?: Terms;
-  title?: string;
+  title: string;
   titles?: Title[];
   titlescount?: number;
   totalpageviews?: number;
   totaluniquepageviews?: number;
   url?: string;
-  verificationlevel?: number;
-  verificationleveldescription?: string;
+  verificationlevel: number;
+  verificationleveldescription: string;
   worktypes?: WorkType[];
 }
 
@@ -208,11 +208,11 @@ interface Person {
 }
 
 interface Color {
-  color?: string;
-  css3?: string;
-  hue?: string;
-  percent?: number;
-  spectrum?: string;
+  color: string;
+  css3: string;
+  hue: string;
+  percent: number;
+  spectrum: string;
 }
 
 interface ContextualText {
@@ -256,22 +256,22 @@ interface Grouping {
   name?: string;
 }
 
-interface Image {
-  alttext?: string;
-  baseimageurl?: string;
-  copyright?: string;
-  date?: string;
-  description?: string;
-  displayorder?: number;
-  format?: string;
-  height?: number;
-  idsid?: number;
-  iiifbaseuri?: string;
-  imageid?: number;
-  publiccaption?: string;
-  renditionnumber?: string;
-  technique?: string;
-  width?: number;
+export interface ImageDetails {
+  alttext: string;
+  baseimageurl: string;
+  copyright: string;
+  date: string;
+  description: string;
+  displayorder: number;
+  format: string;
+  height: number;
+  idsid: number;
+  iiifbaseuri: string;
+  imageid: number;
+  publiccaption: string;
+  renditionnumber: string;
+  technique: string;
+  width: number;
 }
 
 interface Place {

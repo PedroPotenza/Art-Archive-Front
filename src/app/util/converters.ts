@@ -55,3 +55,32 @@ export const themeTailwindColorsToHex: { [key: string]: string } = {
   "silver-gray-darkest": "#0d0d0d",
   "silver-gray-black": "#000000"
 };
+
+/**
+ * Determines the appropriate text color (either "text-almost-black" or "text-almost-white")
+ * based on the contrast of the given RGB color values using the YIQ color space.
+ *
+ * @param {Object} param0 - An object containing the RGB color values.
+ * @param {number} param0.r - The red component of the color (0-255).
+ * @param {number} param0.g - The green component of the color (0-255).
+ * @param {number} param0.b - The blue component of the color (0-255).
+ * @returns {string} - Returns "text-almost-black" if the YIQ value is >= 128, otherwise "text-almost-white".
+ */
+export function getContrastYIQ({ r, g, b }: { r: number; g: number; b: number }) {
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 128 ? "text-almost-black" : "text-almost-white";
+}
+
+/**
+ * Converts a hexadecimal color code to an RGB color object.
+ *
+ * @param {string} hex - The hexadecimal color code (e.g., "#FFFFFF").
+ * @returns {{ r: number, g: number, b: number }} An object containing the red, green, and blue color values.
+ */
+export function hexToRgb(hex: string) {
+  const bigint = parseInt(hex.slice(1), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return { r, g, b };
+}
