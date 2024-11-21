@@ -409,7 +409,10 @@ export default function Home() {
                     key={i}
                     className="relative group"
                     onClick={() => router.push(`/object/${object.id}`)}
-                    onAuxClick={() => console.log("open image in new tab")}
+                    onAuxClick={(e) => {
+                      e.preventDefault();
+                      window.open(`/object/${object.id}`, "_blank");
+                    }}
                   >
                     <div className="absolute top-1 left-1 p-2 flex space-x-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                       <button

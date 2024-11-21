@@ -205,6 +205,10 @@ interface Person {
   personid?: number;
   prefix?: string;
   role?: string;
+  objectcount?: number;
+  url?: string;
+  datebegin?: number;
+  dateend?: number;
 }
 
 interface Color {
