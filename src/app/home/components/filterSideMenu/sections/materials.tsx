@@ -84,7 +84,9 @@ export default function Material() {
     }
 
     if (showSelectedOnly) {
-      updatedMaterials = updatedMaterials.filter((material) => selectedFilters.materials.includes(material.id));
+      updatedMaterials = updatedMaterials.filter((material) =>
+        selectedFilters.materials.some((filter) => filter.id === material.id)
+      );
 
       if (updatedMaterials.length === 0) {
         setShowSelectedOnly(false);
@@ -120,12 +122,20 @@ export default function Material() {
     setShowDropdown(false);
   };
 
-  const handleSelectMaterial = (materialId: number) => {
+  const handleSelectMaterial = (material: MaterialFilter) => {
     setSelectedFilters((prev) => ({
       ...prev,
-      materials: prev.materials.includes(materialId)
-        ? prev.materials.filter((id) => id !== materialId)
-        : [...prev.materials, materialId]
+      materials: prev.materials.some((filter) => filter.id === material.id)
+        ? prev.materials.filter((filter) => filter.id !== material.id)
+        : [
+            ...prev.materials,
+            {
+              id: material.id,
+              name: material.name,
+              objectcount: material.objectcount,
+              pathforward: material.pathforward
+            }
+          ]
     }));
   };
 
@@ -198,7 +208,7 @@ export default function Material() {
             <div
               className={`flex items-center border-[1px] border-almost-white p-2 px-4 justify-between rounded-full cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out
           ${
-            selectedFilters.materials.includes(material.id)
+            selectedFilters.materials.map((filter) => filter.id).includes(material.id)
               ? "bg-almost-white bg-opacity-30"
               : level === 0
               ? "bg-silver-gray"
@@ -207,12 +217,14 @@ export default function Material() {
               : "bg-silver-gray-darkest"
           } 
         `}
-              onClick={() => handleSelectMaterial(material.id)}
+              onClick={() => handleSelectMaterial(material)}
             >
               <span className="text-md font-medium max-w-[80%] line-clamp-2">{capitalizeWords(material.name)}</span>
               <span
                 className={`text-sm font-medium ${
-                  selectedFilters.materials.includes(material.id) ? "text-almost-white" : "text-silver-gray-lighter"
+                  selectedFilters.materials.map((filter) => filter.id).includes(material.id)
+                    ? "text-almost-white"
+                    : "text-silver-gray-lighter"
                 }`}
                 title={`${material.objectcount} Objects`}
               >

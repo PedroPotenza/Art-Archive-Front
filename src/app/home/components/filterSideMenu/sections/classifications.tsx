@@ -56,8 +56,8 @@ export default function Classification() {
     if (showSelectedOnly) {
       updatedClassifications = updatedClassifications.filter(
         (classification) =>
-          selectedFilters.classifications.includes(classification.id) ||
-          negativeFilters.classifications.includes(classification.id)
+          selectedFilters.classifications.some((filter) => filter.id === classification.id) ||
+          negativeFilters.classifications.some((filter) => filter.id === classification.id)
       );
 
       if (updatedClassifications.length === 0) {
@@ -97,28 +97,28 @@ export default function Classification() {
   const handleSelectClassification = (classificationId: number) => {
     setSelectedFilters((prev) => ({
       ...prev,
-      classifications: prev.classifications.includes(classificationId)
-        ? prev.classifications.filter((id) => id !== classificationId)
-        : [...prev.classifications, classificationId]
+      classifications: prev.classifications.some((c) => c.id === classificationId)
+        ? prev.classifications.filter((c) => c.id !== classificationId)
+        : [...prev.classifications, classifications.find((c) => c.id === classificationId)!]
     }));
 
     setNegativeFilters((prev) => ({
       ...prev,
-      classifications: prev.classifications.filter((id) => id !== classificationId)
+      classifications: prev.classifications.filter((c) => c.id !== classificationId)
     }));
   };
 
   const handleNegativeSelectClassification = (classificationId: number) => {
     setNegativeFilters((prev) => ({
       ...prev,
-      classifications: prev.classifications.includes(classificationId)
-        ? prev.classifications.filter((id) => id !== classificationId)
-        : [...prev.classifications, classificationId]
+      classifications: prev.classifications.some((c) => c.id === classificationId)
+        ? prev.classifications.filter((c) => c.id !== classificationId)
+        : [...prev.classifications, classifications.find((c) => c.id === classificationId)!]
     }));
 
     setSelectedFilters((prev) => ({
       ...prev,
-      classifications: prev.classifications.filter((id) => id !== classificationId)
+      classifications: prev.classifications.filter((c) => c.id !== classificationId)
     }));
   };
 
@@ -213,9 +213,11 @@ export default function Classification() {
                   <div
                     key={classification.id}
                     className={`flex items-end justify-between h-fit border-[1px] border-almost-white cursor-pointer bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2 px-4 rounded-full ${
-                      selectedFilters.classifications.includes(classification.id) ? "bg-almost-white bg-opacity-20" : ""
+                      selectedFilters.classifications.some((filter) => filter.id === classification.id)
+                        ? "bg-almost-white bg-opacity-20"
+                        : ""
                     } ${
-                      negativeFilters.classifications.includes(classification.id)
+                      negativeFilters.classifications.some((filter) => filter.id === classification.id)
                         ? "bg-red-500 bg-opacity-40 border-red-600 ring-1 ring-red-600"
                         : ""
                     }`}
@@ -225,8 +227,8 @@ export default function Classification() {
                     <span className="text-md font-medium">{capitalizeWords(classification.name)}</span>
                     <span
                       className={`text-sm font-medium ${
-                        selectedFilters.classifications.includes(classification.id) ||
-                        negativeFilters.classifications.includes(classification.id)
+                        selectedFilters.classifications.map((filter) => filter.id).includes(classification.id) ||
+                        negativeFilters.classifications.map((filter) => filter.id).includes(classification.id)
                           ? "text-almost-white"
                           : "text-silver-gray-lighter"
                       }`}

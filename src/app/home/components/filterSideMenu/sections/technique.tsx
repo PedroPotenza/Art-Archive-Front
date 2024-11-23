@@ -53,7 +53,9 @@ export default function Technique() {
     }
 
     if (showSelectedOnly) {
-      updatedTechniques = updatedTechniques.filter((technique) => selectedFilters.techniques.includes(technique.id));
+      updatedTechniques = updatedTechniques.filter((technique) =>
+        selectedFilters.techniques.some((filter) => filter.id === technique.id)
+      );
 
       if (updatedTechniques.length === 0) {
         setShowSelectedOnly(false);
@@ -89,12 +91,12 @@ export default function Technique() {
     setShowDropdown(false);
   };
 
-  const handleSelectTechnique = (techniqueId: number) => {
+  const handleSelectTechnique = (technique: TechniqueFilter) => {
     setSelectedFilters((prev) => ({
       ...prev,
-      techniques: prev.techniques.includes(techniqueId)
-        ? prev.techniques.filter((id) => id !== techniqueId)
-        : [...prev.techniques, techniqueId]
+      techniques: prev.techniques.some((filter) => filter.id === technique.id)
+        ? prev.techniques.filter((filter) => filter.id !== technique.id)
+        : [...prev.techniques, { id: technique.id, name: technique.name }]
     }));
   };
 
@@ -189,14 +191,16 @@ export default function Technique() {
                   <div
                     key={technique.id}
                     className={`flex items-end justify-between h-fit border-[1px] border-almost-white cursor-pointer bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2 px-4 rounded-full ${
-                      selectedFilters.techniques.includes(technique.id) ? "bg-almost-white bg-opacity-20" : ""
+                      selectedFilters.techniques.some((filter) => filter.id === technique.id)
+                        ? "bg-almost-white bg-opacity-20"
+                        : ""
                     }`}
-                    onClick={() => handleSelectTechnique(technique.id)}
+                    onClick={() => handleSelectTechnique(technique)}
                   >
                     <span className="text-md font-medium">{capitalizeWords(technique.name)}</span>
                     <span
                       className={`text-sm font-medium ${
-                        selectedFilters.techniques.includes(technique.id)
+                        selectedFilters.techniques.some((filter) => filter.id === technique.id)
                           ? "text-almost-white"
                           : "text-silver-gray-lighter"
                       }`}

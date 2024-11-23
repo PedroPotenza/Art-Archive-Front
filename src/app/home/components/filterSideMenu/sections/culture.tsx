@@ -53,7 +53,9 @@ export default function Culture() {
     }
 
     if (showSelectedOnly) {
-      updatedCultures = updatedCultures.filter((culture) => selectedFilters.cultures.includes(culture.id));
+      updatedCultures = updatedCultures.filter((culture) =>
+        selectedFilters.cultures.some((filter) => filter.id === culture.id)
+      );
 
       if (updatedCultures.length === 0) {
         setShowSelectedOnly(false);
@@ -92,9 +94,9 @@ export default function Culture() {
   const handleSelectCulture = (cultureId: number) => {
     setSelectedFilters((prev) => ({
       ...prev,
-      cultures: prev.cultures.includes(cultureId)
-        ? prev.cultures.filter((id) => id !== cultureId)
-        : [...prev.cultures, cultureId]
+      cultures: prev.cultures.some((filter) => filter.id === cultureId)
+        ? prev.cultures.filter((filter) => filter.id !== cultureId)
+        : [...prev.cultures, { id: cultureId, name: cultures.find((culture) => culture.id === cultureId)?.name || "" }]
     }));
   };
 
@@ -189,14 +191,18 @@ export default function Culture() {
                   <div
                     key={culture.id}
                     className={`flex items-end justify-between h-fit border-[1px] border-almost-white cursor-pointer bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2 px-4 rounded-full ${
-                      selectedFilters.cultures.includes(culture.id) ? "bg-almost-white bg-opacity-20" : ""
+                      selectedFilters.cultures.map((filter) => filter.id).includes(culture.id)
+                        ? "bg-almost-white bg-opacity-20"
+                        : ""
                     }`}
                     onClick={() => handleSelectCulture(culture.id)}
                   >
                     <span className="text-md font-medium">{capitalizeWords(culture.name)}</span>
                     <span
                       className={`text-sm font-medium ${
-                        selectedFilters.cultures.includes(culture.id) ? "text-almost-white" : "text-silver-gray-lighter"
+                        selectedFilters.cultures.map((filter) => filter.id).includes(culture.id)
+                          ? "text-almost-white"
+                          : "text-silver-gray-lighter"
                       }`}
                       title={`${culture.objectcount} Objects`}
                     >

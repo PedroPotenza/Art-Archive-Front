@@ -21,17 +21,23 @@ export enum FilterSectionsEnum {
   Culture = "culture"
 }
 
+export type FilterData = {
+  id: number;
+  name: string;
+  pathforward?: string;
+};
+
 export type SelectedFilters = {
-  centuries: number[];
-  classifications: number[];
+  centuries: FilterData[];
+  classifications: FilterData[];
   colors: string[];
-  materials: number[];
-  periods: number[];
-  places: number[];
-  techniques: number[];
-  workTypes: number[];
-  persons: number[];
-  cultures: number[];
+  materials: FilterData[];
+  periods: FilterData[];
+  places: FilterData[];
+  techniques: FilterData[];
+  workTypes: FilterData[];
+  persons: FilterData[];
+  cultures: FilterData[];
 };
 
 export type ColorFilter = {

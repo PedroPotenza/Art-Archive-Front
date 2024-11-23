@@ -53,7 +53,9 @@ export default function WorkType() {
     }
 
     if (showSelectedOnly) {
-      updatedWorkTypes = updatedWorkTypes.filter((workType) => selectedFilters.workTypes.includes(workType.id));
+      updatedWorkTypes = updatedWorkTypes.filter((workType) =>
+        selectedFilters.workTypes.some((filter) => filter.id === workType.id)
+      );
 
       if (updatedWorkTypes.length === 0) {
         setShowSelectedOnly(false);
@@ -89,12 +91,12 @@ export default function WorkType() {
     setShowDropdown(false);
   };
 
-  const handleSelectWorkType = (workTypeId: number) => {
+  const handleSelectWorkType = (workType: WorkTypeFilter) => {
     setSelectedFilters((prev) => ({
       ...prev,
-      workTypes: prev.workTypes.includes(workTypeId)
-        ? prev.workTypes.filter((id) => id !== workTypeId)
-        : [...prev.workTypes, workTypeId]
+      workTypes: prev.workTypes.some((filter) => filter.id === workType.id)
+        ? prev.workTypes.filter((filter) => filter.id !== workType.id)
+        : [...prev.workTypes, workType]
     }));
   };
 
@@ -188,9 +190,11 @@ export default function WorkType() {
                   <div
                     key={workType.id}
                     className={`flex items-end justify-between h-fit border-[1px] border-almost-white cursor-pointer bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2 px-4 rounded-full ${
-                      selectedFilters.workTypes.includes(workType.id) ? "bg-almost-white bg-opacity-20" : ""
+                      selectedFilters.workTypes.some((filter) => filter.id === workType.id)
+                        ? "bg-almost-white bg-opacity-20"
+                        : ""
                     }`}
-                    onClick={() => handleSelectWorkType(workType.id)}
+                    onClick={() => handleSelectWorkType(workType)}
                   >
                     <span className="text-md font-medium">{capitalizeWords(workType.name)}</span>
                     {/* <span

@@ -53,7 +53,9 @@ export default function Century() {
     }
 
     if (showSelectedOnly) {
-      updatedCenturies = updatedCenturies.filter((century) => selectedFilters.centuries.includes(century.id));
+      updatedCenturies = updatedCenturies.filter((century) =>
+        selectedFilters.centuries.includes({ id: century.id, name: century.name })
+      );
 
       if (updatedCenturies.length === 0) {
         setShowSelectedOnly(false);
@@ -99,12 +101,12 @@ export default function Century() {
     setShowDropdown(false);
   };
 
-  const handleSelectCentury = (centuryId: number) => {
+  const handleSelectCentury = (century: CenturyFilter) => {
     setSelectedFilters((prev) => ({
       ...prev,
-      centuries: prev.centuries.includes(centuryId)
-        ? prev.centuries.filter((id) => id !== centuryId)
-        : [...prev.centuries, centuryId]
+      centuries: prev.centuries.some((c) => c.id === century.id)
+        ? prev.centuries.filter((c) => c.id !== century.id)
+        : [...prev.centuries, { id: century.id, name: century.name }]
     }));
   };
 
@@ -215,14 +217,14 @@ export default function Century() {
                   <div
                     key={century.id}
                     className={`flex items-end justify-between h-fit border-[1px] border-almost-white cursor-pointer bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2 px-4 rounded-full ${
-                      selectedFilters.centuries.includes(century.id) ? "bg-almost-white bg-opacity-20" : ""
+                      selectedFilters.centuries.some((c) => c.id === century.id) ? "bg-almost-white bg-opacity-20" : ""
                     }`}
-                    onClick={() => handleSelectCentury(century.id)}
+                    onClick={() => handleSelectCentury(century)}
                   >
                     <span className="text-md font-medium">{capitalizeWords(century.name)}</span>
                     <span
                       className={`text-sm font-medium ${
-                        selectedFilters.centuries.includes(century.id)
+                        selectedFilters.centuries.some((c) => c.id === century.id)
                           ? "text-almost-white"
                           : "text-silver-gray-lighter"
                       }`}

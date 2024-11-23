@@ -244,38 +244,40 @@ export default function Home() {
         filters += `&color=${selectedFilters.colors.map((color) => color.replace("#", "%23")).join("|")}`;
       }
       if (selectedFilters?.classifications.length > 0) {
-        filters += `&classification=${selectedFilters.classifications.join("|")}`;
+        filters += `&classification=${selectedFilters.classifications
+          .map((classification) => classification.id)
+          .join("|")}`;
       }
       if (selectedFilters?.workTypes.length > 0) {
-        filters += `&worktype=${selectedFilters.workTypes.join("|")}`;
+        filters += `&worktype=${selectedFilters.workTypes.map((workType) => workType.id).join("|")}`;
       }
       if (selectedFilters?.techniques.length > 0) {
-        filters += `&technique=${selectedFilters.techniques.join("|")}`;
+        filters += `&technique=${selectedFilters.techniques.map((technique) => technique.id).join("|")}`;
       }
       if (selectedFilters?.persons.length > 0) {
-        filters += `&person=${selectedFilters.persons.join("|")}`;
+        filters += `&person=${selectedFilters.persons.map((person) => person.id).join("|")}`;
       }
       if (selectedFilters?.places.length > 0) {
-        filters += `&place=${selectedFilters.places.join("|")}`;
+        filters += `&place=${selectedFilters.places.map((place) => place.id).join("|")}`;
       }
       if (selectedFilters?.periods.length > 0) {
-        filters += `&period=${selectedFilters.periods.join("|")}`;
+        filters += `&period=${selectedFilters.periods.map((period) => period.id).join("|")}`;
       }
       if (selectedFilters?.centuries.length > 0) {
-        filters += `&century=${selectedFilters.centuries.join("|")}`;
+        filters += `&century=${selectedFilters.centuries.map((century) => century.id).join("|")}`;
       }
       if (selectedFilters?.materials.length > 0) {
-        filters += `&medium=${selectedFilters.materials.join("|")}`;
+        filters += `&medium=${selectedFilters.materials.map((material) => material.id).join("|")}`;
       }
       if (selectedFilters?.cultures.length > 0) {
-        filters += `&culture=${selectedFilters.cultures.join("|")}`;
+        filters += `&culture=${selectedFilters.cultures.map((culture) => culture.id).join("|")}`;
       }
 
       // NEGATIVE FILTERS
       if (negativeFilters?.classifications.length > 0) {
-        negativeFiltersQuery += ` AND -classificationid:${negativeFilters.classifications.join(
-          " AND -classificationid:"
-        )}`;
+        negativeFiltersQuery += ` AND -classificationid:${negativeFilters.classifications
+          .map((classification) => classification.id)
+          .join(" AND -classificationid:")}`;
       }
     }
 

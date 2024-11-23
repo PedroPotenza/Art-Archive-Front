@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../../../libs/axios/axios";
 import { capitalizeWords, formatNumber, formatNumberWithCommas } from "../../../../util/converters";
 import { placesAtom, selectedFiltersAtom } from "../atoms";
-import { PlaceFilter, PlaceOrderType } from "../models";
+import { FilterData, PlaceFilter, PlaceOrderType } from "../models";
 
 export default function Place() {
   const [places, setPlaces] = useAtom<PlaceFilter[]>(placesAtom);
@@ -95,7 +95,9 @@ export default function Place() {
     }
 
     if (showSelectedOnly) {
-      updatedPlaces = updatedPlaces.filter((place) => selectedFilters.places.includes(place.id));
+      updatedPlaces = updatedPlaces.filter((place) =>
+        selectedFilters.places.map((filter) => filter.id).includes(place.id)
+      );
 
       if (updatedPlaces.length === 0) {
         setShowSelectedOnly(false);
@@ -131,10 +133,12 @@ export default function Place() {
     setShowDropdown(false);
   };
 
-  const handleSelectPlace = (placeId: number) => {
+  const handleSelectPlace = (place: FilterData) => {
     setSelectedFilters((prev) => ({
       ...prev,
-      places: prev.places.includes(placeId) ? prev.places.filter((id) => id !== placeId) : [...prev.places, placeId]
+      places: prev.places.some((p) => p.id === place.id)
+        ? prev.places.filter((p) => p.id !== place.id)
+        : [...prev.places, place]
     }));
   };
 
@@ -202,7 +206,7 @@ export default function Place() {
             <div
               className={`flex items-center border-[1px] border-almost-white p-2 px-4 justify-between rounded-full cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out
                 ${
-                  selectedFilters.places.includes(place.id)
+                  selectedFilters.places.map((filter) => filter.id).includes(place.id)
                     ? "bg-almost-white bg-opacity-30"
                     : level === 0
                     ? "bg-silver-gray"
@@ -211,12 +215,14 @@ export default function Place() {
                     : "bg-silver-gray-darkest"
                 } 
               `}
-              onClick={() => handleSelectPlace(place.id)}
+              onClick={() => handleSelectPlace(place)}
             >
               <span className="text-md font-medium max-w-[80%] line-clamp-2">{capitalizeWords(place.name)}</span>
               <span
                 className={`text-sm font-medium ${
-                  selectedFilters.places.includes(place.id) ? "text-almost-white" : "text-silver-gray-lighter"
+                  selectedFilters.places.map((filter) => filter.id).includes(place.id)
+                    ? "text-almost-white"
+                    : "text-silver-gray-lighter"
                 }`}
                 title={`${place.objectcount} Objects`}
               >

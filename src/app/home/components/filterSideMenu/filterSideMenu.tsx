@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { Tooltip } from "@nextui-org/tooltip";
 import { ArrowUp, ChevronLeft, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { isFilterOpenAtom } from "./atoms";
+import { isFilterOpenAtom, selectedFiltersAtom } from "./atoms";
 import { FilterSections } from "./constants";
 import ActiveFilters from "./sections/activeFilters";
 import Century from "./sections/century";
@@ -22,6 +22,8 @@ export default function FiltersSideMenu() {
   const [isFilterOpen, setIsFilterOpen] = useAtom(isFilterOpenAtom);
   // const [excludedFilters, setExcludedFilters] = useAtom(excludedFilters);
   const [selectedFilterSection, setSelectedFilterSection] = useState("Active Filters");
+  const [selectedFilters] = useAtom(selectedFiltersAtom);
+  // const [negativeFilters] = useAtom(negativeFiltersAtom);
   const containerRef = useRef<HTMLDivElement>(null);
   const [showBackToStart, setShowBackToStart] = useState(false);
 
@@ -80,25 +82,68 @@ export default function FiltersSideMenu() {
         {FilterSections.map((section) => {
           return (
             section.shouldRender && (
-              <div
-                key={section.section}
-                className={`flex gap-4 p-4 items-center border-transparent hover:border-white border-y-2 hover:shadow-2xl hover:bg-silver-gray-light cursor-pointer ${
-                  section.divisionLine ? "border-b-2 border-b-silver-gray-darker" : ""
-                } ${
-                  selectedFilterSection === section.section && isFilterOpen
-                    ? "bg-silver-gray-light border-white border-opacity-30 bg-opacity-30 border-b-white shadow-2xl"
-                    : ""
+              <Tooltip
+                content={
+                  <div className="px-1 py-2 max-w-[280px]">
+                    <p className="font-semibold text-lg">{section.displayName} </p>
+                  </div>
                 }
-                  `}
-                onClick={() => {
-                  toggleFilterDetails();
-                  setSelectedFilterSection(section.section);
+                placement="right"
+                isDisabled={isFilterOpen}
+                showArrow
+                delay={0}
+                offset={16}
+                closeDelay={0}
+                classNames={{
+                  base: ["before:bg-silver-gray-dark"],
+                  content: ["py-2 px-4 shadow-xl", "text-almost-white bg-silver-gray-dark"]
                 }}
-                title={section.displayName}
+                motionProps={{
+                  variants: {
+                    exit: {
+                      opacity: 0,
+                      transition: {
+                        duration: 0.1,
+                        ease: "easeIn"
+                      }
+                    },
+                    enter: {
+                      opacity: 1,
+                      transition: {
+                        duration: 0.15,
+                        ease: "easeOut"
+                      }
+                    }
+                  }
+                }}
               >
-                {section.icon}
-                {isFilterOpen && <span className="text-xl cursor-pointer w-40">{section.displayName}</span>}
-              </div>
+                <div
+                  key={section.section}
+                  className={`flex gap-4 p-4 items-center border-transparent hover:border-white border-y-2 hover:shadow-2xl hover:bg-silver-gray-light cursor-pointer ${
+                    section.divisionLine ? "border-b-2 border-b-silver-gray-darker" : ""
+                  } ${
+                    selectedFilterSection === section.section && isFilterOpen
+                      ? "bg-silver-gray-light border-white border-opacity-30 bg-opacity-30 border-b-white shadow-2xl"
+                      : ""
+                  }
+                  `}
+                  onClick={() => {
+                    toggleFilterDetails();
+                    setSelectedFilterSection(section.section);
+                  }}
+                >
+                  <div className="relative">
+                    {section.icon}
+                    {section.section === "activeFilters" && Object.values(selectedFilters).flat().length > 0 && (
+                      <div className="absolute top-[-6px] right-[-6px] bg-white text-black text-sm rounded-full w-[22px] h-[22px] p-1 flex items-center justify-center font-bold">
+                        {Object.values(selectedFilters).flat().length}
+                      </div>
+                    )}
+                  </div>
+
+                  {isFilterOpen && <span className="text-xl cursor-pointer w-40">{section.displayName}</span>}
+                </div>
+              </Tooltip>
             )
           );
         })}

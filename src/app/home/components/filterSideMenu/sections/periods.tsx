@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../../../libs/axios/axios";
 import { capitalizeWords, formatNumber } from "../../../../util/converters";
 import { selectedFiltersAtom } from "../atoms";
-import { PeriodFilter, PeriodOrderType } from "../models";
+import { FilterData, PeriodFilter, PeriodOrderType } from "../models";
 
 export default function Period() {
   const [periods, setPeriods] = useState<PeriodFilter[]>([]);
@@ -53,7 +53,9 @@ export default function Period() {
     }
 
     if (showSelectedOnly) {
-      updatedPeriods = updatedPeriods.filter((period) => selectedFilters.periods.includes(period.id));
+      updatedPeriods = updatedPeriods.filter((period) =>
+        selectedFilters.periods.some((filter) => filter.id === period.id)
+      );
 
       if (updatedPeriods.length === 0) {
         setShowSelectedOnly(false);
@@ -89,12 +91,12 @@ export default function Period() {
     setShowDropdown(false);
   };
 
-  const handleSelectPeriod = (periodId: number) => {
+  const handleSelectPeriod = (period: FilterData) => {
     setSelectedFilters((prev) => ({
       ...prev,
-      periods: prev.periods.includes(periodId)
-        ? prev.periods.filter((id) => id !== periodId)
-        : [...prev.periods, periodId]
+      periods: prev.periods.some((p) => p.id === period.id)
+        ? prev.periods.filter((p) => p.id !== period.id)
+        : [...prev.periods, period]
     }));
   };
 
@@ -189,14 +191,16 @@ export default function Period() {
                   <div
                     key={period.id}
                     className={`flex items-end justify-between h-fit border-[1px] border-almost-white cursor-pointer bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2 px-4 rounded-full ${
-                      selectedFilters.periods.includes(period.id) ? "bg-almost-white bg-opacity-20" : ""
+                      selectedFilters.periods.some((p) => p.id === period.id) ? "bg-almost-white bg-opacity-20" : ""
                     }`}
-                    onClick={() => handleSelectPeriod(period.id)}
+                    onClick={() => handleSelectPeriod(period)}
                   >
                     <span className="text-md font-medium">{capitalizeWords(period.name)}</span>
                     <span
                       className={`text-sm font-medium ${
-                        selectedFilters.periods.includes(period.id) ? "text-almost-white" : "text-silver-gray-lighter"
+                        selectedFilters.periods.map((p) => p.id).includes(period.id)
+                          ? "text-almost-white"
+                          : "text-silver-gray-lighter"
                       }`}
                       title={`${period.objectcount} Objects`}
                     >
