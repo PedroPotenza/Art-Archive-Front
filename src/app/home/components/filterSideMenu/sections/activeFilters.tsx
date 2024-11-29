@@ -1,142 +1,219 @@
-import { Loader2Icon } from "lucide-react";
-import React, { useState } from "react";
-import { negativeFiltersAtom, selectedFiltersAtom } from "../atoms";
 import { useAtom } from "jotai";
+import { X } from "lucide-react";
+import { capitalizeWords } from "../../../../util/converters";
+import { negativeFiltersAtom, selectedFiltersAtom } from "../atoms";
+import { FilterSectionsEnum } from "../models";
+import type { SelectedFilters } from "../models";
 
 export default function ActiveFilters() {
-  const [isLoading] = useState<boolean>(false);
-  const [selectedFilters] = useAtom(selectedFiltersAtom);
-  const [negativeFilters] = useAtom(negativeFiltersAtom);
+  const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom);
+  const [negativeFilters, setNegativeFilters] = useAtom(negativeFiltersAtom);
+
+  const handleSelectFilter = (filterId: number, type: FilterSectionsEnum) => {
+    const updateFilters = (key: keyof SelectedFilters, isString = false) => {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        [key]: prev[key].some((item: any) => (isString ? item === filterId.toString() : item.id === filterId))
+          ? prev[key].filter((item: any) => (isString ? item !== filterId.toString() : item.id !== filterId))
+          : [
+              ...prev[key],
+              isString ? filterId.toString() : selectedFilters[key].find((item: any) => item.id === filterId)!
+            ]
+      }));
+
+      setNegativeFilters((prev) => ({
+        ...prev,
+        [key]: prev[key].filter((item: any) => (isString ? item !== filterId.toString() : item.id !== filterId))
+      }));
+    };
+
+    switch (type) {
+      case FilterSectionsEnum.Classifications:
+        updateFilters("classifications");
+        break;
+      case FilterSectionsEnum.Colors:
+        updateFilters("colors", true);
+        break;
+      case FilterSectionsEnum.WorkType:
+        updateFilters("workTypes");
+        break;
+      case FilterSectionsEnum.Materials:
+        updateFilters("materials");
+        break;
+      case FilterSectionsEnum.Technique:
+        updateFilters("techniques");
+        break;
+      case FilterSectionsEnum.Periods:
+        updateFilters("periods");
+        break;
+      case FilterSectionsEnum.Century:
+        updateFilters("centuries");
+        break;
+      case FilterSectionsEnum.Place:
+        updateFilters("places");
+        break;
+      case FilterSectionsEnum.Person:
+        updateFilters("persons");
+        break;
+      case FilterSectionsEnum.Culture:
+        updateFilters("cultures");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleNegativeSelect = (filterId: number, type: FilterSectionsEnum) => {
+    const updateNegativeFilters = (key: keyof SelectedFilters, isString = false) => {
+      setNegativeFilters((prev) => ({
+        ...prev,
+        [key]: prev[key].some((item: any) => (isString ? item === filterId.toString() : item.id === filterId))
+          ? prev[key].filter((item: any) => (isString ? item !== filterId.toString() : item.id !== filterId))
+          : [
+              ...prev[key],
+              isString ? filterId.toString() : selectedFilters[key].find((item: any) => item.id === filterId)!
+            ]
+      }));
+
+      setSelectedFilters((prev) => ({
+        ...prev,
+        [key]: prev[key].filter((item: any) => (isString ? item !== filterId.toString() : item.id !== filterId))
+      }));
+    };
+
+    switch (type) {
+      case FilterSectionsEnum.Classifications:
+        updateNegativeFilters("classifications");
+        break;
+      case FilterSectionsEnum.Colors:
+        updateNegativeFilters("colors", true);
+        break;
+      case FilterSectionsEnum.WorkType:
+        updateNegativeFilters("workTypes");
+        break;
+      case FilterSectionsEnum.Materials:
+        updateNegativeFilters("materials");
+        break;
+      case FilterSectionsEnum.Technique:
+        updateNegativeFilters("techniques");
+        break;
+      case FilterSectionsEnum.Periods:
+        updateNegativeFilters("periods");
+        break;
+      case FilterSectionsEnum.Century:
+        updateNegativeFilters("centuries");
+        break;
+      case FilterSectionsEnum.Place:
+        updateNegativeFilters("places");
+        break;
+      case FilterSectionsEnum.Person:
+        updateNegativeFilters("persons");
+        break;
+      case FilterSectionsEnum.Culture:
+        updateNegativeFilters("cultures");
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="flex flex-col gap-2 text-white w-[350px] transition-transform duration-200 ease-in-out">
-      <h1 className="text-4xl text-center font-bold mt-4">Active Filters</h1>
-      {isLoading ? (
-        <div className="self-center mt-8 flex flex-col items-center gap-2">
-          <Loader2Icon size={80} className="animate-spin stroke-1" />
-          <span className="text-sm">Fetching filters</span>
-        </div>
-      ) : (
-        <div className="flex flex-col w-full px-4">
-          <p>Selected Filters: {JSON.stringify(selectedFilters)}</p>
-          <p className="mt-10">Negative Filters: {JSON.stringify(negativeFilters)}</p>
-          {/* <div className="flex items-center gap-2 relative mt-6 mb-2">
-            <input
-              type="text"
-              placeholder="Search classification..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="p-2 border border-gray-400 rounded-lg w-full"
-            />
+      <h1 className="text-4xl font-bold mt-4 ml-4">Active Filters</h1>
 
-            <button
-              onClick={toggleDropdown}
-              className="p-2 border border-gray-400 rounded-lg hover:bg-almost-white hover:bg-opacity-30 transition w-fit bg-transparent flex items-center gap-1"
-            >
-              {orderType === "objectCount-desc" && <ArrowDown10 size={20} />}
-              {orderType === "objectCount-asc" && <ArrowDown01 size={20} />}
-              {orderType === "alphabetical-asc" && <ArrowDownAZ size={20} />}
-              {orderType === "alphabetical-desc" && <ArrowDownZA size={20} />}
-            </button>
-
-            {showDropdown && (
-              <div className="absolute top-full right-0 mt-2 w-48 bg-white text-black rounded-2xl drop-shadow-2xl z-10 overflow-hidden border-[1px] border-white">
-                <ul className="flex flex-col text-almost-white">
-                  <li
-                    className={`p-2 bg-silver-gray-light hover:bg-silver-gray-lighter cursor-pointer ${
-                      orderType === "objectCount-desc" ? "bg-silver-gray-lighter" : ""
-                    }`}
-                    onClick={() => handleOrderChange("objectCount-desc")}
-                  >
-                    Object Count (Higher First)
-                  </li>
-                  <li
-                    className={`p-2 bg-silver-gray-light hover:bg-silver-gray-lighter cursor-pointer ${
-                      orderType === "objectCount-asc" ? "bg-silver-gray-lighter" : ""
-                    }`}
-                    onClick={() => handleOrderChange("objectCount-asc")}
-                  >
-                    Object Count (Lower First)
-                  </li>
-                  <li
-                    className={`p-2 bg-silver-gray-light hover:bg-silver-gray-lighter cursor-pointer ${
-                      orderType === "alphabetical-asc" ? "bg-silver-gray-lighter" : ""
-                    }`}
-                    onClick={() => handleOrderChange("alphabetical-asc")}
-                  >
-                    Alphabetical (A - Z)
-                  </li>
-                  <li
-                    className={`p-2 bg-silver-gray-light hover:bg-silver-gray-lighter cursor-pointer ${
-                      orderType === "alphabetical-desc" ? "bg-silver-gray-lighter" : ""
-                    }`}
-                    onClick={() => handleOrderChange("alphabetical-desc")}
-                  >
-                    Alphabetical (Z - A)
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
-
-          {(selectedFilters.classifications.length > 0 || negativeFilters.classifications.length > 0) && (
-            <div className="flex items-center gap-2 ml-2">
-              <input
-                type="checkbox"
-                id="show-selected-only"
-                checked={showSelectedOnly}
-                onChange={(e) => setShowSelectedOnly(e.target.checked)}
-                className="cursor-pointer"
-              />
-              <label htmlFor="show-selected-only" className="cursor-pointer text-md">
-                Show Selected Only
-              </label>
-            </div>
-          )}
-
-          <div className="flex flex-col gap-3 my-4">
-            {filteredClassifications.length !== 0
-              ? filteredClassifications.map((classification) => (
+      <div className="flex flex-col w-full px-4">
+        {[
+          {
+            title: "Classification",
+            selectedFilters: selectedFilters.classifications,
+            negativeFilters: negativeFilters.classifications,
+            type: FilterSectionsEnum.Classifications
+          },
+          {
+            title: "Work Type",
+            selectedFilters: selectedFilters.workTypes,
+            negativeFilters: negativeFilters.workTypes,
+            type: FilterSectionsEnum.WorkType
+          },
+          {
+            title: "Materials",
+            selectedFilters: selectedFilters.materials,
+            negativeFilters: negativeFilters.materials,
+            type: FilterSectionsEnum.Materials
+          },
+          {
+            title: "Techniques",
+            selectedFilters: selectedFilters.techniques,
+            negativeFilters: negativeFilters.techniques,
+            type: FilterSectionsEnum.Technique
+          },
+          {
+            title: "Periods",
+            selectedFilters: selectedFilters.periods,
+            negativeFilters: negativeFilters.periods,
+            type: FilterSectionsEnum.Periods
+          },
+          {
+            title: "Centuries",
+            selectedFilters: selectedFilters.centuries,
+            negativeFilters: negativeFilters.centuries,
+            type: FilterSectionsEnum.Century
+          },
+          {
+            title: "Cultures",
+            selectedFilters: selectedFilters.cultures,
+            negativeFilters: negativeFilters.cultures,
+            type: FilterSectionsEnum.Culture
+          },
+          {
+            title: "Places",
+            selectedFilters: selectedFilters.places,
+            negativeFilters: negativeFilters.places,
+            type: FilterSectionsEnum.Place
+          }
+          // Adicione mais seções aqui conforme necessário
+        ].map(({ title, selectedFilters, negativeFilters, type }) =>
+          selectedFilters.length > 0 || negativeFilters.length > 0 ? (
+            <div key={type} className="flex flex-col gap-3 my-4">
+              <p className="text-2xl font-semibold">{title}</p>
+              {selectedFilters
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((filter) => (
                   <div
-                    key={classification.id}
-                    className={`flex items-end justify-between h-fit border-[1px] border-almost-white cursor-pointer bg-opacity-30 hover:scale-105 transition-transform duration-200 ease-in-out p-2 px-4 rounded-full ${
-                      selectedFilters.classifications.includes(classification.id) ? "bg-almost-white bg-opacity-20" : ""
-                    } ${
-                      negativeFilters.classifications.includes(classification.id)
-                        ? "bg-red-500 bg-opacity-40 border-red-600 ring-1 ring-red-600"
-                        : ""
-                    }`}
-                    onClick={() => handleSelectClassification(classification.id)}
-                    onAuxClick={() => handleNegativeSelectClassification(classification.id)}
+                    key={filter.id}
+                    className="flex items-center justify-between h-fit border-[1px] border-almost-white cursor-pointer bg-opacity-30 p-2 px-4 rounded-full bg-almost-white bg-opacity-20"
+                    onAuxClick={() => handleNegativeSelect(filter.id, type)}
                   >
-                    <span className="text-md font-medium">{capitalizeWords(classification.name)}</span>
+                    <span className="text-md font-medium">{capitalizeWords(filter.name)}</span>
                     <span
                       className={`text-sm font-medium ${
-                        selectedFilters.classifications.includes(classification.id) ||
-                        negativeFilters.classifications.includes(classification.id)
+                        selectedFilters.map((f) => f.id).includes(filter.id) ||
+                        negativeFilters.map((f) => f.id).includes(filter.id)
                           ? "text-almost-white"
                           : "text-silver-gray-lighter"
                       }`}
-                      title={`${classification.objectcount} Objects`}
-                    >
-                      {formatNumber(classification.objectcount)}
-                    </span>
+                    ></span>
+                    <X size={24} className="text-almost-white" onClick={() => handleSelectFilter(filter.id, type)} />
                   </div>
-                ))
-              : searchTerm !== "" && (
-                  <div className="self-center flex flex-col items-center text-center max-w-[70%] ">
-                    <PackageOpen size={64} className="stroke-1 text-silver-gray-lighter mb-4" />
-                    <span className="mb-4">
-                      No results for <span className="font-semibold">&quot;{searchTerm}&quot;</span>
-                    </span>
-                    <span>Try a different search term or adjust your filter.</span>
-                  </div>
-                )}
-          </div>
-        </div> 
-      )}*/}
-        </div>
-      )}
+                ))}
+              {negativeFilters.length > 0 && <p className="text-lg">Negative Filters</p>}
+              {negativeFilters.map((filter) => (
+                <div
+                  key={filter.id}
+                  className="flex items-center justify-between h-fit border-[1px] border-almost-white cursor-pointer bg-opacity-30 p-2 px-4 rounded-full bg-red-500 bg-opacity-40 border-red-600 ring-1 ring-red-600"
+                  onAuxClick={() => handleNegativeSelect(filter.id, type)}
+                >
+                  <span className="text-md font-medium">{capitalizeWords(filter.name)}</span>
+                  <X size={24} className="text-almost-white" onClick={() => handleNegativeSelect(filter.id, type)} />
+                </div>
+              ))}
+            </div>
+          ) : null
+        )}
+
+        {/* <p>Selected Filters: {JSON.stringify(selectedFilters)}</p>
+      <p className="mt-4">Negative Filters: {JSON.stringify(negativeFilters)}</p> */}
+      </div>
     </div>
   );
 }

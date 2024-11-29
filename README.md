@@ -1,32 +1,147 @@
-# Art Archive Project
+# 🎨 Art Archive
 
-This teis a repository with the website and the documentation about it. It was developed using React, Next.js, Typescript, Tailwind and some other technologies.
+## 📖 Overview
 
-To run using docker compose:
-`docker compose up `
+The **Art Archive Front** is a React-based web application designed for exploring and interacting with artworks in a modern and intuitive way. The project leverages technologies like Next.js, TypeScript, Tailwind CSS, and Firebase to deliver a seamless user experience. Additionally, a Python-based proxy handles backend operations for optimized API consumption.
 
-To run the project, use:
+The application was built as a **Minimum Viable Product (MVP)** to provide a solid foundation for future expansions, such as personalized user feeds and advanced filtering capabilities.
 
-`npm run dev`
+## 🚀 Key Features
 
-To run the proxy/backend, use:
+- **Artwork Grid**: Infinite scrolling grid of artworks with lazy loading and placeholder colors for enhanced UX.
+- **Advanced Filters**: Filter by attributes like color, material, technique, period, and more.
+- **Dynamic Artwork Details**: View comprehensive information about selected artworks, including artists, dimensions, and predominant colors.
+- **User Authentication**: Login and registration with Google OAuth integration.
+- **Custom Collections**: Save artworks into personal archive boxes (planned feature).
+- **Optimized Performance**: Includes lazy loading, proportional image grids, and efficient API requests.
 
-`cd proxy/`
-`source artArchive_python/bin/activate`
-`python proxy.py`
+## 🛠 Installation and Setup
 
-## Husky + Commitzen + Emoji Conventional
+### Using Docker Compose
 
-To follow the pattern of semantic commits, we use the combo of Husky + Commitzen + Emoji Conventional to create a commit template direct of your terminal. You can run "git cz", or just "git commit" to display a menu option to create your commit.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/PedroPotenza/Art-Archive-Front.git
+   cd Art-Archive-Front
+   ```
+2. Run the application:
+   ```bash
+   docker compose up
+   ```
 
-Using Aurora Template:
+### Without Docker
 
-[Screencast from 03-10-2023 11:58:03.webm](https://github.com/PedroPotenza/Aurora/assets/83480686/743cbf64-d9d3-4cc9-b17b-81b12c8d435d)
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/PedroPotenza/Art-Archive-Front.git
+   cd Art-Archive-Front
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up the Python-based proxy (First time):
 
-Using with this repo:
+   ```bash
+   cd proxy/
+   python -m venv artArchive_python
+   source artArchive_python/bin/activate
+   pip install -r requirements.txt
+   python proxy.py
+   ```
+
+   After already set up the venv, run:
+
+   ```bash
+   cd proxy/
+   source artArchive_python/bin/activate
+   python proxy.py
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+5. Access the application at `http://localhost:3000`.
+
+## 🔧 Tools and Workflow
+
+### Commit Standards: Husky + Commitizen + Emoji Conventional
+
+This project follows **semantic commit standards** using the Husky + Commitizen + Emoji Conventional combo for structured and descriptive commit messages.
+
+To create a commit:
+
+1. Run `git cz` or `git commit` to access the commit message menu.
+2. Follow the prompts to generate a semantic commit message with emojis.
+
+#### Example:
 
 [Screencast from 08-06-2024 00:27:46.webm](https://github.com/PedroPotenza/Art-Archive-Front/assets/83480686/ce2e1e32-c361-4b8f-a1c0-9f16bb1e0b6c)
 
 (when GNU Nano opens, I just type Ctrl + X to exit)
 
-Result: ![example](https://github.com/PedroPotenza/Aurora/assets/83480686/8cd81785-4a79-4dd4-ab9e-2588478d50bb)
+#### Result:
+
+![alt text](assets/commitHistoryExample.png)
+
+---
+
+## 📂 Project Structure
+
+```
+Art-Archive-Front/
+├── docker-compose.yml    # Docker configuration
+├── documentation/        # Contains diagrams, notes, and project documentation
+├── proxy/                # Python-based proxy for backend requests
+├── src/                  # Frontend source files
+│   ├── components/       # Reusable UI components
+│   ├── app/              # Next.js routing and pages
+│   ├── libs/             # API and Firebase configurations
+│   ├── hooks/            # Custom hooks
+│   └── util/             # Helper functions and models
+├── public/               # Static assets
+├── styles/               # Tailwind CSS configurations
+├── package.json          # Dependencies and scripts
+└── README.md             # Documentation
+```
+
+### Key Files:
+
+- **`proxy.py`**: Handles backend operations like API request redirection and data normalization.
+- **`filterSideMenu.tsx`**: Implements advanced filtering functionality.
+- **`imageViewer.tsx`**: Provides interactive image viewing with tooltips.
+
+---
+
+## 📚 Documentation
+
+- [Figma Prototype](https://www.figma.com/design/MsPqVyoHSHn9voeHd1Ebfy/Art-Archive?node-id=0-1&t=zHTmqiityQr73TZE-1)
+- [Harvard Art Museum API](https://github.com/harvardartmuseums/api-docs)
+- [Activity Diagrams and Documentation](./documentation/)
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please adhere to the following guidelines:
+
+1. Fork the repository and create a branch (`feature/your-feature-name`).
+2. Commit changes using semantic messages.
+3. Submit a pull request for review.
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](./LICENSE) file for details.
+
+---
+
+## 🌟 Future Improvements
+
+- Enhanced user personalization with "For You" grids.
+- Integration of multiple APIs for diverse artwork data.
+- Implementation of advanced data normalization for optimized requests.
+
+---

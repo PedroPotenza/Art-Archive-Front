@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { Tooltip } from "@nextui-org/tooltip";
 import { ArrowUp, ChevronLeft, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { isFilterOpenAtom, selectedFiltersAtom } from "./atoms";
+import { isFilterOpenAtom, negativeFiltersAtom, selectedFiltersAtom } from "./atoms";
 import { FilterSections } from "./constants";
 import ActiveFilters from "./sections/activeFilters";
 import Century from "./sections/century";
@@ -20,10 +20,9 @@ import WorkType from "./sections/workType";
 
 export default function FiltersSideMenu() {
   const [isFilterOpen, setIsFilterOpen] = useAtom(isFilterOpenAtom);
-  // const [excludedFilters, setExcludedFilters] = useAtom(excludedFilters);
   const [selectedFilterSection, setSelectedFilterSection] = useState("Active Filters");
   const [selectedFilters] = useAtom(selectedFiltersAtom);
-  // const [negativeFilters] = useAtom(negativeFiltersAtom);
+  const [negativeFilters] = useAtom(negativeFiltersAtom);
   const containerRef = useRef<HTMLDivElement>(null);
   const [showBackToStart, setShowBackToStart] = useState(false);
 
@@ -83,6 +82,7 @@ export default function FiltersSideMenu() {
           return (
             section.shouldRender && (
               <Tooltip
+                key={section.section}
                 content={
                   <div className="px-1 py-2 max-w-[280px]">
                     <p className="font-semibold text-lg">{section.displayName} </p>
@@ -134,11 +134,13 @@ export default function FiltersSideMenu() {
                 >
                   <div className="relative">
                     {section.icon}
-                    {section.section === "activeFilters" && Object.values(selectedFilters).flat().length > 0 && (
-                      <div className="absolute top-[-6px] right-[-6px] bg-white text-black text-sm rounded-full w-[22px] h-[22px] p-1 flex items-center justify-center font-bold">
-                        {Object.values(selectedFilters).flat().length}
-                      </div>
-                    )}
+                    {section.section === "activeFilters" &&
+                      (Object.values(selectedFilters).flat().length > 0 ||
+                        Object.values(negativeFilters).flat().length > 0) && (
+                        <div className="absolute top-[-6px] right-[-6px] bg-white text-black text-sm rounded-full w-[22px] h-[22px] p-1 flex items-center justify-center font-bold">
+                          {Object.values(selectedFilters).flat().length + Object.values(negativeFilters).flat().length}
+                        </div>
+                      )}
                   </div>
 
                   {isFilterOpen && <span className="text-xl cursor-pointer w-40">{section.displayName}</span>}

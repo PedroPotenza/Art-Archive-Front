@@ -1,20 +1,32 @@
 Proxy: 
     - Proxy endpoint 
+        Foi necessario a implementação do proxy para redirecionamento de requests
     - Hide the next and prev attributes 
+        Uma exposição de chave de API estava acontecendo nos requests nos campos de next e prev quando a response possuia paginação, portanto foi necessário omitir esses campos.
 
 Image grid:
 
     FEITAS
     - Calculo das larguras proporcionais e o algoritmo para preenchimento das colunas
+        O calculo ficou bem mais complexo e custoso que o esperado.
     - Optimização e Lazy Loading
+        Implementação do next para adiconar lazy loading (permitindo assim o carregamento das imagens apenas quando exibidas em tela), placeholder color e mais algumas otimizações.
     - Color Placeholder 
+        Implementado junto com o next. Referencia do pinterest
     - Quick image visualizator
+        Adição de um visualizador de imagem simples para poder identificar melhor obras.
     - Random Seed Generator 
+        Após uma analise cuidadosa da API foi possivel observar uma lógica de seeds que permitia um debbug muito melhor e a implementação futura de um historico de navegação bem melhor, sem a alteração do grid de imagens da pagina home. Infelizmente essa seed apenas persiste por 1 dia, não permitindo uma visualização sempre igual do mesmo grid.
     - Infinite Scroll
+        Implementação do infinite scroll
     - Seed URL Param
+        Seed se tornou um campo adicional na URL permitindo uma visualização especifica da home.
     - Quick Negative Colors Button
+        Muitas imagens eram fotografias em negativo, portanto foi implementado um botão simples para transformar as cores das fotos para uma visualização usual em preto e branco.
     - Quick Favorite Button
+        Adição de um botão de favorito na imagem da home grid, porem apenas mockado, sem implementação por trás.
     - Hover style
+        Adição de um estilo de hover que faz com que a obra escureça levemente de baixo para cima e exiba o nome, o artista e alguns botões de ação rapida (Favorito, Visão em negativo, Expandir objeto)
   
     TRABALHANDO EM CIMA
     

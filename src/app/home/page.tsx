@@ -279,6 +279,42 @@ export default function Home() {
           .map((classification) => classification.id)
           .join(" AND -classificationid:")}`;
       }
+
+      // if (negativeFilters?.colors.length > 0) {
+      //   negativeFiltersQuery += ` AND -colorid:${negativeFilters.colors.join(" AND -colorid:")}`;
+      // }
+
+      // if (negativeFilters?.workTypes.length > 0) {
+      //   negativeFiltersQuery += ` AND -worktypeid:${negativeFilters.workTypes.join(" AND -worktypeid:")}`;
+      // }
+
+      // if (negativeFilters?.techniques.length > 0) {
+      //   negativeFiltersQuery += ` AND -techniqueid:${negativeFilters.techniques.join(" AND -techniqueid:")}`;
+      // }
+
+      // if (negativeFilters?.persons.length > 0) {
+      //   negativeFiltersQuery += ` AND -personid:${negativeFilters.persons.join(" AND -personid:")}`;
+      // }
+
+      // if (negativeFilters?.places.length > 0) {
+      //   negativeFiltersQuery += ` AND -placeid:${negativeFilters.places.join(" AND -placeid:")}`;
+      // }
+
+      // if (negativeFilters?.periods.length > 0) {
+      //   negativeFiltersQuery += ` AND -periodid:${negativeFilters.periods.join(" AND -periodid:")}`;
+      // }
+
+      // if (negativeFilters?.centuries.length > 0) {
+      //   negativeFiltersQuery += ` AND -centuryid:${negativeFilters.centuries.join(" AND -centuryid:")}`;
+      // }
+
+      // if (negativeFilters?.materials.length > 0) {
+      //   negativeFiltersQuery += ` AND -mediumid:${negativeFilters.materials.join(" AND -mediumid:")}`;
+      // }
+
+      // if (negativeFilters?.cultures.length > 0) {
+      //   negativeFiltersQuery += ` AND -cultureid:${negativeFilters.cultures.join(" AND -cultureid:")}`;
+      // }
     }
 
     try {
