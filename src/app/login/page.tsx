@@ -3,9 +3,10 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createSession } from "../../actions/authActions";
-import { signInEmailAndPassword, signInGoogle } from "../../libs/firebase/auth";
+// import { createSession } from "../../actions/authActions";
+// import { signInEmailAndPassword, signInGoogle } from "../../libs/firebase/auth";
 import "../globals.css";
+import React from "react";
 
 interface FormValues {
   email: string;
@@ -28,23 +29,32 @@ export default function Login() {
   });
 
   const handleSignInGoogle = async () => {
-    const userUid = await signInGoogle(); // Probably I can use the credentials normally here this is something to look up another moment
-    if (userUid) {
-      await createSession(userUid);
-    }
+    // const userUid = await signInGoogle(); // Probably I can use the credentials normally here this is something to look up another moment
+    // if (userUid) {
+    //   await createSession(userUid);
+    // }
+    console.log("Sign in with Google");
+
     router.push("/home");
   };
 
   const handleSignInEmailAndPassword = async (data: FormValues) => {
     try {
       setLoading(true);
-      const userUid = await signInEmailAndPassword(data.email, data.password);
+      // const userUid = await signInEmailAndPassword(data.email, data.password);
 
-      if (userUid) {
-        await createSession(userUid);
-        reset();
-        setServerError(null);
-      }
+      // if (userUid) {
+      //   await createSession(userUid);
+      //   reset();
+      //   setServerError(null);
+      // }
+
+      console.log("data", data.email);
+
+      reset();
+
+      console.log("Sign in with email and password");
+
       router.push("/home");
     } catch (error) {
       setServerError("Wrong email or password");
@@ -109,7 +119,10 @@ export default function Login() {
             </div>
 
             <div className="flex flex-row w-full justify-between items-start">
-              <span className="text-almost-black text-sm font-semibold m-2 hover:underline hover:text-golden-yellow-dark">
+              <span
+                className="text-almost-black text-sm font-semibold m-2 hover:underline hover:text-golden-yellow-dark cursor-pointer"
+                onClick={() => console.log("forgot password")}
+              >
                 Forgot password?
               </span>
 

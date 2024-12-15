@@ -3,15 +3,14 @@ import { useAtom } from "jotai";
 import { Contrast, Expand, Heart } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getSession } from "../../actions/authActions";
+// import { getSession } from "../../actions/authActions";
+import { useRouter } from "next/navigation";
 import axiosInstance from "../../libs/axios/axios";
 import "../globals.css";
 import { Record } from "../util/models/models";
-import { isFilterOpenAtom, negativeFiltersAtom } from "./components/filterSideMenu/atoms";
+import { isFilterOpenAtom, negativeFiltersAtom, selectedFiltersAtom } from "./components/filterSideMenu/atoms";
 import FiltersSideMenu from "./components/filterSideMenu/filterSideMenu";
 import ImageViewer from "./components/imageViewer";
-import { selectedFiltersAtom } from "./components/filterSideMenu/atoms";
-import { useRouter } from "next/navigation";
 
 type ImageObject = {
   proportionalWidth: number;
@@ -35,7 +34,7 @@ function useDebounce(func: (...args: any[]) => void, delay: number) {
 }
 
 export default function Home() {
-  const [userSessionId, setUserSessionId] = useState<string>("");
+  // const [userSessionId, setUserSessionId] = useState<string>("");
   const [objects, setObjects] = useState<Record[]>([]);
 
   const [selectedFilters] = useAtom(selectedFiltersAtom);
@@ -138,12 +137,20 @@ export default function Home() {
     if (!imageGrid) return;
     const imageGridWidth = imageGrid.getBoundingClientRect().width;
 
-    const whitespace = numberColumns * 8 + 32 + 16; // 4px of margin on each side + 16 padding of the container off each side + 16 because of the scrollbar
+    const whitespace = numberColumns * 8 + 32 + 16; // 4px of margin on each side of each column + 16 padding of the container off each side + 16 because of the scrollbar
 
     const totalWidth = isFilterOpen ? imageGridWidth - whitespace - 390 : imageGridWidth - whitespace; //390 px is the width of the filter side menu
 
+    // console.log("totalWidth", totalWidth);
+
     const firstImages = objects.slice(0, numberColumns);
     const totalFirstWidths = firstImages.reduce((acc, obj) => acc + obj.images[0].width + 8, 0); //4px of margin on each side (8px total)
+
+    // firstImages.forEach((obj, index) => {
+    //   console.log(`Image ${index + 1} width: ${obj.images[0].width}`);
+    // });
+
+    // console.log("totalFirstWidths", totalFirstWidths);
 
     firstImages.forEach((obj, index) => {
       const imageWidthWithMargin = obj.images[0].width + 8; //4px of margin on each side (8px total)
@@ -151,6 +158,13 @@ export default function Home() {
 
       const proportionalWidth = (porcentProportionalWidth * totalWidth) / 100;
       const proportionalHeight = (obj.images[0].height / obj.images[0].width) * proportionalWidth;
+
+      // console.group(`Image ${index + 1}:`);
+      // console.log(`Original width: ${obj.images[0].width}`);
+      // console.log(`Width with margin: ${imageWidthWithMargin}`);
+      // console.log(`Proportional width percentage: ${porcentProportionalWidth}%`);
+      // console.log(`Calculated proportional width: ${proportionalWidth}`);
+      // console.log(`Calculated proportional height: ${proportionalHeight}`);
 
       newColumns[index] = [
         {
@@ -198,11 +212,13 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchSession() {
-      const sessionId = await getSession();
-      if (sessionId) {
-        setUserSessionId(sessionId);
-        // console.log("sessionId", sessionId);
-      }
+      // const sessionId = await getSession();
+      // if (sessionId) {
+      //   setUserSessionId(sessionId);
+      // console.log("sessionId", sessionId);
+      // }
+
+      console.log("fetchSession");
     }
 
     fetchSession();
@@ -213,11 +229,11 @@ export default function Home() {
   }, [randomSeed]);
 
   // quick test to see user session id
-  useEffect(() => {
-    if (userSessionId) {
-      // console.log("userSessionId", userSessionId);
-    }
-  }, [userSessionId]);
+  // useEffect(() => {
+  //   if (userSessionId) {
+  //     // console.log("userSessionId", userSessionId);
+  //   }
+  // }, [userSessionId]);
 
   const fetchObjects = async ({
     seed,

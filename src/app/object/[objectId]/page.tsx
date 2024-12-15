@@ -20,7 +20,10 @@ export default function Object({ params }: { params: { objectId: string } }) {
 
   const getObjectDetails = async (): Promise<RecordDetails | null> => {
     setIsLoading(true);
+    if (!params.objectId) return null;
     try {
+      console.log("test");
+
       const response = await axiosInstance.get(`proxy/object/${params.objectId}`);
       // const data = response.data as RecordDetails;
 
@@ -53,6 +56,7 @@ export default function Object({ params }: { params: { objectId: string } }) {
       const finalResponse = { ...normalizedFields, people: responsePeople.data };
       return finalResponse;
     } catch (error) {
+      console.log("params.objectId", params.objectId);
       console.error("Failed to fetch object details:", error);
       return null;
     } finally {

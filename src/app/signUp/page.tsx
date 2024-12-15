@@ -1,11 +1,12 @@
 "use client";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createSession } from "../../actions/authActions";
-import { signInGoogle, signUpEmailAndPassword } from "../../libs/firebase/auth";
+// import { createSession } from "../../actions/authActions";
+// import { signInGoogle, signUpEmailAndPassword } from "../../libs/firebase/auth";
 import "../globals.css";
+import React from "react";
 
 interface FormValues {
   email: string;
@@ -17,7 +18,7 @@ interface FormValues {
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-  const router = useRouter();
+  // const router = useRouter();
 
   const {
     register,
@@ -39,13 +40,17 @@ export default function SignUp() {
         return;
       }
 
-      const userUid = await signUpEmailAndPassword(data.email, data.password);
+      // const userUid = await signUpEmailAndPassword(data.email, data.password);
 
-      if (userUid) {
-        await createSession(userUid);
-        reset();
-        router.push("/home");
-      }
+      // if (userUid) {
+      //   await createSession(userUid);
+      //   reset();
+      //   router.push("/home");
+      // }
+
+      reset();
+
+      console.log("Sign up with email and password");
     } catch (error) {
       setServerError("An error occurred during sign-up. Please try again.");
     } finally {
@@ -54,11 +59,12 @@ export default function SignUp() {
   };
 
   const handleSignInGoogle = async () => {
-    const userUid = await signInGoogle();
-    if (userUid) {
-      await createSession(userUid);
-      router.push("/home");
-    }
+    // const userUid = await signInGoogle();
+    // if (userUid) {
+    //   await createSession(userUid);
+    //   router.push("/home");
+    // }
+    console.log("Sign in with Google");
   };
 
   return (
