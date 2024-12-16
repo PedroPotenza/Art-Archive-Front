@@ -53,9 +53,11 @@ export default function Home() {
 
   const [columns, setColumns] = useState<ImageObject[][]>([]);
 
-  const url = new URL(window.location.href);
+  const url = typeof window !== "undefined" && window.location.href ? new URL(window.location.href) : null;
   const [randomSeed] = useState(
-    url.searchParams.get("seed") ? parseInt(url.searchParams.get("seed")!, 10) : Math.floor(Math.random() * 1000000)
+    url && url.searchParams.get("seed")
+      ? parseInt(url.searchParams.get("seed")!, 10)
+      : Math.floor(Math.random() * 1000000)
   );
 
   const [isFilterOpen] = useAtom(isFilterOpenAtom);
